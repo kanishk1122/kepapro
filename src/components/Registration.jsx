@@ -8,6 +8,8 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [token, setToken]=useState("");
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ const Registration = () => {
         };
 
         const response = await axios.post("/register", user, { withCredentials: true });
-        console.log(response.data); // Assuming your backend returns some data upon successful registration
+        setToken(response.data); // Assuming your backend returns some data upon successful registration
 
         // Reset form fields after successful submission
         setUsername("");
@@ -30,6 +32,12 @@ const Registration = () => {
         console.log("Error:", error);
     }
 };
+
+// Storing the JWT token in localStorage
+localStorage.setItem('token', token);
+
+// Retrieving the JWT token from localStorage
+const token = localStorage.getItem('jwtToken');
 
 
   return (
