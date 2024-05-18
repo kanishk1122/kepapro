@@ -36,7 +36,9 @@ const Registration = () => {
 
 // Storing the JWT token in localStorage
 
-Cookies.set('token', gettoken, { expires: 7 }); 
+// Cookies.set('token', gettoken, { expires: 7 }); 
+
+localStorage.setItem('token', gettoken);
 
 // Retrieving the JWT token from localStorage
 const token = localStorage.getItem('jwtToken');
