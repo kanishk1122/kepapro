@@ -8,7 +8,7 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [token, setToken]=useState("");
+  const [gettoken, setToken]=useState("");
   
 
   const handleSubmit = async (e) => {
@@ -34,7 +34,7 @@ const Registration = () => {
 };
 
 // Storing the JWT token in localStorage
-localStorage.setItem('token', token);
+localStorage.setItem('token', gettoken);
 
 // Retrieving the JWT token from localStorage
 const token = localStorage.getItem('jwtToken');
