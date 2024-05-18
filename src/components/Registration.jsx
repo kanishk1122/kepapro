@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
+import Cookies from 'js-cookie';
 
 const Registration = () => {
   const [scale, setScale] = useState(false);
@@ -35,6 +36,7 @@ const Registration = () => {
 
 // Storing the JWT token in localStorage
 localStorage.setItem('token', gettoken);
+Cookies.set('token', gettoken, { expires: 7 }); 
 
 // Retrieving the JWT token from localStorage
 const token = localStorage.getItem('jwtToken');
