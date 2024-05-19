@@ -38,7 +38,7 @@ const DecodedToken = () => {
       {decodedToken && (
         <div>
           <h3>Decoded Token:</h3>
-          <pre>{JSON.stringify(decodedToken, null, 2)}</pre> {/* Display the decoded token */}
+          <pre>{JSON.stringify(decodedToken.email)}</pre> {/* Display the decoded token */}
         </div>
       )}
     </div>
