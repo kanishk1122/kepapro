@@ -241,13 +241,13 @@ const Home = () => {
                               <div className="w-[10vw] h-fit ">
                                 <div
                                   style={{ flexDirection: "row" }}
-                                  className="w-[20vw] overflow-hidden h-fit"
+                                  className="w-full overflow-hidden h-fit"
                                 >
                                   <div
-                                    className="w-[20vw]"
+                                    className="w-full"
                                     style={{ flexShrink: 0 }}
                                   >
-                                    {item.discription}
+                                    {item.description}
                                   </div>
                                 </div>
                               </div>
