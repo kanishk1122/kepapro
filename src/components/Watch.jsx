@@ -74,7 +74,8 @@ const Watch = () => {
       return filtered;
     };
 
-    setwatchseason(seo);
+    setwatchseason(desiredPart[1]);
+    console.log(watchseason)
 
     const filtered = filterData();
     setFilteredData(filtered); // Update filteredData
