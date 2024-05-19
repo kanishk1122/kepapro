@@ -38,7 +38,7 @@ const Registration = () => {
 // });
 
 
-        const response = await axios.post("/register", user, { withCredentials: true });
+        const response = await axios.post("/register", user, { withCredentials: true, credentials:true, });
         setToken(response.data); // Assuming your backend returns some data upon successful registration
 
         // Reset form fields after successful submission
@@ -53,9 +53,6 @@ const Registration = () => {
 };
 
 
-Cookies.set('token', token, { expires: 7 })
-// Retrieving the JWT token from localStorage
-const token = localStorage.getItem('jwtToken');
 
 
   return (
