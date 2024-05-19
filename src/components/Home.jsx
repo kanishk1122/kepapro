@@ -266,7 +266,7 @@ const Home = () => {
                               src={item.thumnail}
                               alt=""
                             />
-                            <div className="absolute text-center top-3/4 text-2xl font-semibold text-red-700 left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
+                            <div className="absolute text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
                               {item.animename}
                             </div>
                           </div>
