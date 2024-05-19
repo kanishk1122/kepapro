@@ -37,8 +37,6 @@ const Registration = () => {
       setUsername("");
       setEmail("");
       setPassword("");
-  
-      navigate('/') // Redirect to home page after successful registration
     } catch (error) {
       console.log("Error:", error);
     }
