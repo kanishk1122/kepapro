@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://kepapro-back.onrender.com',
+  withCredentials:true
 });
 
 // Function to retrieve the JWT token from localStorage
