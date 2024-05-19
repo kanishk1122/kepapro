@@ -137,12 +137,12 @@ const Watch = () => {
 
         <div className="w-fit  h-fit bg-black p-5 flex flex-wrap rounded gap-2">
 
-  {data.map((item, index) => {
-    return item.animename === name && item.quality === 720 && item.season === seo ? (
+        {data.map((item, index) => {
+    return item.animename === name && item.quality === 720 && item.ep === seo  ? (
       <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
         <div className="  w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
         
-          <p>season : {item.season} ep : {item.ep} </p>
+          <p>ep: {item.ep}  </p>
           
           </div>
        
