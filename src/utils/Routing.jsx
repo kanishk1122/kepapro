@@ -12,6 +12,7 @@ import Adminreg from '../components/Adminreg.jsx';
 import Upload from '../components/Upload.jsx';
 import Ads from "../components/ads.txt"
 import Allpopular from "../components/Allpopular.jsx"
+import DecodedToken from '../components/DecodeToken.jsx';
 
 const Routing = () => {
 
@@ -31,6 +32,7 @@ const Routing = () => {
           <Route path='/adminreg' element={<Adminreg />} />
           <Route path='/upload' element={<Upload />} />
           <Route path='/ads.txt' element={<Ads />} />
+          <Route path='/decode' element={<DecodedToken />} />
           {/* Add more routes as needed */}
           {/* Redirect to 404 page for unknown routes */}
         </Routes>
