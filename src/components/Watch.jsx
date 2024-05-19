@@ -29,7 +29,6 @@ const Watch = () => {
   // Extract the desired part
   const parts = decodedUrl.split('/');
   const desiredPart = parts.slice(4);
-  setwatchseason(desiredPart[1])
   
 
   useEffect(() => {
