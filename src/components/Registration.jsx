@@ -29,6 +29,8 @@ const Registration = () => {
         const response = await axios('/register', user , {
     method: 'POST',
     credentials: 'include', // This is important to include cookies
+    withCredentials: true,
+    credentials:true,
     headers: {
         'Content-Type': 'application/json',
     },
