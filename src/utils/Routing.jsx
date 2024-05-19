@@ -21,8 +21,8 @@ const Routing = () => {
         <Routes>
           <Route path='/' element={<Home />} exact  />
           <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
-          <Route path='/all/trending' element={<Allanime />} />
-          <Route path='/all/popular' element={<Allpopular />} />
+          <Route path='/all/trending' element={<Allanime/>} />
+          <Route path='/all/popular' element={<Allpopular/>} />
           <Route path='/user/:username' element={<User />} />
           <Route path='/news' element={<News />} />
           <Route path='/register' element={<Registration />} />
