@@ -38,7 +38,7 @@ const Registration = () => {
 // });
 
 
-        const response = await axios.post("/register", user, { withCredentials: true, credentials:true, });
+        const response = await axios.post("/register", user, { withCredentials: true });
         setToken(response.data); // Assuming your backend returns some data upon successful registration
 
         // Reset form fields after successful submission
