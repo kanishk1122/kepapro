@@ -35,7 +35,7 @@ const DecodedToken = () => {
       <h2>Decode JWT</h2>
       <div>
         <label htmlFor="token">Enter JWT:</label>
-        <input type="text" id="token" value={token} onChange={(e)=>setToken(e.target.value)} />
+        <input type="text" id="token" value={token} className="bg-transparent" onChange={(e)=>setToken(e.target.value)} />
         <button onClick={decodingToken}>Decode</button>
       </div>
       {decodedToken && (
