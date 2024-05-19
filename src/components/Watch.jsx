@@ -95,7 +95,7 @@ const Watch = () => {
       <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
         <div className="  w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
         
-          <p>season : {item.season} ep : {item.ep} </p>
+          <p>season : {item.season}  </p>
           
           </div>
        
