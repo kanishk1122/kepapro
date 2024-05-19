@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [scale, setScale] = useState(false);
@@ -40,6 +41,7 @@ const Login = () => {
     } catch (error) {
       console.log("Error:", error);
     }
+    history.push('/');
   };
   
 

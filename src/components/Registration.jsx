@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
 import Cookies from 'js-cookie';
+import { useHistory } from 'react-router-dom';
 
 const Registration = () => {
   const [scale, setScale] = useState(false);
@@ -10,6 +11,9 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gettoken, setToken]=useState("");
+
+
+  
   
 
   const handleSubmit = async (e) => {
@@ -32,11 +36,10 @@ const Registration = () => {
     } catch (error) {
         console.log("Error:", error);
     }
+
+    history.push('/');
 };
 
-// Storing the JWT token in localStorage
-
-// Cookies.set('token', gettoken, { expires: 7 }); 
 
 
 // Retrieving the JWT token from localStorage
