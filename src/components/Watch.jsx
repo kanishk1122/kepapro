@@ -18,6 +18,7 @@ const Watch = () => {
   const [live, setLive] = useState(false); // Assuming this is meant to track if content is live
   const [filteredData, setFilteredData] = useState(null); // Initialize filteredData with null
   const [videoquality,setvideoquality] = useState("720");
+  const [watchseason, setwatchseason] = useState("")
   
   
   const url = window.location.href;
@@ -28,6 +29,7 @@ const Watch = () => {
   // Extract the desired part
   const parts = decodedUrl.split('/');
   const desiredPart = parts.slice(4);
+  setwatchseason(desiredPart[1])
   
 
   useEffect(() => {
