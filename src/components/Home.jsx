@@ -74,10 +74,10 @@ const Home = () => {
                                     backdropFilter: "blur(30px)",
                                   }}
                                 >
-                                  <div className="flex w-[70%] flex-col  justify-between h-full max-sm:p-10   p-20 bg-[rgba(0,0,0,0.8)]">
+                                  <div className="flex px-[20%] flex-col  justify-between h-full max-sm:p-10   p-20 bg-[rgba(0,0,0,0.8)]">
                                     <div className="flex flex-col gap-3">
                                       <p>season {item.season}</p>
-                                      <h1 className="text-[6vw] font-semibold">
+                                      <h1 className="text-[6vw] leading-8 font-semibold">
                                         {item.animename}
                                       </h1>
                                     </div>
