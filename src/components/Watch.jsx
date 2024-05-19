@@ -89,11 +89,13 @@ const Watch = () => {
     <>
       <div className="bg-neutral-900 text-white w-full">
         <Navbar />
+        <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
         {data.filter((item)=>item.ep == 1).map((item,index)=>{
           <Link to={`/${item.animename}/${item.season}/1`} className="bg-red-500 px-2 py-1">
-            {item.season}
+            season : {item.season}
           </Link>
         })}
+        </div>
         <div className="h-fit pb-5 w-full p-4 flex flex-wrap gap-4">
           {/* Conditional rendering of iframe */}
           <div className="w-[930px] overflow-hidden min-w-[300px] h-[60vw] max-h-[400px] rounded-lg relative">
