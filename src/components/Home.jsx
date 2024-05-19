@@ -352,7 +352,7 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[6px] font-semibold ">
+                        <div className="w-full h-1/3 text-center pt-3 text-[10px] font-semibold ">
                           {item.animename}
                         </div>
                       </div>
