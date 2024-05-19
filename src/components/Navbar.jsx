@@ -71,7 +71,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   }, []);
 
   const navLinkProps = checkinguser
-    ? { to: "/profile" }
+    ? { to: {`/user/${}`} }
     : { onClick: () => setTemp((prev) => !prev) };
 
   const textcolor = {
@@ -142,7 +142,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
           login
         </NavLink>
         <NavLink
-          to="/all/populer"
+          to="/all/popular"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className="navlink text-[7vw] w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
@@ -199,7 +199,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
       </div>
       <div className="p2 flex max-md:opacity-0 max-md:scale-0 max-md:w-0 justify-center w-[30vw] z-10 items-start gap-3 pt-3">
         <NavLink
-          to="/all/populer"
+          to="/all/popular"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className="navlink text-lg w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
