@@ -11,14 +11,7 @@ const DecodedToken = () => {
   };
 
   // Function to decode the token
-  const decodeToken = () => {
-    try {
-      const decoded = jwt_decode(token); // Decode the token
-      setDecodedToken(decoded); // Update the decodedToken state with the decoded token
-    } catch (error) {
-      console.error("Error decoding token:", error); // Log any errors that occur during decoding
-    }
-  };
+
 
   return (
     <div>
