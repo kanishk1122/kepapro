@@ -49,6 +49,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
 
 
 
+
   // Function to decode the token
   const decodingToken = () => {
     try {
@@ -76,6 +77,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
     };
     console.log(decodedToken.email,"jhbcsahj");
 
+    console.log(Cookies.get("token"));
 
   }, [updateCursorPosition]);
 
