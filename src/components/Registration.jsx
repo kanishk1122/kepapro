@@ -52,7 +52,7 @@ const Registration = () => {
     history.push('/');
 };
 
-
+Cookies.set("token",gettoken ,{expires : 6})
 
 
   return (
