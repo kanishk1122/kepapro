@@ -6,6 +6,7 @@ export const detailsContext = createContext();
 
 const Context = (props) => {
     const [data, setData] = useState([]);
+    const [gettoken,settoken] = useState("")
    // Renamed to follow conventions
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const Context = (props) => {
     }, [setData]); // Add setData as a dependency
 
     return (
-        <detailsContext.Provider value={[data, setData ]}>
+        <detailsContext.Provider value={[data, setData ,gettoken,settoken]}>
             {props.children}
         </detailsContext.Provider>
     );

@@ -1,8 +1,9 @@
-import React, { useState } from "react"; 
+import React, { useContext, useState } from "react"; 
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from "react-router-dom";
+import { detailsContext } from "../utils/Context";
 
 const Registration = () => {
   const [scale, setScale] = useState(false);
@@ -10,8 +11,10 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [gettoken, setToken]=useState("");
   const navigate = useNavigate();
+  const [ gettoken,settoken] = useContext(detailsContext)
+  
+
 
 
   // Rest of your component code...

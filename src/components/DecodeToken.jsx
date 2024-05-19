@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { detailsContext } from "../utils/Context";
 // Import the default export from jwt-decode
 
 
 const DecodedToken = () => {
+// State to hold the decoded token
+  const [gettoken,settoken] = useContext(detailsContext)
   const [token, setToken] = useState(""); // State to hold the JWT string
-  const [decodedToken, setDecodedToken] = useState(null); // State to hold the decoded token
+  const [decodedToken, setDecodedToken] = useState(gettoken); 
 
   function jwt_decode (token) {
     var base64Url = token.split('.')[1];
