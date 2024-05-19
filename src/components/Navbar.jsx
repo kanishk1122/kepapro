@@ -71,7 +71,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   }, []);
 
   const navLinkProps = checkinguser
-    ? { to: {`/user/${}`} }
+    ? { to: '/user' }
     : { onClick: () => setTemp((prev) => !prev) };
 
   const textcolor = {
