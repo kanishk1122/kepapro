@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useHistory } from 'react-router-dom'; 
+import React, { useState } from "react"; 
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
 import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [scale, setScale] = useState(false);
@@ -11,7 +11,8 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gettoken, setToken]=useState("");
-  const history = useHistory(); // Make sure you have this line
+  const navigate = useNavigate();
+
 
   // Rest of your component code...
 
@@ -37,7 +38,7 @@ const Registration = () => {
       setEmail("");
       setPassword("");
   
-      history.push('/'); // Redirect to home page after successful registration
+      navigate('/') // Redirect to home page after successful registration
     } catch (error) {
       console.log("Error:", error);
     }
