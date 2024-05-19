@@ -11,7 +11,7 @@ const DecodedToken = () => {
   };
 
   // Function to decode the token
-  const decodeToken = () => {
+  const decodingToken = () => {
     try {
       const decoded = jwt_decode(token); // Decode the token
       setDecodedToken(decoded); // Update the decodedToken state with the decoded token
@@ -26,7 +26,7 @@ const DecodedToken = () => {
       <div>
         <label htmlFor="token">Enter JWT:</label>
         <input type="text" id="token" value={token} onChange={handleChange} />
-        <button onClick={decodeToken}>Decode</button>
+        <button onClick={decodingToken}>Decode</button>
       </div>
       {decodedToken && (
         <div>
