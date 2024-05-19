@@ -87,7 +87,7 @@ const Watch = () => {
       setquality(filtered.quality);
       setthumnail(filtered.thumnail);
     }
-  }, [data, name, seo, episode, videoquality]); // Added 'videoquality' to the dependency array
+  }, [data, name, seo, episode, videoquality,watchseason]); // Added 'videoquality' to the dependency array
 
   return (
     <>
