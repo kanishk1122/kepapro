@@ -186,7 +186,7 @@ const Home = () => {
                     )}
 
                     <card className="w-[40vw]  max-w-[300px] max-h-[200px]rounded-lg overflow-hidden object-cover relative">
-                      <Link to="/all/populer">
+                      <Link to="/all/trending">
                         <div className="absolute flex flex-col items-center gap-[1vw] justify-center  duration-500 w-full h-full bg-[#00000099] text-white felx p-4 felx-col opacity-100   ">
                           <h1 className="text-[10vw]">View all</h1>
                           <div className="mt-[20px]">
@@ -275,7 +275,7 @@ const Home = () => {
                     )}
 
                     <card className="w-[40vw]  max-w-[300px] max-h-[200px]rounded-lg overflow-hidden object-cover relative">
-                      <Link to="/all/populer">
+                      <Link to="/all/popular">
                         <div className="absolute flex flex-col items-center gap-[1vw] justify-center  duration-500 w-full h-full bg-[#00000099] text-white felx p-4 felx-col opacity-100   ">
                           <h1 className="text-[10vw]">View all</h1>
                           <div className="mt-[20px]">
