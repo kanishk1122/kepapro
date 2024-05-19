@@ -14,7 +14,6 @@ const Context = (props) => {
             try {
                 const response = await axios.get("/getall");
                 setData(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
                 // Handle error if needed
