@@ -75,7 +75,8 @@ const Watch = () => {
     };
 
     
-    console.log(typeof(desiredPart[1]))
+    setwatchseason(Number(desiredPart[1]));
+    console.log(typeof(watchseason))
   
 
     const filtered = filterData();
