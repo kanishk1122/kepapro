@@ -15,7 +15,7 @@ const AllAnime = () => {
         return; // Return if data is empty
       }
       // Filter data based on type
-      const filteredByType = data.filter(item => item.season === 1 && item.trending === true);
+      const filteredByType = data.filter(item => item.season === 1 && item.popular === true);
       setFilteredData(filteredByType);
     };
 

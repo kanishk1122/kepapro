@@ -11,6 +11,7 @@ import Adminlogin from '../components/Adminlogin.jsx';
 import Adminreg from '../components/Adminreg.jsx';
 import Upload from '../components/Upload.jsx';
 import Ads from "../components/ads.txt"
+import Allpopular from "../components/Allpopular.jsx"
 
 const Routing = () => {
 
@@ -20,7 +21,8 @@ const Routing = () => {
         <Routes>
           <Route path='/' element={<Home />} exact  />
           <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
-          <Route path='/all/:type' element={<Allanime />} />
+          <Route path='/all/trending' element={<Allanime />} />
+          <Route path='/all/popular' element={<Allpopular />} />
           <Route path='/user/:username' element={<User />} />
           <Route path='/news' element={<News />} />
           <Route path='/register' element={<Registration />} />
