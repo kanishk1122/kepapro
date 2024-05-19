@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from './Axios';
 
+
 export const detailsContext = createContext();
 
 const Context = (props) => {

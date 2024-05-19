@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import jwt_decode from "jwt-decode"; // Import the jwt-decode library
+// Import the default export from jwt-decode
+
 
 const DecodedToken = () => {
   const [token, setToken] = useState(""); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(null); // State to hold the decoded token
 
-  // Function to handle changes in the input field
-  const handleChange = (event) => {
-    setToken(event.target.value); // Update the token state with the input value
-  };
+  function jwt_decode (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
 
   // Function to decode the token
   const decodingToken = () => {
@@ -25,7 +32,7 @@ const DecodedToken = () => {
       <h2>Decode JWT</h2>
       <div>
         <label htmlFor="token">Enter JWT:</label>
-        <input type="text" id="token" value={token} onChange={handleChange} />
+        <input type="text" id="token" value={token} onChange={(e)=>setToken(e.target.value)} />
         <button onClick={decodingToken}>Decode</button>
       </div>
       {decodedToken && (
