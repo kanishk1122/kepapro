@@ -90,11 +90,18 @@ const Watch = () => {
       <div className="bg-neutral-900 text-white w-full">
         <Navbar />
         <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
-        {data.filter((item)=>item.ep == 1).map((item,index)=>{
-          <Link to={`/${item.animename}/${item.season}/1`} className="bg-red-500 px-2 py-1">
-            season : {item.season}
-          </Link>
-        })}
+        {data.map((item, index) => {
+    return item.animename === name && item.quality === 720 && item.ep === 1 ? (
+      <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
+        <div className="  w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
+        
+          <p>season : {item.season} ep : {item.ep} </p>
+          
+          </div>
+       
+      </Link>
+    ) : null;
+  })}
         </div>
         <div className="h-fit pb-5 w-full p-4 flex flex-wrap gap-4">
           {/* Conditional rendering of iframe */}
@@ -128,6 +135,7 @@ const Watch = () => {
        
 
         <div className="w-fit  h-fit bg-black p-5 flex flex-wrap rounded gap-2">
+
   {data.map((item, index) => {
     return item.animename === name && item.quality === 720 ? (
       <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
