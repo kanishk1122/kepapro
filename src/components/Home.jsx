@@ -158,7 +158,7 @@ const Home = () => {
                                     className="w-[20vw]"
                                     style={{ flexShrink: 0 }}
                                   >
-                                    {item.discription}
+                                    {item.discription}nszkcnjkas
                                   </div>
                                 </div>
                               </div>
