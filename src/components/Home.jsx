@@ -149,7 +149,7 @@ const Home = () => {
                               <h1 className="font-semibold">
                                 {item.animename}
                               </h1>
-                              <div className="w-[10vw] h-fit ">
+                              <div className="w-[30vw] h-fit ">
                                 <div
                                   style={{ flexDirection: "row" }}
                                   className="w-full overflow-hidden h-fit"
@@ -238,7 +238,7 @@ const Home = () => {
                               <h1 className="font-semibold">
                                 {item.animename}
                               </h1>
-                              <div className="w-[10vw] h-fit ">
+                              <div className="w-[30vw] h-fit ">
                                 <div
                                   style={{ flexDirection: "row" }}
                                   className="w-full overflow-hidden h-fit"
