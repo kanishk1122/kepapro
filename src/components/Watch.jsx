@@ -74,8 +74,7 @@ const Watch = () => {
       return filtered;
     };
 
-    setwatchseason(desiredPart[1]);
-    typeof(watchseason)
+  
 
     const filtered = filterData();
     setFilteredData(filtered); // Update filteredData
