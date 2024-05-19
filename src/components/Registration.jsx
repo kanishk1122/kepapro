@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
 import Cookies from 'js-cookie';
-import { useHistory } from 'react-router-dom';
 
 const Registration = () => {
   const [scale, setScale] = useState(false);
@@ -11,6 +11,9 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gettoken, setToken]=useState("");
+  const history = useHistory(); // Make sure you have this line
+
+  // Rest of your component code...
 
 
   
@@ -18,39 +21,28 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-        const user = {
-            username,
-            email,
-            password
-        };
-
-//         const response = await axios('/register', user , {
-//     method: 'POST',
-//     credentials: 'include', // This is important to include cookies
-//     withCredentials: true,
-//     credentials:true,
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(data),
-// });
-
-
-        const response = await axios.post("/register", user, { withCredentials: true, credentials:true, });
-        setToken(response.data); // Assuming your backend returns some data upon successful registration
-
-        // Reset form fields after successful submission
-        setUsername("");
-        setEmail("");
-        setPassword("");
+      const user = {
+        username,
+        email,
+        password
+      };
+  
+      const response = await axios.post("/register", user, { withCredentials: true });
+      setToken(response.data);
+  
+      // Reset form fields after successful submission
+      setUsername("");
+      setEmail("");
+      setPassword("");
+  
+      history.push('/'); // Redirect to home page after successful registration
     } catch (error) {
-        console.log("Error:", error);
+      console.log("Error:", error);
     }
-
-    history.push('/');
-};
+  };
+  
 
 Cookies.set("token",gettoken ,{expires : 6})
 
