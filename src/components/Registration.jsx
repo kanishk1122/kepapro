@@ -52,7 +52,7 @@ Cookies.set("token",gettoken ,{expires : 6})
         <div className={` ${scale ? "w-full ,z-1, h-full " : " w-10 , z-1 "} flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}>
           <video className={` h-3/4 duration-700 text-white  ${scale ? "w-full ,z-1, h-full " : " w-10 , z-1 "} absolute object-cover`} autoPlay loop muted src={videoFile}></video>
           <p id="wel" className={`${scale ? " text-3xl " : " text-opacity-0 "}   absolute font-bold font-['monument']`}>WELCOME</p>
-          <Link to="/" className="bg-white absolute h-fit w-fit px-2 py-1 rounded-full text-black font-semibold text-xl">Back</Link>
+          <Link to="/" className="bg-white absolute top-[100px] h-fit w-fit px-2 py-1 rounded-full text-black font-bold text-2xl font-['monument']">Back</Link>
         </div>
         <div className={`w-[340px] duration-700 rounded-3xl p-4 backdrop-blur-sm ${scale ? "opacity-0" : "opacity-100"}  h-3/4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[rgba(60,58,58,1)]`}>
           <form className="flex justify-center  flex-col gap-8 items-center" onSubmit={handleSubmit}>
