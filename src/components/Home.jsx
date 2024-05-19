@@ -105,12 +105,12 @@ const Home = () => {
                                     </div>
                                   </div>
                                 </div>
-                                <img className="bg-red-600 w-full h-full object-cover" src={item.thumnail} alt="" />
+                                <img className=" w-full h-full object-cover" src={item.thumnail} alt="" />
                               </div>
                             </div>
                             <div className="w-[35%] max-sm:w-[70vw] h-full">
                               <img
-                                className="w-full bg-red-500 h-full object-cover"
+                                className="w-full  h-full object-cover"
                                 src={item.thumnail}
                                 alt=""
                               />
