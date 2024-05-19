@@ -55,7 +55,7 @@ Cookies.set("token",gettoken ,{expires : 6})
           <Link to="/" className="bg-white absolute top-[100px] h-fit w-fit px-2 py-1 rounded-full text-black font-bold text-2xl font-['monument']">Back</Link>
         </div>
         <div className={`w-[340px] duration-700 rounded-3xl p-4 backdrop-blur-sm ${scale ? "opacity-0" : "opacity-100"}  h-3/4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[rgba(60,58,58,1)]`}>
-          <form className="flex justify-center  flex-col gap-8 items-center" onSubmit={handleSubmit}>
+          <form className={` justify-center ${scale ? "flex" : "hidden"}  flex-col gap-8 items-center`} onSubmit={handleSubmit}>
             <div>
               <h1>Enter a username</h1>
               <input type="text" className="bg-transparent focus:bg-transparent outline-none placeholder:text-zinc-400 " placeholder="e.g. john" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />

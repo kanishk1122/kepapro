@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
-import { useHistory } from 'react-router-dom';
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [scale, setScale] = useState(false);
@@ -9,6 +10,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  
 
 
   const handleSubmit = async (e) => {
@@ -41,7 +43,7 @@ const Login = () => {
     } catch (error) {
       console.log("Error:", error);
     }
-    history.push('/');
+    Navigate("/")
   };
   
 
