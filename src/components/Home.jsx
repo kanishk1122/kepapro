@@ -149,13 +149,13 @@ const Home = () => {
                               <h1 className="font-semibold">
                                 {item.animename}
                               </h1>
-                              <div className="w-[10vw] h-fit ">
+                              <div className="w-[20vw] h-fit ">
                                 <div
                                   style={{ flexDirection: "row" }}
-                                  className="w-[20vw] overflow-hidden h-fit"
+                                  className="w-full  h-fit"
                                 >
                                   <div
-                                    className="w-[20vw]"
+                                    className="w-full h-fit "
                                     style={{ flexShrink: 0 }}
                                   >
                                     {item.discription}nszkcnjkas
