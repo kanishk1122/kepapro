@@ -74,6 +74,8 @@ const Watch = () => {
       return filtered;
     };
 
+    
+    console.log(typeof(desiredPart[1]))
   
 
     const filtered = filterData();
