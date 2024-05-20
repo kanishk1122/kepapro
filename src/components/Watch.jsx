@@ -188,7 +188,7 @@ console.log(userdata.email);
             <form action="">
               <input type="text" className="bg-transparent hidden " value={jwt_decode(token).email}  name="email"/>
               <input type="text" className="bg-transparent hidden " value={jwt_decode(token).username}  name="username"/>
-              <input type="text" className="bg-transparent " value={filteredData.animename }  name="animename"/>
+              <input type="text" className="bg-transparent " value={desiredPart[0]}  name="animename"/>
               <input type="text" className="bg-transparent " value={seo}  name="season"/>
               <input type="text" className="bg-transparent " value={episode}  name="ep"/>
               
