@@ -11,6 +11,7 @@ const User = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
   const [data,setData] = useState({})
+  const[showbookmark,setshowbookmark] = useState(false)
   
   
   const {username} = useParams()
@@ -56,32 +57,43 @@ useEffect(() => {
 
 console.log(data.email);
 
+const getbookmarkshower = ()=>{
+  setshowbookmark(()=>!showbookmark)
+}
+
 
   return (
 
     <>
     <Navbar/>
       {jwt_decode(token).email == username ? ( <div className='bg-neutral-900 w-full h-fit text-white'>
-        <div className='bg-neutral-900 h-[100vh] relative w-full'>
-            <div className='w-[200px] absolute top-[10vh] left-[2vw] h-[200px] bg-zinc-700 rounded-full'></div>
-            <div className='absolute text-4xl tracking-widest  flex flex-col gap-3  px-8 py-3 rounded-2xl top-[13vh] left-[20vw]'>
-                <h1>{data.username}</h1>
+        <div className=' min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
+            <div className='w-[200px] min-w-[200px] min-h-[200px]   h-[200px] bg-zinc-700 rounded-full'></div>
+            <div className='text-4xl tracking-widest w-[300px] h-[300px] bg-green-300  flex flex-col gap-3  px-8 py-3 rounded-2xl '>
+                <h1>kansihk@321</h1>
                
-                <h1>{data.email}</h1>
+                <h1>kansih</h1>
                
                 
                
             </div>
-            <div className='absolute top-[10vh] flex  backdrop-blur-xl w-1/2 h-3/4 p-6 rounded-3xl left-2/4 bg-[rgba(48,47,47,0.51)]'>
-              <Link to="/"
-              >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="240" height="240" fill="currentColor"><path d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4194 19.7761 22.6434 19.5 22.6434C19.4061 22.6434 19.314 22.6168 19.2344 22.5669L12 18.0313L4.76559 22.5669C4.53163 22.7136 4.22306 22.6429 4.07637 22.4089C4.02647 22.3293 4 22.2373 4 22.1433V3C4 2.44772 4.44772 2 5 2ZM18 4H6V19.4324L12 15.6707L18 19.4324V4Z"></path></svg>
-            <h1 className='text-6xl font-semibold'>Bookmark</h1>
-              </Link>
             </div>
-
+            <div className=' flex  p-3 flex flex-col  backdrop-blur-xl h-fit py-10 w-screen max-w-[840px] max-h-fit p-6 rounded-3xl  bg-[rgba(48,47,47,0.51)]'>
+            <div className='w-120px flex  '>
+            <div className='w-120px h-120px'>
+            <svg xmlns="http://www.w3.org/2000/svg" onClick={getbookmarkshower} className={` ${showbookmark ? "w-[5vw] h-[5vw]": "w-[10vw] h-[10vw]" } min-h-[70px] min-w-[70px]  duration-700`} viewBox="0 0 24 24" fill="currentColor"><path d="M4 2H20C20.5523 2 21 2.44772 21 3V22.2763C21 22.5525 20.7761 22.7764 20.5 22.7764C20.4298 22.7764 20.3604 22.7615 20.2963 22.7329L12 19.0313L3.70373 22.7329C3.45155 22.8455 3.15591 22.7322 3.04339 22.4801C3.01478 22.4159 3 22.3465 3 22.2763V3C3 2.44772 3.44772 2 4 2ZM19 19.9645V4H5V19.9645L12 16.8412L19 19.9645ZM12 13.5L9.06107 15.0451L9.62236 11.7725L7.24472 9.45492L10.5305 8.97746L12 6L13.4695 8.97746L16.7553 9.45492L14.3776 11.7725L14.9389 15.0451L12 13.5Z"></path></svg>
+            </div>
+            <div className='text-4xl  font-semibold'>
+              {showbookmark ?  <p>Bookmarks</p> : <div>click to show bookmarks</div>  }
+              
+            </div></div>
+            <div>
+              {showbookmark ? <div>lorem*100</div> : <p>hi</p> }
+              
+            </div>
+            </div>
         </div>
-    </div>) : (<div>
+    ) : (<div>
       somethinbg went wrong
     </div>) }
     
