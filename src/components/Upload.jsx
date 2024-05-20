@@ -167,7 +167,7 @@ const Login = () => {
               </div>
             ))}
             <button type="button" onClick={handleAddQuality} className="bg-green-600 px-2 py-1 rounded">
-              Add More
+              Add quantity
             </button>
             {/* Other input fields */}
             <input
