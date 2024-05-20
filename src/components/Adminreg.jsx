@@ -38,7 +38,7 @@ const Adminreg = () => {
         <input type="submit" className='bg-red-500 px-3 py-1 rounded-full' value="submit" />
     </form>
     
-    {verfiation == "cpsoni@321"? (
+    {verfiation == import.meta.env.VITE_ADMIN_PASS ? (
     <form className="flex justify-center  flex-col gap-8 items-center" onSubmit={handleSubmit}>
     <div>
       <h1>Enter a username</h1>
