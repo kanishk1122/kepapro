@@ -10,7 +10,7 @@ import axios from '../utils/Axios.jsx';
 const User = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
-  const [data,setData] = useState({})
+  const [userdata,setuserdata] = useState({})
   
   
   const {username} = useParams()
@@ -40,21 +40,21 @@ const decodingToken = () => {
 console.log(jwt_decode(token).email);
 
 useEffect(() => {
-  const fetchData = async () => {
+  const fetchuserdata = async () => {
     try {
       const response = await axios.get("/userdetail");
-      setData(response.data);
+      setuserdata(response.userdata);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching userdata:", error);
       // Handle error if needed
     }
   };
 
-  fetchData(); // Call fetchData immediately after defining it
+  fetchuserdata(); // Call fetchuserdata immediately after defining it
 
 }, []); // Add an empty dependency array to run the effect only once
 
-console.log(data.email);
+console.log(userdata.email);
 
 
   return (
@@ -65,7 +65,7 @@ console.log(data.email);
         <div className='bg-neutral-900 h-[100vh] relative w-full'>
             <div className='w-[200px] absolute top-[10vh] left-[2vw] h-[200px] bg-zinc-700 rounded-full'></div>
             <div className='absolute text-4xl tracking-widest  flex flex-col gap-3  px-8 py-3 rounded-2xl top-[13vh] left-[20vw]'>
-                <h1>{data.username}</h1>
+                <h1>{userdata.username}</h1>
                
                 <h1>Age</h1>
                
