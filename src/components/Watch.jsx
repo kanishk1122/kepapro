@@ -42,7 +42,13 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await axios.post("/userdetailupdate", formData, {
+    const response = await axios.post("/userdetailupdate", {
+      email: jwt_decode(token).email,
+      username: jwt_decode(token).username,
+      season: seo,
+      ep: episode,
+      animename: desiredPart[0]
+    }, {
       withCredentials: true,
     });
     console.log(response.data);
@@ -50,11 +56,7 @@ const handleSubmit = async (e) => {
     if (response.data) {
       prompt("this video add to favrate");
       // Reset form data after successful submission
-      setFormData({
-        season: "",
-        ep: [""],
-        animename: "",
-      });
+
     } else {
       console.error("Failed to add video details.");
     }
