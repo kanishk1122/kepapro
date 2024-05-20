@@ -43,7 +43,6 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await axios.post("/user/addBookmark", {
-      email: jwt_decode(token).email,
       season: seo,
       ep: episode,
       animename: desiredPart[0]
