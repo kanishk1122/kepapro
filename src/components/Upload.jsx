@@ -17,8 +17,7 @@ const Login = () => {
     rating: "",
   });
 
-  console.log(import.meta.env.VITE_ADMIN_PASS);
-  console.log(import.meta.env.VITE_SOME_KEY)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
