@@ -44,13 +44,16 @@ useEffect(() => {
     try {
       const response = await axios.get("/userdetail");
       setData(response.data);
-    
-      
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle error if needed
     }
   };
+
+  fetchData(); // Call fetchData immediately after defining it
+
+}, []); // Add an empty dependency array to run the effect only once
+
 
 
   return (
