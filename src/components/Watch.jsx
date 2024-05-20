@@ -90,7 +90,7 @@ useEffect(() => {
 
 }, []); // Add an empty dependency array to run the effect only once
 
-console.log(userdata.email);
+
   
   
   const url = window.location.href;
