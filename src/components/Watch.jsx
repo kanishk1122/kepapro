@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from '../utils/Axios';
+import Cookies from "js-cookie";
 
 const Watch = () => {
 
@@ -19,6 +20,53 @@ const Watch = () => {
   const [filteredData, setFilteredData] = useState(null); // Initialize filteredData with null
   const [videoquality,setvideoquality] = useState("720");
   const [watchseason, setwatchseason] = useState(1)
+  const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
+  const [decodedToken, setDecodedToken] = useState({}); 
+  const [userdata,setuserdata] = useState({})
+  const[showbookmark,setshowbookmark] = useState(false)
+  
+
+  
+
+  function jwt_decode (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+
+
+const decodingToken = () => {
+  try {
+    
+    setDecodedToken(jwt_decode(token).email); // Update the decodedToken state with the decoded token
+  } catch (error) {
+    console.error("Error decoding token:", error); // Log any errors that occur during decoding
+  }
+};
+
+console.log(jwt_decode(token).email);
+
+useEffect(() => {
+  const fetchuserdata = async () => {
+    try {
+      const response = await axios.get("/userdetail");
+      setuserdata(response.userdata);
+    } catch (error) {
+      console.error("Error fetching userdata:", error);
+      // Handle error if needed
+    }
+  };
+
+  fetchuserdata(); // Call fetchuserdata immediately after defining it
+
+}, []); // Add an empty dependency array to run the effect only once
+
+console.log(userdata.email);
   
   
   const url = window.location.href;
@@ -136,6 +184,16 @@ const Watch = () => {
             <h1>Season:  {seo}</h1>
             <h1>Episode :  {episode}</h1>
             </div>
+
+            <form action="">
+              <input type="text" className="bg-transparent hidden " value={jwt_decode(token).email}  name="email"/>
+              <input type="text" className="bg-transparent hidden " value={jwt_decode(token).username}  name="username"/>
+              <input type="text" className="bg-transparent " value={filteredData.animename }  name="animename"/>
+              <input type="text" className="bg-transparent " value={seo}  name="season"/>
+              <input type="text" className="bg-transparent " value={episode}  name="ep"/>
+              
+            </form>
+          
           </div>
         </div>
        
