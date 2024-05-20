@@ -54,6 +54,7 @@ useEffect(() => {
 
 }, []); // Add an empty dependency array to run the effect only once
 
+console.log(data);
 
 
   return (
