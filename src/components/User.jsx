@@ -67,9 +67,9 @@ console.log(data.email);
             <div className='absolute text-4xl tracking-widest  flex flex-col gap-3  px-8 py-3 rounded-2xl top-[13vh] left-[20vw]'>
                 <h1>{data.username}</h1>
                
-                <h1>Age</h1>
+                <h1>{data.email}</h1>
                
-                <h1>Email</h1>
+                
                
             </div>
             <div className='absolute top-[10vh] flex  backdrop-blur-xl w-1/2 h-3/4 p-6 rounded-3xl left-2/4 bg-[rgba(48,47,47,0.51)]'>
