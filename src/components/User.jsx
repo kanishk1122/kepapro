@@ -54,7 +54,18 @@ useEffect(() => {
 
 }, []); // Add an empty dependency array to run the effect only once
 
-console.log(data);
+console.log(data.then(result => {
+  const email = result.email;
+  const username = result.username;
+
+  // Now you can use these values as needed
+  console.log("Email:", email);
+  console.log("iat:", iat);
+  console.log("Username:", username);
+}).catch(error => {
+  // Handle any errors if the Promise was rejected
+  console.error("Error occurred:", error);
+}););
 
 
   return (
