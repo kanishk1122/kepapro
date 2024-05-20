@@ -48,31 +48,7 @@ function jwt_decode(token) {
   return JSON.parse(jsonPayload);
 }
 
-const handleSubmit = async (e) => {
-e.preventDefault();
-const token = Cookies.get("token");  // Get the token from cookies
 
-try {
-  const response = await axios.post("https://kepapro-back.onrender.com/user/addBookmark", {
-    email: jwt_decode(token).email,
-    season: seo,
-    ep: episode,
-    animename: desiredPart[0]
-  }, {
-    withCredentials: true,
-  });
-  
-  console.log(response.data);
-
-  if (response.data) {
-    alert("This video added to favorites");
-  } else {
-    console.error("Failed to add video details.");
-  }
-} catch (error) {
-  console.error("Error:", error);
-}
-};
 
 
 const decodingToken = () => {
@@ -173,6 +149,32 @@ useEffect(() => {
       setthumnail(filtered.thumnail);
     }
   }, [data, name, seo, episode, videoquality,watchseason]); // Added 'videoquality' to the dependency array
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");  // Get the token from cookies
+    
+    try {
+      const response = await axios.post("https://kepapro-back.onrender.com/user/addBookmark", {
+        email: jwt_decode(token).email,
+        season: seo,
+        ep: episode,
+        animename: desiredPart[0]
+      }, {
+        withCredentials: true,
+      });
+      
+      console.log(response.data);
+    
+      if (response.data) {
+        alert("This video added to favorites");
+      } else {
+        console.error("Failed to add video details.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    };
 
   return (
     <>
