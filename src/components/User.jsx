@@ -65,7 +65,7 @@ console.log(data.then(result => {
 }).catch(error => {
   // Handle any errors if the Promise was rejected
   console.error("Error occurred:", error);
-}););
+}));
 
 
   return (
