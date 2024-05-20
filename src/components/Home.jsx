@@ -82,7 +82,7 @@ const decodingToken = () => {
                   <Link key={index} to={``}>
                     <SwiperSlide className="relative w-full h-full  ">
                       <Link
-                        to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                        to={`/watch/${item._id}/${item.season}/${item.ep}`}
                       >
                     <div className="text-3xl bg-zinc-900 text-white relative w-full overflow-hidden h-[100%]  ">
                           <div className="w-full h-[100%]  flex justify-between">
