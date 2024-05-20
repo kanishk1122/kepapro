@@ -15,14 +15,13 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "../utils/Axios";
 
 const Home = () => {
-  const [data] = useContext(detailsContext);
+  const [data,gettoken,settoken] = useContext(detailsContext);// State to hold the JWT string
   const [resultsearch, setsearchResult] = useState();
-
   const discription = data.discription;
-
-
-  const [token, setToken] = useState(""); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(null); // State to hold the decoded token
+
+  // settoken("kansih")
+
 
   function jwt_decode (token) {
     var base64Url = token.split('.')[1];

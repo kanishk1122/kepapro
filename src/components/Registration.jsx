@@ -1,8 +1,9 @@
-import React, { useState } from "react"; 
+import React, { useContext, useState } from "react"; 
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
 import Cookies from 'js-cookie';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"
+import {detailsContext} from "../utils/Context"
 
 const Registration = () => {
   const [scale, setScale] = useState(false);
@@ -10,7 +11,7 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [gettoken, setToken]=useState("");
+  const [gettoken, settoken]=useContext(detailsContext);
   const navigate = useNavigate();
   
 
@@ -25,7 +26,7 @@ const Registration = () => {
       };
   
       const response = await axios.post("/register", user, { withCredentials: true });
-      setToken(response.data);
+      settoken(response.data);
   
       // Reset form fields after successful submission
       setUsername("");
@@ -38,6 +39,8 @@ const Registration = () => {
   
 
 Cookies.set("token",gettoken ,{expires : 6})
+
+
 
 
   return (
