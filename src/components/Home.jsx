@@ -15,13 +15,13 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "../utils/Axios";
 
 const Home = () => {
-  const [data,gettoken,settoken] = useContext(detailsContext);// State to hold the JWT string
+  const [data] = useContext(detailsContext);// State to hold the JWT string
   const [resultsearch, setsearchResult] = useState();
   const discription = data.discription;
-  const [decodedToken, setDecodedToken] = useState(null); // State to hold the decoded token
+  const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
+  const [decodedToken, setDecodedToken] = useState(""); 
 
-  // settoken("kansih")
-
+  console.log(Cookies.get("token"))
 
   function jwt_decode (token) {
     var base64Url = token.split('.')[1];
@@ -41,6 +41,7 @@ const decodingToken = () => {
     console.error("Error decoding token:", error); // Log any errors that occur during decoding
   }
 };
+
 
   const divstyle = {
     background: `linear-gradient(#000000 50%, transparent 100%)`,

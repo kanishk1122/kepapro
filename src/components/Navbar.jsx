@@ -9,7 +9,6 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import "../assets/public/css/navbar.css";
 import { detailsContext } from "../utils/Context";
-
 import Cookies from 'js-cookie';
 
 function getUserFromToken() {
@@ -42,23 +41,19 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   const [showmenu,setshowmenu] = useState(false)
   const [isChecked, setIsChecked] = useState(false);
   const [userinfo, setuser] = useState("");
-  const [token, setToken] = useState(); // State to hold the JWT string
-  const [decodedToken, setDecodedToken] = useState(null); // State to hold the decoded token
+  const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
+  const [decodedToken, setDecodedToken] = useState(""); 
 
 
+  function jwt_decode (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
 
-
-
-
-  // Function to decode the token
-  const decodingToken = () => {
-    try {
-      const decoded = jwt_decode(token); // Decode the token
-      setDecodedToken(decoded); // Update the decodedToken state with the decoded token
-    } catch (error) {
-      console.error("Error decoding token:", error); // Log any errors that occur during decoding
-    }
-  };
+    return JSON.parse(jsonPayload);
+}
 
   
 
@@ -71,15 +66,21 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   }, []);
 
   useEffect(() => {
+
+   
     document.addEventListener("mousemove", updateCursorPosition);
     return () => {
       document.removeEventListener("mousemove", updateCursorPosition);
     };
     console.log(decodedToken.email,"jhbcsahj");
 
-    console.log(Cookies.get("token"));
+    
+     
+    
 
   }, [updateCursorPosition]);
+
+
 
 
   // Function to decode the token
@@ -98,7 +99,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   }, []);
 
   const navLinkProps = checkinguser
-  ? { to: `/user/kanishk` }
+  ? { to: `/user/${jwt_decode(token).email}` }
   : { onClick: () => setTemp((prev) => !prev) };
 
   const textcolor = {
