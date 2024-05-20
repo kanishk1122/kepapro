@@ -54,7 +54,7 @@ const handleSubmit = async (e) => {
     console.log(response.data);
 
     if (response.data) {
-      prompt("this video add to favrate");
+      alert("this video add to favrate");
       // Reset form data after successful submission
 
     } else {
