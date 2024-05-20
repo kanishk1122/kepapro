@@ -4,41 +4,41 @@ import axios from "../utils/Axios";
 const Login = () => {
   const [temp, setTemp] = useState("");
   const [formData, setFormData] = useState({
-      links: [""],
-          languages: [""],
-          qualities: [""],
-          season: "",
-          ep: "",
-          description: "",
-          genres: [],
-          thumnail: "",
-          animename: "",
-          rating: "",
+    links: [""],
+    languages: [""],
+    qualities: [""],
+    season: "",
+    ep: [""],
+    description: "",
+    genres: [],
+    thumnail: "",
+    animename: "",
+    rating: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post("/addlink", formData, {
         withCredentials: true,
       });
       console.log(response.data);
-  
+
       if (response.data) {
         console.log("Video details added successfully.");
         // Reset form data after successful submission
         setFormData({
-           links: [""],
+          links: [""],
           languages: [""],
           qualities: [""],
           season: "",
-          ep: "",
+          ep: [""],
           description: "",
           genres: [],
           thumnail: "",
           animename: "",
-          rating:"",
+          rating: "",
         });
       } else {
         console.error("Failed to add video details.");
@@ -47,7 +47,6 @@ const Login = () => {
       console.error("Error:", error);
     }
   };
-  
 
   const handleAddQuality = () => {
     setFormData({
@@ -55,7 +54,21 @@ const Login = () => {
       links: [...formData.links, ""],
       languages: [...formData.languages, ""],
       qualities: [...formData.qualities, ""],
-      ep:[...formData.ep,""]
+      ep: [...formData.ep, ""]
+    });
+  };
+
+  const handleDeleteQuality = (index) => {
+    const updatedLinks = formData.links.filter((_, i) => i !== index);
+    const updatedLanguages = formData.languages.filter((_, i) => i !== index);
+    const updatedQualities = formData.qualities.filter((_, i) => i !== index);
+    const updatedEp = formData.ep.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      links: updatedLinks,
+      languages: updatedLanguages,
+      qualities: updatedQualities,
+      ep: updatedEp
     });
   };
 
@@ -76,10 +89,11 @@ const Login = () => {
     updatedQualities[index] = e.target.value;
     setFormData({ ...formData, qualities: updatedQualities });
   };
-  const handleepChange = (index, e) => {
-    const updatedep = [...formData.ep];
-    updatedep[index] = e.target.value;
-    setFormData({ ...formData, ep: updatedep });
+
+  const handleEpChange = (index, e) => {
+    const updatedEp = [...formData.ep];
+    updatedEp[index] = e.target.value;
+    setFormData({ ...formData, ep: updatedEp });
   };
 
   return (
@@ -106,7 +120,7 @@ const Login = () => {
               Add Link
             </button>
             {formData.links.map((link, index) => (
-              <div key={index} className="flex gap-2">
+              <div key={index} className="flex gap-2 items-center">
                 <input
                   type="text"
                   value={formData.links[index]}
@@ -133,23 +147,26 @@ const Login = () => {
                     onChange={(e) => handleQualityChange(index, e)}
                     className="bg-black"
                   >
-                     <option value="null">select your quality</option>
+                    <option value="null">select your quality</option>
                     <option value="1080">1080p</option>
                     <option value="720">720p</option>
                     <option value="480">480p</option>
                   </select>
                 </div>
                 <input
-              type="number"
-              className="bg-transparent  h-5 focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter Episode Number"
-              value={formData.ep[index]}
-              onChange={(e) => handleepChange(index, e)}
-              name="ep"
-            />
+                  type="number"
+                  className="bg-transparent  h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                  placeholder="Enter Episode Number"
+                  value={formData.ep[index]}
+                  onChange={(e) => handleEpChange(index, e)}
+                  name="ep"
+                />
+                <button type="button" onClick={() => handleDeleteQuality(index)} className="bg-red-600 px-2 py-1 rounded">
+                  Delete
+                </button>
               </div>
             ))}
-            <button type="button" onClick={handleAddQuality}>
+            <button type="button" onClick={handleAddQuality} className="bg-green-600 px-2 py-1 rounded">
               Add Quality
             </button>
             {/* Other input fields */}
@@ -157,7 +174,7 @@ const Login = () => {
               type="text"
               className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
               placeholder="Enter Thumbnail Link"
-              value={formData.thumbnail}
+              value={formData.thumnail}
               onChange={(e) => setFormData({ ...formData, thumnail: e.target.value })}
               name="thumnail"
             />
@@ -169,7 +186,6 @@ const Login = () => {
               onChange={(e) => setFormData({ ...formData, season: e.target.value })}
               name="season"
             />
-            
             <input
               type="text"
               className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
@@ -189,7 +205,7 @@ const Login = () => {
             <textarea
               className="bg-transparent w-[70vw] h-[100px] focus:bg-transparent  placeholder:text-zinc-400"
               placeholder="Enter Genres (separated by commas)"
-               value={formData.genres}
+              value={formData.genres.join(",")}
               onChange={(e) => setFormData({ ...formData, genres: e.target.value.split(",") })}
               name="genres"
             />
