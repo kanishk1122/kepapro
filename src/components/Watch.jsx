@@ -44,7 +44,6 @@ const handleSubmit = async (e) => {
   try {
     const response = await axios.post("/user/addBookmark", {
       email: jwt_decode(token).email,
-      username: jwt_decode(token).username,
       season: seo,
       ep: episode,
       animename: desiredPart[0]
@@ -213,7 +212,6 @@ console.log(userdata.email);
 
             <form onSubmit={handleSubmit}>
               <input type="text" className="bg-transparent hidden " value={jwt_decode(token).email}  name="email"/>
-              <input type="text" className="bg-transparent hidden " value={jwt_decode(token).username}  name="username"/>
               <input type="text" className="bg-transparent   hidden " value={desiredPart[0]}  name="animename"/>
               <input type="number" className="bg-transparent hidden  " value={seo}  name="season"/>
               <input type="number" className="bg-transparent hidden  " value={episode}  name="ep"/>
