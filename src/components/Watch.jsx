@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
-import axios from 'axios';
+import axios from '../utils/Axios';
 import Cookies from "js-cookie";
 
 const Watch = () => {
