@@ -42,7 +42,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await axios.post("/userdetailupdate", {
+    const response = await axios.post("/user/addBookmark", {
       email: jwt_decode(token).email,
       username: jwt_decode(token).username,
       season: seo,
