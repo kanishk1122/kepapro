@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "../utils/Axios";
 
+
 const Login = () => {
   const [temp, setTemp] = useState("");
   const [formData, setFormData] = useState({
@@ -15,6 +16,9 @@ const Login = () => {
     animename: "",
     rating: "",
   });
+
+  console.log(import.meta.env.VITE_ADMIN_PASS);
+  console.log(import.meta.env.VITE_SOME_KEY)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +110,7 @@ const Login = () => {
         onChange={(e) => setTemp(e.target.value)}
       />
 
-      {temp === "cpsoni@321" && (
+      {temp === import.meta.env.VITE_ADMIN_PASS && (
         <div className="bg-neutral-900 text-white">
           <form
             className="flex justify-center w-full flex-col gap-8 items-center"
