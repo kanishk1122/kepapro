@@ -38,6 +38,30 @@ const Watch = () => {
     return JSON.parse(jsonPayload);
 }
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post("/userdetailupdate", formData, {
+      withCredentials: true,
+    });
+    console.log(response.data);
+
+    if (response.data) {
+      prompt("this video add to favrate");
+      // Reset form data after successful submission
+      setFormData({
+        season: "",
+        ep: [""],
+        animename: "",
+      });
+    } else {
+      console.error("Failed to add video details.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 
 const decodingToken = () => {
@@ -185,13 +209,13 @@ console.log(userdata.email);
             <h1>Episode :  {episode}</h1>
             </div>
 
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <input type="text" className="bg-transparent hidden " value={jwt_decode(token).email}  name="email"/>
               <input type="text" className="bg-transparent hidden " value={jwt_decode(token).username}  name="username"/>
-              <input type="text" className="bg-transparent " value={desiredPart[0]}  name="animename"/>
-              <input type="text" className="bg-transparent " value={seo}  name="season"/>
-              <input type="text" className="bg-transparent " value={episode}  name="ep"/>
-              
+              <input type="text" className="bg-transparent   hidden " value={desiredPart[0]}  name="animename"/>
+              <input type="number" className="bg-transparent hidden  " value={seo}  name="season"/>
+              <input type="number" className="bg-transparent hidden  " value={episode}  name="ep"/>
+              <input type="submit" value="Add to favrate" className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold "  />
             </form>
           
           </div>
