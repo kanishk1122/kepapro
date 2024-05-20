@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
-import axios from '../utils/Axios';
+import axios from 'axios';
 import Cookies from "js-cookie";
 
 const Watch = () => {
@@ -38,30 +38,40 @@ const Watch = () => {
     return JSON.parse(jsonPayload);
 }
 
+function jwt_decode(token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
 const handleSubmit = async (e) => {
-  e.preventDefault();
+e.preventDefault();
+const token = Cookies.get("token");  // Get the token from cookies
 
-  try {
-    const response = await axios.post("/user/addBookmark", {
-      email: jwt_decode(token).email,
-      season: seo,
-      ep: episode,
-      animename: desiredPart[0]
-    }, {
-      withCredentials: true,
-    });
-    console.log(response.data);
+try {
+  const response = await axios.post("https://kepapro-back.onrender.com/user/addBookmark", {
+    email: jwt_decode(token).email,
+    season: seo,
+    ep: episode,
+    animename: desiredPart[0]
+  }, {
+    withCredentials: true,
+  });
+  
+  console.log(response.data);
 
-    if (response.data) {
-      alert("this video add to favrate");
-      // Reset form data after successful submission
-
-    } else {
-      console.error("Failed to add video details.");
-    }
-  } catch (error) {
-    console.error("Error:", error);
+  if (response.data) {
+    alert("This video added to favorites");
+  } else {
+    console.error("Failed to add video details.");
   }
+} catch (error) {
+  console.error("Error:", error);
+}
 };
 
 
