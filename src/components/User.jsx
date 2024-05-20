@@ -69,7 +69,7 @@ const getbookmarkshower = ()=>{
       {jwt_decode(token).email == username ? ( <div className='bg-neutral-900 w-full h-fit text-white'>
         <div className=' min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
             <div className='w-[200px] min-w-[200px] min-h-[200px]   h-[200px] bg-zinc-700 rounded-full'></div>
-            <div className='text-4xl tracking-widest w-[300px] h-[300px] bg-green-300  flex flex-col gap-3  px-8 py-3 rounded-2xl '>
+            <div className='text-4xl tracking-widest w-[300px] h-[300px]  flex flex-col gap-3  px-8 py-3 rounded-2xl '>
                 <h1>kansihk@321</h1>
                
                 <h1>kansih</h1>
