@@ -1,16 +1,17 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useMemo } from 'react';
 import axios from './Axios';
 import Cookies from 'js-cookie';
 
 export const detailsContext = createContext();
 
 const Context = (props) => {
+
     const [data, setData] = useState([]);
     const [gettoken, settoken] = useState("");
-    const [userdata, setuserdata] = useState({});
+    
 
     const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
-    const [decodedToken, setDecodedToken] = useState(""); 
+    const [decodedToken, setDecodedToken] = useState({}); 
  
     async function jwt_decode(token) {
         if (token) {
@@ -43,13 +44,16 @@ const Context = (props) => {
         } catch (error) {
             console.error("Error decoding token:", error); // Log any errors that occur during decoding
         }
-        console.log(await jwt_decode(token));
+        
     };
+
 
     useEffect(() => {
         console.log("Component mounted");
         decodingToken();
         
+       
+
         const fetchData = async () => {
             try {
                 const response = await axios.get("/getall");
@@ -64,8 +68,16 @@ const Context = (props) => {
     
     }, [setData]); // Add setData as a dependency
 
+
+
+    const [userdata, setuserdata] = useState(jwt_decode(token));
+    const checkinguser = useMemo(() => jwt_decode(), []);
+
+    console.log(userdata)
+
+ 
     return (
-        <detailsContext.Provider value={[data, setData, gettoken, settoken]}>
+        <detailsContext.Provider value={[data, setData, gettoken, settoken ,userdata, setuserdata]}>
             {props.children}
         </detailsContext.Provider>
     );

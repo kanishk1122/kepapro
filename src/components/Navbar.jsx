@@ -55,6 +55,17 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
     return JSON.parse(jsonPayload);
 }
 
+
+
+const decodingToken = () => {
+  try {
+    
+    setDecodedToken(jwt_decode(token).email); // Update the decodedToken state with the decoded token
+  } catch (error) {
+    console.error("Error decoding token:", error); // Log any errors that occur during decoding
+  }
+};
+
   
 
   const handleCheckboxChange = (event) => {

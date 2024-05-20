@@ -1,18 +1,67 @@
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useContext, useEffect, useState } from 'react';
+import { detailsContext } from '../utils/Context.jsx';
+import axios from '../utils/Axios.jsx';
 
 
 const User = () => {
+  const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
+  const [decodedToken, setDecodedToken] = useState(""); 
+  const [data,setData] = useState({})
+  
+  
+  const {username} = useParams()
+  
+
+  function jwt_decode (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+
+
+const decodingToken = () => {
+  try {
+    
+    setDecodedToken(jwt_decode(token).email); // Update the decodedToken state with the decoded token
+  } catch (error) {
+    console.error("Error decoding token:", error); // Log any errors that occur during decoding
+  }
+};
+
+console.log(jwt_decode(token).email);
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/userdetail");
+      setData(response.data);
+    
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle error if needed
+    }
+  };
+
+
   return (
 
     <>
     <Navbar/>
-    <div className='bg-neutral-900 w-full h-fit text-white'>
+      {jwt_decode(token).email == username ? ( <div className='bg-neutral-900 w-full h-fit text-white'>
         <div className='bg-neutral-900 h-[100vh] relative w-full'>
             <div className='w-[200px] absolute top-[10vh] left-[2vw] h-[200px] bg-zinc-700 rounded-full'></div>
             <div className='absolute text-4xl tracking-widest  flex flex-col gap-3  px-8 py-3 rounded-2xl top-[13vh] left-[20vw]'>
-                <h1>userName</h1>
+                <h1>{data.username}</h1>
                
                 <h1>Age</h1>
                
@@ -28,7 +77,10 @@ const User = () => {
             </div>
 
         </div>
-    </div>
+    </div>) : (<div>
+      somethinbg went wrong
+    </div>) }
+    
     <Footer/>
     </>
   )
