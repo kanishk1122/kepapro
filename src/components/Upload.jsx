@@ -102,7 +102,7 @@ const Login = () => {
   return (
     <div>
       <input
-        type="text"
+        type="password"
         className="w-1/4 m-4 bg-transparent"
         placeholder="Enter password"
         value={temp}
