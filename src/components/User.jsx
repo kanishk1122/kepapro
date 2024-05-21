@@ -61,7 +61,9 @@ const User = () => {
           const allData = await axios.get('/alldata'); // Assuming this endpoint provides all necessary data
           const filtered = userdata.bookmarks.map(bookmark => {
             return allData.data.find(item =>
-              item.animename === bookmark.animename 
+              item.animename === bookmark.animename &&
+              item.seasson === 1,
+              item.ep === 1
             );
           });
           setBookmarks(filtered);
