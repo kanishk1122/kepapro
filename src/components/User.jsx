@@ -62,6 +62,7 @@ const userlogout =()=>{
 }
 
 
+console.log(userdata.bookmarks);
 
 const getbookmarkshower = ()=>{
   setshowbookmark(()=>!showbookmark)
@@ -99,7 +100,8 @@ const getbookmarkshower = ()=>{
               
             </div></div>
             <div>
-              {showbookmark ? <div>lorem*100</div> : <p>hi</p> }
+              {showbookmark ? <div className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'><div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-warp'><div className='bg-red-500 w-1/4 h-full rounded-xl'><img src="" alt="" /></div> <h1 className='text-2xl'>animename</h1>  </div></div>
+ : <p>hi</p> }
               
             </div>
             </div>
