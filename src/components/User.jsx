@@ -117,7 +117,7 @@ const User = () => {
     //   const filtered = filterData();
     //   setFilteredData(filtered);
     // })
-    console.log(userdata.bookmarks);
+    
   }, []);
 
   console.log(bookmarks);
