@@ -10,7 +10,9 @@ const User = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
+  const [bookmarks, setbookmarks] = useState({});
   const [showBookmark, setShowBookmark] = useState(false);
+
 
   const { username } = useParams();
 
@@ -43,7 +45,7 @@ const User = () => {
         const response = await axios.post("/userdetail", {
           email: username,
         }, { withCredentials: true });
-        console.log(response.data);
+        setUserData(response.data);
       } catch (error) {
         console.log("Error:", error);
       }
@@ -53,6 +55,21 @@ const User = () => {
       handleSubmit();
     }
   }, [userdata.email]);
+
+  useEffect(()=>{
+   for (let index = 0; index == userdata.bookmarks; index++) {
+    const filterData = () => {
+      if (data.length === 0) {
+        return null;
+      }
+      const filteredByName = data.filter(item => item.animename === userdata.bookmarks.animename[index] );
+      const filtered = filteredByName.find(item => item.season == userdata.bookmarks.season[index] && item.ep == userdata.bookmarks.ep[index]);
+      setbookmarks(filtered)
+      return filtered;
+    }}
+  },[])
+    
+   
 
   const userLogout = () => {
     Cookies.remove("token");
@@ -101,15 +118,17 @@ const User = () => {
               </div>
               <div>
                 {showBookmark ? (
-                  <div className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
+                  bookmarks.map((item,index)=>{
+                    <div className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
                     <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
                       <div className='bg-red-500 w-1/4 h-full rounded-xl'>
-                        <img src="" alt="" />
+                        <img src={item.thumnail} alt="" />
                       </div>
-                      <h1 className='text-2xl'>animename</h1>
+                      <h1 className='text-2xl'>{item.animename}</h1>
                     </div>
                   </div>
-                ) : <p>hi</p>}
+                  })
+                ) : <p>click the icon to show bookmarks</p>}
               </div>
             </div>
           </div>
