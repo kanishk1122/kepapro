@@ -62,8 +62,6 @@ const User = () => {
           const filtered = userdata.bookmarks.map(bookmark => {
             return allData.data.find(item =>
               item.animename === bookmark.animename &&
-              item.season === bookmark.season &&
-              item.ep === bookmark.ep
             );
           });
           setBookmarks(filtered);
