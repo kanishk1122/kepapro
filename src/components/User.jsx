@@ -40,21 +40,29 @@ const decodingToken = () => {
 
 console.log(jwt_decode(token).email);
 
-useEffect(() => {
-  const fetchuserdata = async () => {
-    try {
-      const response = await axios.get("/userdetail");
-      console.log(response.data,"thissi r");
-    } catch (error) {
-      console.error("Error fetching userdata:", error);
-      // Handle error if needed
-    }
-  };
+const handleSubmit = async (e) => {
+   
+  e.preventDefault();
 
-  fetchuserdata(); // Call fetchuserdata immediately after defining it
+ try {
 
-}, []); // Add an empty dependency array to run the effect only once
+   const response = await axios.post("/login", {
+     email:userdata.email,
+   }, { withCredentials: true });
+   console.log(response.data);
 
+
+ } catch (error) {
+   console.log("Error:", error);
+ }
+};
+// Call fetchuserdata immediately after defining it
+
+ // Add an empty dependency array to run the effect only once
+
+useEffect(()=>{
+  handleSubmit()
+},[])
 
 const userlogout =()=>{
   Cookies.remove("token")
@@ -62,7 +70,7 @@ const userlogout =()=>{
 }
 
 
-console.log(userdata);
+
 
 const getbookmarkshower = ()=>{
   setshowbookmark(()=>!showbookmark)
