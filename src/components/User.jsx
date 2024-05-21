@@ -68,7 +68,7 @@ const User = () => {
       const filterBookmarks = async () => {
         try {
           const filtered = userdata.bookmarks.map(bookmark => {
-            return content.find(item =>
+            return content.filter(item =>
               item.animename === bookmark.animename &&
               item.season === 1 && // Fix typo: 'seasson' should be 'season'
               item.ep === 1
