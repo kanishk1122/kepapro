@@ -10,11 +10,8 @@ import axios from '../utils/Axios.jsx';
 const User = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
-  const [filtereddata, setfiltereddata] = useState({}); 
   const [userdata,setuserdata] = useState({})
   const[showbookmark,setshowbookmark] = useState(false)
-  const [data] = useContext(detailsContext)
-  
   
   
   const {username} = useParams()
@@ -47,7 +44,7 @@ useEffect(() => {
   const fetchuserdata = async () => {
     try {
       const response = await axios.get("/userdetail");
-      console.log(response.data);
+      setuserdata(response.data);
     } catch (error) {
       console.error("Error fetching userdata:", error);
       // Handle error if needed
@@ -59,25 +56,12 @@ useEffect(() => {
 }, []); // Add an empty dependency array to run the effect only once
 
 
-// useEffect(()=>{
-//   const filterData = () => {
-//     if (data.length === 0) {
-//       return null;
-//     }
-//     const filteredByName = data.filter(item => item.animename === userdata.bookmarks.animename );
-//     const filtered = filteredByName.find(item => item.season == userdata.bookmarks.season && item.ep == userdata.bookmarks.ep);
-//     return filtered;
-//   };
-//   const filtred = filterData();
-//   setfiltereddata(filterData)
-
-// },[])
 const userlogout =()=>{
   Cookies.remove("token")
   window.location.href="/" 
 }
 
-console.log(userdata);
+
 
 const getbookmarkshower = ()=>{
   setshowbookmark(()=>!showbookmark)
@@ -97,8 +81,9 @@ const getbookmarkshower = ()=>{
         <div className=' min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
             <div className='w-[200px] min-w-[200px] min-h-[200px]   h-[200px] bg-zinc-700 rounded-full'></div>
             <div className='text-4xl tracking-widest w-[300px] h-full text-center  flex flex-col gap-3  px-8 py-3 rounded-2xl '>
+                <h1>{userdata.email}</h1>
                
-                <h1>{userdata.username}</h1>
+                <h2>{userdata.username}</h2>
                
                 
                
@@ -114,10 +99,7 @@ const getbookmarkshower = ()=>{
               
             </div></div>
             <div>
-              {showbookmark ? <div>{filtereddata.map((item,index)=>{
-              <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'><div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-warp'><div className='bg-red-500 w-1/4 h-full rounded-xl'><img src="" alt="" /></div> <h1 className='text-2xl'></h1>  </div></div>
-
-              })}</div> : <p>hi</p> }
+              {showbookmark ? <div>lorem*100</div> : <p>hi</p> }
               
             </div>
             </div>
