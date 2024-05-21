@@ -23,11 +23,12 @@ const Watch = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState({}); 
   const [userdata,setuserdata] = useState({})
-  const[showbookmark,setshowbookmark] = useState(false)
+  const[userloginmenu,setuserloginmenu] = useState(false)
   
 
   
 
+if (token) {
   function jwt_decode (token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -37,17 +38,6 @@ const Watch = () => {
 
     return JSON.parse(jsonPayload);
 }
-
-function jwt_decode(token) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload);
-}
-
 
 
 
@@ -59,8 +49,8 @@ const decodingToken = () => {
     console.error("Error decoding token:", error); // Log any errors that occur during decoding
   }
 };
+}
 
-console.log(jwt_decode(token).email);
 
 useEffect(() => {
   const fetchuserdata = async () => {
@@ -135,7 +125,6 @@ useEffect(() => {
 
     
     setwatchseason(Number(desiredPart[1]));
-    console.log(typeof(watchseason))
   
 
     const filtered = filterData();
@@ -149,6 +138,10 @@ useEffect(() => {
       setthumnail(filtered.thumnail);
     }
   }, [data, name, seo, episode, videoquality,watchseason]); // Added 'videoquality' to the dependency array
+
+  const userloger =()=>{
+    setuserloginmenu(()=>!userloginmenu)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -223,14 +216,22 @@ useEffect(() => {
             <h1>Episode :  {episode}</h1>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            {Cookies.get("token") ? <form onSubmit={handleSubmit}>
               <input type="text" className="bg-transparent hidden " value={jwt_decode(token).email}  name="email"/>
               <input type="text" className="bg-transparent   hidden " value={desiredPart[0]}  name="animename"/>
               <input type="number" className="bg-transparent hidden  " value={seo}  name="season"/>
               <input type="number" className="bg-transparent hidden  " value={episode}  name="ep"/>
               <input type="submit" value="Add to favrate" className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold "  />
-            </form>
-          
+            </form> : null  }
+            
+          <div className="w-[30%]">
+          <input onClick={userloger} value="Add to favrate" className="bg-yellow-600 w-fit  px-2 py-1 text-2xl rounded-full font-semibold "  />
+          <div className="w-1/2 h-fit flex flex-col justify-center item-center text-center">
+            <Link to="/register">Register</Link>
+            <hr />
+            <Link to="login">Login</Link>
+          </div>
+            </div>          
           </div>
         </div>
        
