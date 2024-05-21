@@ -99,6 +99,7 @@ const getbookmarkshower = ()=>{
             </div></div>
             <div>
               {showbookmark ? <div>lorem*100</div> : <p>hi</p> }
+              {userdata.boo}
               
             </div>
             </div>

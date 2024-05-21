@@ -46,7 +46,7 @@ const Watch = () => {
 
       try {
         const response = await axios.get("/userdetail");
-        setUserdata(response.data);
+        set(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -74,6 +74,7 @@ const Watch = () => {
   }, []);
 
   useEffect(() => {
+    jwtDecode(token).email
     const filterData = () => {
       if (data.length === 0) {
         return null;
