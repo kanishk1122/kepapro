@@ -62,7 +62,7 @@ const userlogout =()=>{
 }
 
 
-console.log(userdata.bookmarks);
+console.log(userdata);
 
 const getbookmarkshower = ()=>{
   setshowbookmark(()=>!showbookmark)
