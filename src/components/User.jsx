@@ -59,19 +59,19 @@ useEffect(() => {
 }, []); // Add an empty dependency array to run the effect only once
 
 
-useEffect(()=>{
-  const filterData = () => {
-    if (data.length === 0) {
-      return null;
-    }
-    const filteredByName = data.filter(item => item.animename === userdata.bookmarks.animename );
-    const filtered = filteredByName.find(item => item.season == userdata.bookmarks.season && item.ep == userdata.bookmarks.ep);
-    return filtered;
-  };
-  const filtred = filterData();
-  setfiltereddata(filterData)
+// useEffect(()=>{
+//   const filterData = () => {
+//     if (data.length === 0) {
+//       return null;
+//     }
+//     const filteredByName = data.filter(item => item.animename === userdata.bookmarks.animename );
+//     const filtered = filteredByName.find(item => item.season == userdata.bookmarks.season && item.ep == userdata.bookmarks.ep);
+//     return filtered;
+//   };
+//   const filtred = filterData();
+//   setfiltereddata(filterData)
 
-},[])
+// },[])
 const userlogout =()=>{
   Cookies.remove("token")
   window.location.href="/" 
