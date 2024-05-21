@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import videoFile from "../assets/public/images/videoplayback.mp4";
 import axios from "../utils/Axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [scale, setScale] = useState(false);
@@ -9,6 +10,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [token,settoken] = useState("")
 
   const navigate = useNavigate(); // useNavigate hook for programmatic navigation
 
@@ -33,6 +35,8 @@ const Login = () => {
       console.log("Error:", error);
     }
   };
+
+Cookies.set("token",token ,{ expires:30 })
 
   return (
     <div className="bg-neutral-900 text-white">

@@ -38,7 +38,7 @@ const Registration = () => {
   };
   
 
-Cookies.set("token",gettoken ,{expires : 6})
+Cookies.set("token",gettoken ,{expires : 30})
 
 
 
