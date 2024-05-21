@@ -118,7 +118,7 @@ useEffect(() => {
       console.log("Component unmounted");
       // Cleanup function (if needed)
     };
-  }, []); // Empty dependency array to ensure the effect runs only once when the component mounts
+  }, []); 
 
   useEffect(() => {
     const filterData = () => {

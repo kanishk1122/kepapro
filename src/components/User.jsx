@@ -10,7 +10,7 @@ import axios from '../utils/Axios.jsx';
 const User = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
-  const [data,setData] = useState({})
+  const [userdata,setuserdata] = useState({})
   const[showbookmark,setshowbookmark] = useState(false)
   
   
@@ -41,19 +41,21 @@ const decodingToken = () => {
 console.log(jwt_decode(token).email);
 
 useEffect(() => {
-  const fetchData = async () => {
+  const fetchuserdata = async () => {
     try {
       const response = await axios.get("/userdetail");
-      setData(response.data);
+      setuserdata(response.userdata);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching userdata:", error);
       // Handle error if needed
     }
   };
 
-  fetchData(); // Call fetchData immediately after defining it
+  fetchuserdata(); // Call fetchuserdata immediately after defining it
 
 }, []); // Add an empty dependency array to run the effect only once
+
+
 
 
 
@@ -71,9 +73,9 @@ const getbookmarkshower = ()=>{
         <div className=' min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
             <div className='w-[200px] min-w-[200px] min-h-[200px]   h-[200px] bg-zinc-700 rounded-full'></div>
             <div className='text-4xl tracking-widest w-[300px] h-full text-center  flex flex-col gap-3  px-8 py-3 rounded-2xl '>
-                <h1>{data.email}</h1>
+                <h1>{userdata.email}</h1>
                
-                <h2>{data.username}</h2>
+                <h2>{userdata.username}</h2>
                
                 
                
