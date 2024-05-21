@@ -93,34 +93,34 @@ const User = () => {
     window.location.href = "/";
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/watchall");
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/watchall");
+  //       setData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
+  //   fetchData();
 
-    // userdata.bookmarks.map((item,index)=>{
-    //   const filterData = () => {
-    //     if (data.length === 0) {
-    //       return null;
-    //     }
-    //     const filteredByName = data.filter(item => item.animename === item.animename[index]);
-    //     const filtered = filteredByName.find(item => item.season == item.season[index] && item.ep == item.ep[index]);
-    //     return filtered;
-    //   };
-    //   const filtered = filterData();
-    //   setFilteredData(filtered);
-    // })
+  //   // userdata.bookmarks.map((item,index)=>{
+  //   //   const filterData = () => {
+  //   //     if (data.length === 0) {
+  //   //       return null;
+  //   //     }
+  //   //     const filteredByName = data.filter(item => item.animename === item.animename[index]);
+  //   //     const filtered = filteredByName.find(item => item.season == item.season[index] && item.ep == item.ep[index]);
+  //   //     return filtered;
+  //   //   };
+  //   //   const filtered = filterData();
+  //   //   setFilteredData(filtered);
+  //   // })
     
-  }, []);
+  // }, []);
 
-  console.log(bookmarks);
+  console.log(contenta);
   const toggleBookmarkVisibility = () => {
     setShowBookmark(prev => !prev);
   };
