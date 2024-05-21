@@ -44,7 +44,7 @@ useEffect(() => {
   const fetchuserdata = async () => {
     try {
       const response = await axios.get("/userdetail");
-      setuserdata(response.userdata);
+      setuserdata(response.data);
     } catch (error) {
       console.error("Error fetching userdata:", error);
       // Handle error if needed
@@ -76,7 +76,6 @@ const getbookmarkshower = ()=>{
                 <h1>{userdata.email}</h1>
                
                 <h2>{userdata.username}</h2>
-               
                
                 
                
