@@ -2,17 +2,15 @@ import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 import { Link, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useContext, useEffect, useState } from 'react';
-import { detailsContext } from '../utils/Context.jsx';
+import { useEffect, useState } from 'react';
 import axios from '../utils/Axios.jsx';
 
 const User = () => {
-  const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
+  const [token, setToken] = useState(Cookies.get("token"));
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
-  const [bookmarks, setbookmarks] = useState({});
+  const [bookmarks, setBookmarks] = useState([]);
   const [showBookmark, setShowBookmark] = useState(false);
-
 
   const { username } = useParams();
 
@@ -40,7 +38,7 @@ const User = () => {
   }, [token]);
 
   useEffect(() => {
-    const handleSubmit = async () => {
+    const fetchUserDetails = async () => {
       try {
         const response = await axios.post("/userdetail", {
           email: username,
@@ -52,37 +50,42 @@ const User = () => {
     };
 
     if (userdata.email) {
-      handleSubmit();
+      fetchUserDetails();
     }
   }, [userdata.email]);
 
-  useEffect(()=>{
-   for (let index = 0; index == userdata.bookmarks; index++) {
-    const filterData = () => {
-      if (data.length === 0) {
-        return null;
-      }
-      const filteredByName = data.filter(item => item.animename === userdata.bookmarks.animename[index] );
-      const filtered = filteredByName.find(item => item.season == userdata.bookmarks.season[index] && item.ep == userdata.bookmarks.ep[index]);
-      setbookmarks(filtered)
-      return filtered;
-    }}
-  },[])
-    
-   
+  useEffect(() => {
+    if (userdata.bookmarks && userdata.bookmarks.length > 0) {
+      const filterBookmarks = async () => {
+        try {
+          const allData = await axios.get('/alldata'); // Assuming this endpoint provides all necessary data
+          const filtered = userdata.bookmarks.map(bookmark => {
+            return allData.data.find(item =>
+              item.animename === bookmark.animename &&
+              item.season === bookmark.season &&
+              item.ep === bookmark.ep
+            );
+          });
+          setBookmarks(filtered);
+        } catch (error) {
+          console.error("Error fetching data for bookmarks:", error);
+        }
+      };
+      filterBookmarks();
+    }
+  }, [userdata.bookmarks]);
 
   const userLogout = () => {
     Cookies.remove("token");
     window.location.href = "/";
   };
 
-  const getBookmarkShower = () => {
+  const toggleBookmarkVisibility = () => {
     setShowBookmark(prev => !prev);
   };
 
   return (
     <>
-    
       <Navbar />
       <div className=''>
         <div className='w-full flex justify-end items-end '>
@@ -104,7 +107,7 @@ const User = () => {
                 <div className='w-120px h-120px'>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    onClick={getBookmarkShower}
+                    onClick={toggleBookmarkVisibility}
                     className={`${showBookmark ? "w-[5vw] h-[5vw]" : "w-[10vw] h-[10vw]"} min-h-[70px] min-w-[70px] duration-700`}
                     viewBox="0 0 24 24"
                     fill="currentColor"
@@ -112,23 +115,23 @@ const User = () => {
                     <path d="M4 2H20C20.5523 2 21 2.44772 21 3V22.2763C21 22.5525 20.7761 22.7764 20.5 22.7764C20.4298 22.7764 20.3604 22.7615 20.2963 22.7329L12 19.0313L3.70373 22.7329C3.45155 22.8455 3.15591 22.7322 3.04339 22.4801C3.01478 22.4159 3 22.3465 3 22.2763V3C3 2.44772 3.44772 2 4 2ZM19 19.9645V4H5V19.9645L12 16.8412L19 19.9645ZM12 13.5L9.06107 15.0451L9.62236 11.7725L7.24472 9.45492L10.5305 8.97746L12 6L13.4695 8.97746L16.7553 9.45492L14.3776 11.7725L14.9389 15.0451L12 13.5Z"></path>
                   </svg>
                 </div>
-                <div onClick={getBookmarkShower} className='text-4xl font-semibold'>
-                  {showBookmark ? <p>Bookmarks</p> : <div>click to show bookmarks</div>}
+                <div onClick={toggleBookmarkVisibility} className='text-4xl font-semibold'>
+                  {showBookmark ? <p>Bookmarks</p> : <div>Click to show bookmarks</div>}
                 </div>
               </div>
               <div>
                 {showBookmark ? (
-                  bookmarks.map((item,index)=>{
-                    <div className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
-                    <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
-                      <div className='bg-red-500 w-1/4 h-full rounded-xl'>
-                        <img src={item.thumnail} alt="" />
+                  bookmarks.length > 0 ? bookmarks.map((item, index) => (
+                    <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
+                      <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
+                        <div className='bg-red-500 w-1/4 h-full rounded-xl'>
+                          <img src={item.thumbnail} alt="" />
+                        </div>
+                        <h1 className='text-2xl'>{item.animename}</h1>
                       </div>
-                      <h1 className='text-2xl'>{item.animename}</h1>
                     </div>
-                  </div>
-                  })
-                ) : <p>click the icon to show bookmarks</p>}
+                  )) : <p>No bookmarks available.</p>
+                ) : <p>Click the icon to show bookmarks</p>}
               </div>
             </div>
           </div>
