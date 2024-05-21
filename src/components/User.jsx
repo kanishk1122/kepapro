@@ -90,7 +90,7 @@ const User = () => {
     window.location.href = "/";
   };
 
-  console.log(userdata.bookmarks.length);
+  console.log(userdata.bookmarks);
 
   console.log(bookmarks);
   const toggleBookmarkVisibility = () => {
