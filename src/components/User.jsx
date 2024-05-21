@@ -71,7 +71,7 @@ const User = () => {
           
            // Assuming this endpoint provides all necessary data
           const filtered = userdata.bookmarks.map(bookmark => {
-            return allData.content.find(item =>
+            return content.find(item =>
               item.animename === bookmark.animename &&
               item.seasson === 1,
               item.ep === 1
