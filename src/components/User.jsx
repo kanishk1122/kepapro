@@ -64,7 +64,7 @@ const User = () => {
   }, [userdata.email,content]);
 
   useEffect(() => {
-    if (userdata.bookmarks && userdata.bookmarks.length > 0) {
+    if (userdata.bookmarks ) {
       const filterBookmarks = async () => {
         try {
           
