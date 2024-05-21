@@ -31,7 +31,7 @@ const User = () => {
       try {
         const decoded = jwt_decode(token);
         setDecodedToken(decoded);
-        setUserData(prev => ({ ...prev, email: decoded.email }));
+
       } catch (error) {
         console.error("Error decoding token:", error);
       }
@@ -50,9 +50,8 @@ const User = () => {
       }
     };
 
-    if (userdata.email) {
       fetchUserDetails();
-    }
+
 
     const fetchcontent = async () => {
       try {
