@@ -77,7 +77,7 @@ const userlogout =()=>{
   window.location.href="/" 
 }
 
-
+console.log(filtereddata);
 
 const getbookmarkshower = ()=>{
   setshowbookmark(()=>!showbookmark)
@@ -115,7 +115,7 @@ const getbookmarkshower = ()=>{
             </div></div>
             <div>
               {showbookmark ? <div>{filtereddata.map((item,index)=>{
-              <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'><div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-warp'><div className='bg-red-500 w-1/4 h-full rounded-xl'><img src={item.thumnail} alt="" /></div> <h1 className='text-2xl'>{item.animename}</h1>  </div></div>
+              <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'><div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-warp'><div className='bg-red-500 w-1/4 h-full rounded-xl'><img src="" alt="" /></div> <h1 className='text-2xl'></h1>  </div></div>
 
               })}</div> : <p>hi</p> }
               
