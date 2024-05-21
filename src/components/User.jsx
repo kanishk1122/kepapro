@@ -78,6 +78,7 @@ const User = () => {
     window.location.href = "/";
   };
 
+  console.log(a);
   const toggleBookmarkVisibility = () => {
     setShowBookmark(prev => !prev);
   };
