@@ -40,7 +40,7 @@ const User = () => {
   useEffect(() => {
     const handleSubmit = async () => {
       try {
-        const response = await axios.post("/login", {
+        const response = await axios.post("/userdetail", {
           email: userdata.email,
         }, { withCredentials: true });
         console.log(response.data);
