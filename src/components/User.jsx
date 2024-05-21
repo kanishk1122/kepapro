@@ -73,7 +73,7 @@ const User = () => {
               item.season === 1 && // Fix typo: 'seasson' should be 'season'
               item.ep === 1
             );
-          })a; // Filter out undefined results
+          }).filter(item => item !== undefined); // Filter out undefined results
 
           setBookmarks(filtered);
         } catch (error) {
