@@ -134,7 +134,7 @@ const User = () => {
               </div>
               <div>
                 {showBookmark ? (
-                  bookmarks.length > 0 ? bookmarks.map((item, index) => (
+                  bookmarks ? bookmarks.map((item, index) => (
                     <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
                       <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
                         <div className='bg-red-500 w-1/4 h-full rounded-xl'>
