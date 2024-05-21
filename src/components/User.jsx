@@ -64,18 +64,17 @@ const User = () => {
   }, [userdata.email,content]);
 
   useEffect(() => {
-    if (userdata.bookmarks ) {
+    if (userdata.bookmarks) {
       const filterBookmarks = async () => {
         try {
-          
-           // Assuming this endpoint provides all necessary data
           const filtered = userdata.bookmarks.map(bookmark => {
             return content.find(item =>
               item.animename === bookmark.animename &&
-              item.seasson === 1,
+              item.season === 1 && // Fix typo: 'seasson' should be 'season'
               item.ep === 1
             );
-          });
+          }).filter(item => item !== undefined); // Filter out undefined results
+
           setBookmarks(filtered);
         } catch (error) {
           console.error("Error fetching data for bookmarks:", error);
@@ -83,7 +82,7 @@ const User = () => {
       };
       filterBookmarks();
     }
-  }, [userdata.bookmarks]);
+  }, [userdata.bookmarks, content]); // Add 'content' to dependencies
 
   const userLogout = () => {
     Cookies.remove("token");
