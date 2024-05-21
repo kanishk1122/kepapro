@@ -120,7 +120,7 @@ const User = () => {
     
   // }, []);
 
-  console.log(contenta);
+  console.log(content);
   const toggleBookmarkVisibility = () => {
     setShowBookmark(prev => !prev);
   };
