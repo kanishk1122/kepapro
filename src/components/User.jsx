@@ -9,9 +9,13 @@ const User = () => {
   const [token, setToken] = useState(Cookies.get("token"));
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
-  const [bookmarks, setBookmarks] = useState();
+  const [bookmarks, setBookmarks] = useState("");
   const [content, setcontent] = useState();
   const [showBookmark, setShowBookmark] = useState(false);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState(null);
+
+
 
   const { username } = useParams();
 
@@ -63,33 +67,58 @@ const User = () => {
     };
   }, [userdata.email,content]);
 
-  useEffect(() => {
-    if (userdata.bookmarks) {
-      const filterBookmarks = async () => {
-        try {
-          const filtered = userdata.bookmarks.map(bookmark => {
-            return content.filter(item =>
-              item.animename === bookmark.animename &&
-              item.season === 1 && // Fix typo: 'seasson' should be 'season'
-              item.ep === 1
-            );
-          }).filter(item => item !== undefined); // Filter out undefined results
+  // useEffect(() => {
+  //   if (userdata.bookmarks) {
+  //     const filterBookmarks = async () => {
+  //       try {
+  //         const filtered = userdata.bookmarks.map(bookmark => {
+  //           return content.filter(item =>
+  //             item.animename === bookmark.animename &&
+  //             item.season === 1 && // Fix typo: 'seasson' should be 'season'
+  //             item.ep === 1
+  //           );
+  //         }).filter(item => item !== undefined); // Filter out undefined results
 
-          setBookmarks(filtered);
-        } catch (error) {
-          console.error("Error fetching data for bookmarks:", error);
-        }
-      };
-      filterBookmarks();
-    }
-  }, [userdata.bookmarks, content]); // Add 'content' to dependencies
+  //         setBookmarks(filtered);
+  //       } catch (error) {
+  //         console.error("Error fetching data for bookmarks:", error);
+  //       }
+  //     };
+  //     filterBookmarks();
+  //   }
+  // }, [userdata.bookmarks, content]); // Add 'content' to dependencies
 
   const userLogout = () => {
     Cookies.remove("token");
     window.location.href = "/";
   };
 
-  console.log(bookmarks);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/watchall");
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    userdata.bookmarks.map((item,index)=>{
+      const filterData = () => {
+        if (data.length === 0) {
+          return null;
+        }
+        const filteredByName = data.filter(item => item.animename === item.animename[index]);
+        const filtered = filteredByName.find(item => item.season == item.season[index] && item.ep == item.ep[index]);
+        return filtered;
+      };
+      const filtered = filterData();
+      setFilteredData(filtered);
+    })
+    
+  }, []);
 
   console.log(bookmarks);
   const toggleBookmarkVisibility = () => {
