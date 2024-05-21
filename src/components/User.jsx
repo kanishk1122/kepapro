@@ -68,7 +68,7 @@ const User = () => {
     fetchcontent();
 
   }, [userdata.email]);
-      userdata.bookmarks.animename.map(1)
+
 
   // useEffect(() => {
   //   if (userdata.bookmarks) {
