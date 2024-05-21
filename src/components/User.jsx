@@ -77,7 +77,7 @@ const userlogout =()=>{
   window.location.href="/" 
 }
 
-console.log(filtereddata);
+console.log(userdata.bookmarks);
 
 const getbookmarkshower = ()=>{
   setshowbookmark(()=>!showbookmark)
