@@ -65,6 +65,7 @@ const User = () => {
         console.error("Error fetching data:", error);
       }
     };
+    fetchcontent()a
   }, [userdata.email,content]);
 
   // useEffect(() => {
