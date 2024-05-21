@@ -9,7 +9,8 @@ const User = () => {
   const [token, setToken] = useState(Cookies.get("token"));
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
-  const [bookmarks, setBookmarks] = useState([]);
+  const [bookmarks, setBookmarks] = useState();
+  const [content, setcontent] = useState();
   const [showBookmark, setShowBookmark] = useState(false);
 
   const { username } = useParams();
@@ -52,15 +53,25 @@ const User = () => {
     if (userdata.email) {
       fetchUserDetails();
     }
-  }, [userdata.email]);
+
+    const fetchcontent = async () => {
+      try {
+        const response = await axios.get("/watchall");
+        setcontent(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  }, [userdata.email,content]);
 
   useEffect(() => {
     if (userdata.bookmarks && userdata.bookmarks.length > 0) {
       const filterBookmarks = async () => {
         try {
-          const allData = await axios.get('/alldata'); // Assuming this endpoint provides all necessary data
+          
+           // Assuming this endpoint provides all necessary data
           const filtered = userdata.bookmarks.map(bookmark => {
-            return allData.data.find(item =>
+            return allData.content.find(item =>
               item.animename === bookmark.animename &&
               item.seasson === 1,
               item.ep === 1
