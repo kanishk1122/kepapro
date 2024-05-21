@@ -13,32 +13,22 @@ const Login = () => {
   const navigate = useNavigate(); // useNavigate hook for programmatic navigation
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+   
+     e.preventDefault();
+  
     try {
-      const user = {
-        username,
-        password,
-        email
-      };
-
-      const response = await axios.post("/login", user, { withCredentials: true });
-      console.log(response.data.success);
-
-      if (response.data.success) {
-        // Redirect to home page after successful login
-        setTimeout(() => {
-          window.location.href='/'; // Navigate programmatically
-        }, 5000); // Redirect after 5 seconds
-      } else {
-        // Handle login failure
-        console.error('Login failed');
-      }
-
-      // Reset form fields after submission
+  
+      const response = await axios.post("/login", {
+        username: username,
+        email:email,
+        password: password,
+      }, { withCredentials: true });
+      settoken(response.data);
+  
+      // Reset form fields after successful submission
       setUsername("");
-      setPassword("");
       setEmail("");
+      setPassword("");
     } catch (error) {
       console.log("Error:", error);
     }
