@@ -66,7 +66,7 @@ const User = () => {
       }
     };
     fetchcontent();
-acs
+
   }, [userdata.email]);
 
   // useEffect(() => {
