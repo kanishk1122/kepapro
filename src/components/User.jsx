@@ -66,7 +66,7 @@ const User = () => {
       }
     };
     fetchcontent();
-    console.log(userdata.bookmarks);
+    userdata.bookmarks.map(1)
   }, [userdata.email]);
 
   // useEffect(() => {
