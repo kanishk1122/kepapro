@@ -10,8 +10,11 @@ import axios from '../utils/Axios.jsx';
 const User = () => {
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
+  const [filtereddata, setfiltereddata] = useState({}); 
   const [userdata,setuserdata] = useState({})
   const[showbookmark,setshowbookmark] = useState(false)
+  const [data] = useContext(detailsContext)
+  
   
   
   const {username} = useParams()
@@ -56,6 +59,19 @@ useEffect(() => {
 }, []); // Add an empty dependency array to run the effect only once
 
 
+useEffect(()=>{
+  const filterData = () => {
+    if (data.length === 0) {
+      return null;
+    }
+    const filteredByName = data.filter(item => item.animename === userdata.bookmarks.animename );
+    const filtered = filteredByName.find(item => item.season == userdata.bookmarks.season && item.ep == userdata.bookmarks.ep);
+    return filtered;
+  };
+  const filtred = filterData();
+  setfiltereddata(filterData)
+
+},[])
 const userlogout =()=>{
   Cookies.remove("token")
   window.location.href="/" 
@@ -98,8 +114,10 @@ const getbookmarkshower = ()=>{
               
             </div></div>
             <div>
-              {showbookmark ? <div>lorem*100</div> : <p>hi</p> }
-              {userdata.boo}
+              {showbookmark ? <div>{filtereddata.map((item,index)=>{
+              <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'><div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-warp'><div className='bg-red-500 w-1/4 h-full rounded-xl'><img src={item.thumnail} alt="" /></div> <h1 className='text-2xl'>{item.animename}</h1>  </div></div>
+
+              })}</div> : <p>hi</p> }
               
             </div>
             </div>

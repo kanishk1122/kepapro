@@ -74,7 +74,7 @@ const Watch = () => {
   }, []);
 
   useEffect(() => {
-    jwtDecode(token).email
+  
     const filterData = () => {
       if (data.length === 0) {
         return null;
