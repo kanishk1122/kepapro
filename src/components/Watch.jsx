@@ -167,10 +167,10 @@ const Watch = () => {
 
             {token ? (
               <form onSubmit={handleSubmit}>
-                <input type="text" value={jwtDecode(token).email} name="email" />
-                <input type="text" value={desiredPart[0]} name="animename" />
-                <input type="number" value={seo} name="season" />
-                <input type="number" value={episode} name="ep" />
+                <input className="bg-transparent" type="text" value={jwtDecode(token).email} name="email" />
+                <input className="bg-transparent" type="text" value={desiredPart[0]} name="animename" />
+                <input className="bg-transparent" type="number" value={seo} name="season" />
+                <input className="bg-transparent" type="number" value={episode} name="ep" />
                 <input type="submit" value="Add to favorites" className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold" />
               </form>
             ) : (
