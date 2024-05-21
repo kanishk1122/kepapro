@@ -141,6 +141,7 @@ useEffect(() => {
 
   const userloger =()=>{
     setuserloginmenu(()=>!userloginmenu)
+    alert("you need a accound first do it")
   }
 
   const handleSubmit = async (e) => {
@@ -222,16 +223,16 @@ useEffect(() => {
               <input type="number" className="bg-transparent hidden  " value={seo}  name="season"/>
               <input type="number" className="bg-transparent hidden  " value={episode}  name="ep"/>
               <input type="submit" value="Add to favrate" className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold "  />
-            </form> : null  }
-            
-          <div className="w-[30%]">
-          <input onClick={userloger} value="Add to favrate" className="bg-yellow-600 w-fit  px-2 py-1 text-2xl rounded-full font-semibold "  />
-          <div className="w-1/2 h-fit flex flex-col justify-center item-center text-center">
-            <Link to="/register">Register</Link>
-            <hr />
-            <Link to="login">Login</Link>
+            </form> :  <div className="w-fit flex justify-center flex-col rounded-3xl items-center bg-zinc-600 p-3">
+          <button onClick={userloger}  className="bg-yellow-600 w-fit  px-2 py-1 text-2xl rounded-full font-semibold " >Add to favrate</button>
+          <div className={`${userloginmenu ? ' h-fit' :' h-0' } duration-700  w-1/2 h-fit flex flex-col justify-center item-center text-center`}>
+            <Link className={` w-[30%] ${userloginmenu ? ' text-[100%]' :' text-[0%]' } duration-700 `} to="/register">Register</Link>
+            <hr className={`${userloginmenu ? ' w-full' :' w-0' }`} />
+            <Link className={` w-[30%] ${userloginmenu ? ' text-[100%]' :' text-[0%]' } duration-700 `}  to="login">Login</Link>
           </div>
-            </div>          
+            </div>  }
+          
+                  
           </div>
         </div>
        
