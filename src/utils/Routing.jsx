@@ -13,6 +13,7 @@ import Upload from '../components/Upload.jsx';
 import Ads from "../components/ads.txt"
 import Allpopular from "../components/Allpopular.jsx"
 import DecodedToken from '../components/DecodeToken.jsx';
+import Edituser from '../components/Edituser.jsx';
 
 const Routing = () => {
 
@@ -25,6 +26,7 @@ const Routing = () => {
           <Route path='/all/trending' element={<Allanime/>} />
           <Route path='/all/popular' element={<Allpopular/>} />
           <Route path='/user/:username' element={<User />} />
+          <Route path='/edit/:username' element={<User />} />
           <Route path='/news' element={<News />} />
           <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<Login />} />
@@ -33,6 +35,7 @@ const Routing = () => {
           <Route path='/upload' element={<Upload />} />
           <Route path='/ads.txt' element={<Ads />} />
           <Route path='/decode' element={<DecodedToken />} />
+
           {/* Add more routes as needed */}
           {/* Redirect to 404 page for unknown routes */}
         </Routes>

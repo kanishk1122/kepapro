@@ -99,6 +99,7 @@ const User = () => {
               <div className='text-4xl tracking-widest w-[300px] h-full text-center flex flex-col gap-3 px-8 py-3 rounded-2xl '>
                 
                 <h2>{userdata.username}</h2>
+                <Link to=""></Link>
               </div>
             </div>
             <div className='flex p-3 flex-col backdrop-blur-xl h-fit py-10 w-screen max-w-[840px] max-h-fit p-6 rounded-3xl bg-[rgba(48,47,47,0.51)]'>
