@@ -11,7 +11,7 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [gettoken, settoken]=useContext(detailsContext);
+  const [ gettoken,settoken ] = useState("")
   const navigate = useNavigate();
   
 
@@ -38,7 +38,9 @@ const Registration = () => {
   };
   
 
-Cookies.set("token",gettoken ,{expires : 30})
+if(gettoken){
+  Cookies.set("token",gettoken ,{expires : 30})
+}
 
 
 

@@ -36,7 +36,9 @@ const Login = () => {
     }
   };
 
-Cookies.set("token",token ,{ expires:30 })
+  if(token){
+    Cookies.set("token",token ,{expires : 30})
+  }
 
   return (
     <div className="bg-neutral-900 text-white">

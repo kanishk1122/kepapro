@@ -10,7 +10,7 @@ const User = () => {
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
   const [content, setContent] = useState([]);
-  const [showBookmark, setShowBookmark] = useState(false);
+  const [showBookmark, setShowBookmark] = useState(true);
   const [bookmarks, setBookmarks] = useState([]);
 
   const { username } = useParams();
