@@ -182,7 +182,7 @@ if (userdata.bookmarks) {
               <div>
               {userdata.bookmarks?
                   userdata.bookmarks.map((bookmark, index) => {
-                   <div key={index} >
+                   <div key={index} className='bg-red-400 h-fit' >
                      <div>Bookmark {index + 1}:</div> 
                     <div>Anime: {bookmark.animename}</div> 
                     <div>Season: {bookmark.season}</div> 
