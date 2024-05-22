@@ -9,136 +9,75 @@ const User = () => {
   const [token, setToken] = useState(Cookies.get("token"));
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
-  const [bookmarks, setBookmarks] = useState("");
-  const [content, setcontent] = useState();
+  const [content, setContent] = useState([]);
   const [showBookmark, setShowBookmark] = useState(false);
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState(null);
-
-
+  const [bookmarks, setBookmarks] = useState([]);
 
   const { username } = useParams();
 
-  function jwt_decode(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(
-      window.atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join('')
-    );
-    return JSON.parse(jsonPayload);
-  }
+  const jwt_decode = (token) => {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        window.atob(base64).split('').map((c) => {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join('')
+      );
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
 
   useEffect(() => {
     if (token) {
-      try {
-        const decoded = jwt_decode(token);
-        setDecodedToken(decoded);
-
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
+      const decoded = jwt_decode(token);
+      setDecodedToken(decoded);
     }
   }, [token]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.post("/userdetail", {
-          email: username,
-        }, { withCredentials: true });
+        const response = await axios.post("/userdetail", { email: username }, { withCredentials: true });
         setUserData(response.data);
       } catch (error) {
-        console.log("Error:", error);
+        console.log("Error fetching user details:", error);
       }
     };
 
-      fetchUserDetails();
-
-
-    const fetchcontent = async () => {
+    const fetchContent = async () => {
       try {
         const response = await axios.get("/watchall");
-        setcontent(response.data);
+        setContent(response.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching content:", error);
       }
     };
-    fetchcontent();
 
-  }, [userdata.email]);
+    fetchUserDetails();
+    fetchContent();
+  }, [username]);
 
-
-  // useEffect(() => {
-  //   if (userdata.bookmarks) {
-  //     const filterBookmarks = async () => {
-  //       try {
-  //         const filtered = userdata.bookmarks.map(bookmark => {
-  //           return content.filter(item =>
-  //             item.animename === bookmark.animename &&
-  //             item.season === 1 && // Fix typo: 'seasson' should be 'season'
-  //             item.ep === 1
-  //           );
-  //         }).filter(item => item !== undefined); // Filter out undefined results
-
-  //         setBookmarks(filtered);
-  //       } catch (error) {
-  //         console.error("Error fetching data for bookmarks:", error);
-  //       }
-  //     };
-  //     filterBookmarks();
-  //   }
-  // }, [userdata.bookmarks, content]); // Add 'content' to dependencies
+  useEffect(() => {
+    if (userdata.bookmarks && content.length > 0) {
+      const filteredBookmarks = userdata.bookmarks.map((bookmark) => {
+        return content.find(item => 
+          item.animename === bookmark.animename &&
+          item.season === bookmark.season &&
+          item.ep === bookmark.ep
+        );
+      }).filter(item => item !== undefined);
+      setBookmarks(filteredBookmarks);
+    }
+  }, [userdata.bookmarks, content]);
 
   const userLogout = () => {
     Cookies.remove("token");
     window.location.href = "/";
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/watchall");
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-
-  //   // userdata.bookmarks.map((item,index)=>{
-  //   //   const filterData = () => {
-  //   //     if (data.length === 0) {
-  //   //       return null;
-  //   //     }
-  //   //     const filteredByName = data.filter(item => item.animename === item.animename[index]);
-  //   //     const filtered = filteredByName.find(item => item.season == item.season[index] && item.ep == item.ep[index]);
-  //   //     return filtered;
-  //   //   };
-  //   //   const filtered = filterData();
-  //   //   setFilteredData(filtered);
-  //   // })
-    
-  // }, []);
-
-//   userdata.bookmarks.forEach(bookmark => {
-//   console.log(`Anime: ${bookmark.animename}, Season: ${bookmark.season}, Episode: ${bookmark.ep}`);
-// });
-
-if (userdata.bookmarks) {
-  userdata.bookmarks.forEach((bookmark, index) => {
-    console.log(`Bookmark ${index + 1}:`);
-    console.log(`Anime: ${bookmark.animename}`);
-    console.log(`Season: ${bookmark.season}`);
-    console.log(`Episode: ${bookmark.ep}`);
-    console.log('---');
-  });
-} else {
-  console.log("No bookmarks found.");
-}
-
 
   const toggleBookmarkVisibility = () => {
     setShowBookmark(prev => !prev);
@@ -147,7 +86,7 @@ if (userdata.bookmarks) {
   return (
     <>
       <Navbar />
-      <div className=''>
+      <div>
         <div className='w-full flex justify-end items-end '>
           <svg onClick={userLogout} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
             <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C15.2713 2 18.1757 3.57078 20.0002 5.99923L17.2909 5.99931C15.8807 4.75499 14.0285 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C14.029 20 15.8816 19.2446 17.2919 17.9998L20.0009 17.9998C18.1765 20.4288 15.2717 22 12 22ZM19 16V13H11V11H19V8L24 12L19 16Z"></path>
@@ -180,29 +119,10 @@ if (userdata.bookmarks) {
                 </div>
               </div>
               <div>
-                {/* {showBookmark ? (
-                  bookmarks ? bookmarks.map((item, index) => (
-                    <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
-                      <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
-                        <div className='bg-red-500 w-1/4 h-full rounded-xl'>
-                          <img src={item.thumbnail} alt="" />
-                        </div>
-                        <h1 className='text-2xl'>{item.animename}</h1>
-                      </div>
-                    </div>
-                  )) : <p>No bookmarks available.</p>
-                ) : <p>Click the icon to show bookmarks</p>} */}
-                 
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div>Something went wrong</div>
-        )}
-        {showBookmark && (
+                {showBookmark && (
                   userdata.bookmarks && bookmarks.length > 0 ? (
                     bookmarks.map((bookmark, index) => (
-                      <div key={index} className='bg-red-400 h-[100px]'>
+                      <div key={index} className='bg-red-400 h-fit'>
                         <div>Bookmark {index + 1}:</div>
                         <div>Anime: {bookmark.animename}</div>
                         <div>Season: {bookmark.season}</div>
@@ -214,6 +134,12 @@ if (userdata.bookmarks) {
                     <div>No bookmarks found.</div>
                   )
                 )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>Something went wrong</div>
+        )}
       </div>
       <Footer />
     </>
