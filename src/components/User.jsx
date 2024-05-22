@@ -203,9 +203,7 @@ if (userdata.bookmarks) {
                   userdata.bookmarks && bookmarks.length > 0 ? (
                     bookmarks.map((bookmark, index) => (
                       <div key={index} className='bg-red-400 h-[100px]'>
-                        <div>
-                          <img className='w-1/2 h-full object-cover' src={bookmark.thumnail} alt="" />
-                          </div>
+                        <div>Bookmark {index + 1}:</div>
                         <div>Anime: {bookmark.animename}</div>
                         <div>Season: {bookmark.season}</div>
                         <div>Episode: {bookmark.ep}</div>
