@@ -93,7 +93,7 @@ const Edituser = () => {
     <Navbar/>
     <h1 className='text-3xl text-center font-semibold'>Edit User Details</h1>
     <div className='p-10 h-[90vh]'>
-        <form action="" className='bg-zinc-800 overflow-hidden rounded-3xl w-full h-full flex flex-col gap-7  items-center '>
+        <form onSubmit={handleSubmit}  className='bg-zinc-800 overflow-hidden rounded-3xl w-full h-full flex flex-col gap-7  items-center '>
             <div className='w-full h-fit flex flex-wrap justify-around items-center gap-5 p-3 bg-zinc-600'>
                 <div className='w-[20%] h-full flex flex-col justify-center items-center gap-3 '>
                 <div className='w-[160px] overflow-hidden h-[160px] bg-zinc-700 rounded-full'><img className='w-full h-full object-cover' src={userpic} alt="" />
