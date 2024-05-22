@@ -202,8 +202,7 @@ if (userdata.bookmarks) {
         {showBookmark && (
                   userdata.bookmarks && bookmarks.length > 0 ? (
                     bookmarks.map((bookmark, index) => (
-                      <div key={index}>
-                        <div  className='bg-zinc-700 h-[100px]'>
+                        <div key={index} className='bg-zinc-700 h-[100px]'>
                 <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
                         <div className='bg-red-500 w-1/4 h-full rounded-xl'>
                           <img src="" alt="" />
@@ -211,7 +210,7 @@ if (userdata.bookmarks) {
                         <h1 className='text-2xl'></h1>
                       </div>
                       </div>
-                      </div>
+                     
                     ))
                   ) : (
                     <div>No bookmarks found.</div>
