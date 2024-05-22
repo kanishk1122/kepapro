@@ -123,7 +123,7 @@ const User = () => {
     
   // }, []);
 
-  console.log(content);
+
   const toggleBookmarkVisibility = () => {
     setShowBookmark(prev => !prev);
   };
