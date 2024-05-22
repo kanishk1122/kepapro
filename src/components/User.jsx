@@ -123,12 +123,13 @@ const User = () => {
                   userdata.bookmarks && bookmarks.length > 0 ? (
                     bookmarks.map((bookmark, index) => (
                       <div key={index} className='bg-zinc-700 rounded-2xl p-3 flex   h-fit'>
-                        <div>Bookmark {index }:</div>
-                        <div className='w-1/3 h-[100px] rounded-2xl overflow-hidden '><img className='w-full h-full object-cover' src={bookmark.thumnail} alt="" /></div>
-                        <div>Anime: {bookmark.animename}</div>
+                        <div className='w-[150px] h-[100px] rounded-2xl overflow-hidden '><img className='w-full h-full object-cover' src={bookmark.thumnail} alt="" /></div>
+                       <div className='flex flex-col gap-2'>
+                       <div>Anime: {bookmark.animename}</div>
                         <div>Season: {bookmark.season}</div>
                         <div>Episode: {bookmark.ep}</div>
-                        <div>---</div>
+                       </div>
+                        
                       </div>
                     ))
                   ) : (
