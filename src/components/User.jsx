@@ -182,17 +182,20 @@ if (userdata.bookmarks) {
               <div>
               {userdata.bookmarks?
                   userdata.bookmarks.map((bookmark, index) => {
-                    console.log(`Bookmark ${index + 1}:`);
-                    console.log(`Anime: ${bookmark.animename}`);
-                    console.log(`Season: ${bookmark.season}`);
-                    console.log(`Episode: ${bookmark.ep}`);
-                    console.log('---');
+                   <div key={index} >
+                     <div>Bookmark {index + 1}:</div> 
+                    <div>Anime: {bookmark.animename}</div> 
+                    <div>Season: {bookmark.season}</div> 
+                    <div>Episode: {bookmark.ep}</div>
+                    <div>---</div>
+                   </div>
                   })
                 :
                   (<div>No bookmarks found.</div>)
               }
               </div>
             </div>
+            <div></div>
           </div>
         ) : (
           <div>Something went wrong</div>
