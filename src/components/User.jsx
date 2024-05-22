@@ -127,7 +127,17 @@ const User = () => {
 //   console.log(`Anime: ${bookmark.animename}, Season: ${bookmark.season}, Episode: ${bookmark.ep}`);
 // });
 
-  console.log(userdata.bookmarks)
+if (userdata.bookmarks) {
+  userdata.bookmarks.forEach((bookmark, index) => {
+    console.log(`Bookmark ${index + 1}:`);
+    console.log(`Anime: ${bookmark.animename}`);
+    console.log(`Season: ${bookmark.season}`);
+    console.log(`Episode: ${bookmark.ep}`);
+    console.log('---');
+  });
+} else {
+  console.log("No bookmarks found.");
+}
 
 
   const toggleBookmarkVisibility = () => {
