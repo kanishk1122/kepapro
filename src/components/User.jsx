@@ -128,7 +128,7 @@ const User = () => {
                        <div>Anime: {bookmark.animename}</div>
                         <div>Season: {bookmark.season}</div>
                         <div>Episode: {bookmark.ep}</div>
-                        <Link to={`/watch/${bookmark.animename}/${bookmark.season}/${bookmark.ep}`}className='bg-red-600 rounded-full px-2 py-1' >Watch now </Link>
+                        <Link to={`/watch/${bookmark.animename}/${bookmark.season}/${bookmark.ep}`}className='bg-red-600 rounded-full px-2 py-1 w-fit' >Watch now </Link>
                        </div>
                         
                       </div>
