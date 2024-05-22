@@ -12,7 +12,6 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [ gettoken,settoken ] = useState("")
-  const navigate = useNavigate();
   
 
   const handleSubmit = async (e) => {

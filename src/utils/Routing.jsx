@@ -26,7 +26,7 @@ const Routing = () => {
           <Route path='/all/trending' element={<Allanime/>} />
           <Route path='/all/popular' element={<Allpopular/>} />
           <Route path='/user/:username' element={<User />} />
-          <Route path='/edit/:username' element={<User />} />
+          <Route path='/edit/:username' element={<Edituser />} />
           <Route path='/news' element={<News />} />
           <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<Login />} />
