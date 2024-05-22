@@ -70,7 +70,6 @@ const User = () => {
   }, [userdata.email]);
 
 
-  // useEffect(() => {
   //   if (userdata.bookmarks) {
   //     const filterBookmarks = async () => {
   //       try {
@@ -95,37 +94,6 @@ const User = () => {
     Cookies.remove("token");
     window.location.href = "/";
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/watchall");
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-
-  //   // userdata.bookmarks.map((item,index)=>{
-  //   //   const filterData = () => {
-  //   //     if (data.length === 0) {
-  //   //       return null;
-  //   //     }
-  //   //     const filteredByName = data.filter(item => item.animename === item.animename[index]);
-  //   //     const filtered = filteredByName.find(item => item.season == item.season[index] && item.ep == item.ep[index]);
-  //   //     return filtered;
-  //   //   };
-  //   //   const filtered = filterData();
-  //   //   setFilteredData(filtered);
-  //   // })
-    
-  // }, []);
-
-//   userdata.bookmarks.forEach(bookmark => {
-//   console.log(`Anime: ${bookmark.animename}, Season: ${bookmark.season}, Episode: ${bookmark.ep}`);
-// });
 
 if (userdata.bookmarks) {
   userdata.bookmarks.forEach((bookmark, index) => {
@@ -179,16 +147,16 @@ if (userdata.bookmarks) {
                   {showBookmark ? <p>Bookmarks</p> : <div>Click to show bookmarks</div>}
                 </div>
               </div>
-              <div>
+              <div className='bg-red-500 h-fit w-full'>
               {showBookmark && (
                   userdata.bookmarks && bookmarks.length > 0 ? (
-                    bookmarks.map((item, index) => (
+                    bookmarks.map((bookmark, index) => (
                       <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
                       <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
                         <div className='bg-red-500 w-1/4 h-full rounded-xl'>
-                          <img src={item.thumbnail} alt="" />
+                          <img src={bookmark.thumbnail} alt="" />
                         </div>
-                        <h1 className='text-2xl'>{item.animename}</h1>
+                        <h1 className='text-2xl'>{bookmark.animename}</h1>
                       </div>
                     </div>
                     ))
@@ -210,3 +178,4 @@ if (userdata.bookmarks) {
 };
 
 export default User;
+
