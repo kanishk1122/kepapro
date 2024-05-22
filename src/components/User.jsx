@@ -83,7 +83,7 @@ const User = () => {
     setShowBookmark(prev => !prev);
   };
 
-  console.log(bookmarks);
+  
   return (
     <>
       <Navbar />
@@ -127,7 +127,7 @@ const User = () => {
                         <div>Bookmark {index + 1}:</div>
                         <div>Anime: {bookmark.animename}</div>
                         <div>Season: {bookmark.season}</div>
-                        <div>Episode: {bookmark.ep}</div>
+                        <div>Episode: {bookmark.thumnail}</div>
                         <div>---</div>
                       </div>
                     ))
