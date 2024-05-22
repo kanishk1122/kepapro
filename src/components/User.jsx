@@ -202,21 +202,20 @@ if (userdata.bookmarks) {
         {showBookmark && (
                   userdata.bookmarks && bookmarks.length > 0 ? (
                     bookmarks.map((bookmark, index) => (
-                        <div key={index} className='bg-zinc-700 h-[100px]'>
-                <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
-                        <div className='bg-red-500 w-1/4 h-full rounded-xl'>
-                          <img src="" alt="" />
-                        </div>
-                        <h1 className='text-2xl'></h1>
+                      <div key={index} className='bg-red-400 h-[100px]'>
+                        <div>
+                          <img className='w-1/2 h-full object-cover' src={bookmark.thumnail} alt="" />
+                          </div>
+                        <div>Anime: {bookmark.animename}</div>
+                        <div>Season: {bookmark.season}</div>
+                        <div>Episode: {bookmark.ep}</div>
+                        <div>---</div>
                       </div>
-                      </div>
-                     
                     ))
                   ) : (
                     <div>No bookmarks found.</div>
                   )
                 )}
-                
       </div>
       <Footer />
     </>
