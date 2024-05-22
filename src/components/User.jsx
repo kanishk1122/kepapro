@@ -97,7 +97,7 @@ const User = () => {
             <div className='min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
               <div className='w-[200px] min-w-[200px] min-h-[200px] h-[200px] bg-zinc-700 rounded-full'></div>
               <div className='text-4xl tracking-widest w-[300px] h-full text-center flex flex-col gap-3 px-8 py-3 rounded-2xl '>
-                <h1>{userdata.email}</h1>
+                
                 <h2>{userdata.username}</h2>
               </div>
             </div>
@@ -118,13 +118,13 @@ const User = () => {
                   {showBookmark ? <p>Bookmarks</p> : <div>Click to show bookmarks</div>}
                 </div>
               </div>
-              <div>
+              <div className='flex flex-col gap-3 '>
                 {showBookmark && (
                   userdata.bookmarks && bookmarks.length > 0 ? (
                     bookmarks.map((bookmark, index) => (
-                      <div key={index} className='bg-zinc-700 p-3  h-fit'>
+                      <div key={index} className='bg-zinc-700 rounded-2xl p-3 flex   h-fit'>
                         <div>Bookmark {index }:</div>
-                        <div className='w-1/3 h-full rounded-2xl overflow-hidden '><img className='w-full h-full object-cover' src={bookmark.thumnail} alt="" /></div>
+                        <div className='w-1/3 h-[100px] rounded-2xl overflow-hidden '><img className='w-full h-full object-cover' src={bookmark.thumnail} alt="" /></div>
                         <div>Anime: {bookmark.animename}</div>
                         <div>Season: {bookmark.season}</div>
                         <div>Episode: {bookmark.ep}</div>
