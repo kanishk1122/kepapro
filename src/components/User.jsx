@@ -180,18 +180,17 @@ if (userdata.bookmarks) {
                 </div>
               </div>
               <div>
-                {showBookmark ? (
-                  bookmarks ? bookmarks.map((item, index) => (
-                    <div key={index} className='w-full h-fit flex-col gap-3 bg-zinc-600 rounded-2xl p-3'>
-                      <div className='w-full h-[100px] rounded-2xl p-3 bg-zinc-900 flex gap-10 flex-wrap'>
-                        <div className='bg-red-500 w-1/4 h-full rounded-xl'>
-                          <img src={item.thumbnail} alt="" />
-                        </div>
-                        <h1 className='text-2xl'>{item.animename}</h1>
-                      </div>
-                    </div>
-                  )) : <p>No bookmarks available.</p>
-                ) : <p>Click the icon to show bookmarks</p>}
+              {userdata.bookmarks?
+                  userdata.bookmarks.map((bookmark, index) => {
+                    console.log(`Bookmark ${index + 1}:`);
+                    console.log(`Anime: ${bookmark.animename}`);
+                    console.log(`Season: ${bookmark.season}`);
+                    console.log(`Episode: ${bookmark.ep}`);
+                    console.log('---');
+                  })
+                :
+                  (<div>No bookmarks found.</div>)
+              }
               </div>
             </div>
           </div>
