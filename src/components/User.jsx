@@ -123,9 +123,11 @@ const User = () => {
     
   // }, []);
 
-  userdata.bookmarks.forEach(bookmark => {
-  console.log(`Anime: ${bookmark.animename}, Season: ${bookmark.season}, Episode: ${bookmark.ep}`);
-});
+//   userdata.bookmarks.forEach(bookmark => {
+//   console.log(`Anime: ${bookmark.animename}, Season: ${bookmark.season}, Episode: ${bookmark.ep}`);
+// });
+
+  console.log(userdata.bookmarks)
 
 
   const toggleBookmarkVisibility = () => {
