@@ -83,6 +83,7 @@ const User = () => {
     setShowBookmark(prev => !prev);
   };
 
+  console.log(bookmarks);
   return (
     <>
       <Navbar />
