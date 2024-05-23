@@ -33,7 +33,7 @@ const Routing = () => {
           <Route path='/adminlogin' element={<Adminlogin />} />
           <Route path='/adminreg' element={<Adminreg />} />
           <Route path='/upload' element={<Upload />} />
-          <Route path='/ads.txt' element={<Ads />} />
+          <Route path='/ads.txt' element={<Ads/>} />
           <Route path='/decode' element={<DecodedToken />} />
 
           {/* Add more routes as needed */}
