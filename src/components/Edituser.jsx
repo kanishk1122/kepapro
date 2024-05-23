@@ -85,10 +85,10 @@ const Edituser = () => {
       <div className='p-10 h-[90vh]'>
         <form
           onSubmit={handleSubmit}
-          className='bg-zinc-800 overflow-hidden rounded-3xl w-full h-full flex flex-col gap-7 items-center'
+          className='bg-zinc-800 overflow-hidden rounded-3xl w-full h-fit flex flex-col gap-7 items-center'
         >
           <div className='w-full h-fit flex flex-wrap justify-around items-center gap-5 p-3 bg-zinc-600'>
-            <div className='w-[20%] h-full flex flex-col justify-center items-center gap-3'>
+            <div className='w-[200px]  h-full flex flex-col justify-center items-center gap-3'>
               <div className='w-[160px] overflow-hidden h-[160px] bg-zinc-700 rounded-full'>
                 <img
                   className='w-full h-full object-cover'
@@ -98,17 +98,17 @@ const Edituser = () => {
               </div>
               <input
                 type='text'
-                className='h-[30px] px-2 outline-none w-full bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
+                className='h-[30px] px-2 outline-none w-full  bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
                 placeholder='Enter your image link'
                 value={userpic}
                 onChange={(e) => setUserpic(e.target.value)}
               />
             </div>
-            <div className='bg-zinc-700 w-1/2 p-3 rounded-2xl flex justify-center items-center flex-col gap-4'>
+            <div className='bg-zinc-700 w-1/2 p-3 max-sm:w-full rounded-2xl flex justify-center items-center flex-col gap-4'>
               <h2 className='text-xl font-semibold'>Enter your new username</h2>
               <input
                 type='text'
-                className='w-1/2 bg-zinc-500 rounded-full p-3 h-[50px] text-[35px] outline-none'
+                className='w-1/2 bg-zinc-500 rounded-full p-3 max-sm:w-full h-[50px] text-[35px] outline-none'
                 value={newusername}
                 onChange={(e) => setNewusername(e.target.value)}
               />
