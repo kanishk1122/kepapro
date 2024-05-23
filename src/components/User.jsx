@@ -95,7 +95,7 @@ const User = () => {
         {decodedToken && decodedToken.email === username ? (
           <div className='bg-neutral-900 w-full h-fit text-white'>
             <div className='min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
-              <div className='w-[200px] min-w-[200px] min-h-[200px] h-[200px] bg-zinc-700 rounded-full'> <img src={userdata.userpic} className='w-full h-full object-cover' alt="" /> </div>
+              <div className='w-[200px] overflow-hidden min-w-[200px] min-h-[200px] h-[200px] bg-zinc-700 rounded-full'> <img src={userdata.userpic} className='w-full h-full object-cover' alt="" /> </div>
               <div className='text-4xl tracking-widest w-[300px] h-full text-center flex flex-col gap-3 px-8 py-3 rounded-2xl '>
                 
                 <h2>{userdata.username}</h2>
