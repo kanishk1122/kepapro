@@ -61,7 +61,7 @@ const Edituser = () => {
     try {
 
       const response = await axios.post('/userdetailupdate', {
-        email:userdata.emaila,
+        email:userdata.email,
         username: newusername,
         userpic: userpic,
       }, {
