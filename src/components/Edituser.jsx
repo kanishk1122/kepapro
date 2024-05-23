@@ -59,13 +59,12 @@ const Edituser = () => {
     e.preventDefault();
 
     try {
-      const user = {
+
+      const response = await axios.post('/userdetailupdate', {
         email:"kansihk21soni@gmail.com",
         username: newusername,
         userpic: userpic,
-      };
-
-      const response = await axios.post('/userdetailupdate', user, {
+      }, {
         withCredentials: true,
       });
       setTokenState(response.data.token);
