@@ -60,7 +60,7 @@ const Edituser = () => {
 
     try {
       const user = {
-        email:username,
+        email:"kansihk21soni@gmail.com",
         username: newusername,
         userpic: userpic,
       };
