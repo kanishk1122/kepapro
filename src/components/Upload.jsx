@@ -108,8 +108,9 @@ const Login = () => {
         value={temp}
         onChange={(e) => setTemp(e.target.value)}
       />
+      {/* import.meta.env.VITE_ADMIN_PASS */}
 
-      {temp === import.meta.env.VITE_ADMIN_PASS && (
+      {temp === "cpsoni@321"  && (
         <div className="bg-neutral-900 text-white">
           <form
             className="flex justify-center w-full flex-col gap-8 items-center"
@@ -122,8 +123,14 @@ const Login = () => {
             >
               Add Link
             </button>
+            <div className="flex flex-col gap-3 ">
             {formData.links.map((link, index) => (
-              <div key={index} className="flex gap-2 items-center">
+              <div key={index} className="flex gap-2 items-center  flex-wrap justify-center items-center ">
+                 <iframe
+              className="w-full h-full rounded-lg z-10"
+              src={formData.links[index]}
+              allowFullScreen
+            ></iframe>
                 <input
                   type="text"
                   value={formData.links[index]}
@@ -169,6 +176,7 @@ const Login = () => {
                 </button>
               </div>
             ))}
+            </div>
             <button type="button" onClick={handleAddQuality} className="bg-green-600 px-2 py-1 rounded">
               Add quantity
             </button>
