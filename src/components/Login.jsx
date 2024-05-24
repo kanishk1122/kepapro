@@ -51,8 +51,15 @@ const Login = () => {
       setPassword("");
       setformsubmitred(true)
     } catch (error) {
-      console.log("Error:", error);
-      setflash("Something went wrong")
+      if (error.response && error.response.status === 404) {
+        setflash("you enter an wrong email")
+      }
+      else if (error.response && error.response.status === 401){
+        setflash("Incorrect password")
+      }
+      else {
+        setflash("Internal Server Error")
+      }
       
     }
   };

@@ -49,9 +49,12 @@ const Registration = () => {
 
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        setflash("User email is invalid");
-      } else {
-        setflash("An error occurred");
+        setflash("User email is already exits");
+      } else if (error.response && error.response.status === 500) {
+        setflash("Internal server error");
+      }
+      else{
+        setflash("something went wrong");
       }
       
     }
