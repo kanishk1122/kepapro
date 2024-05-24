@@ -192,7 +192,9 @@ const Watch = () => {
           </div>
         </div>
             {
-              <form ></form>
+              <form >
+                <input type="text" value={filteredData.id} />
+              </form>
             }
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) => {
