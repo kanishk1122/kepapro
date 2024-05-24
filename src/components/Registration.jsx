@@ -48,12 +48,11 @@ const Registration = () => {
       setformsubmitred(true);
 
     } catch (error) {
-     if(error.status === 409){
-      setflash("user email is invaild")
-     }
-     else{
-      setflash("it an error")
-     }
+      if (error.response && error.response.status === 409) {
+        setflash("User email is invalid");
+      } else {
+        setflash("An error occurred");
+      }
       
     }
   };
