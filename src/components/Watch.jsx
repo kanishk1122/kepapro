@@ -193,7 +193,7 @@ const Watch = () => {
         </div>
             {
               <form >
-                <input type="text" value={filteredData.id} />
+                <input type="text" className="bg-transparent" value={filteredData.id} />
               </form>
             }
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
