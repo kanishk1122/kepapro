@@ -137,7 +137,7 @@ const Registration = () => {
                 <p className="text-red-500 text-sm">{errors.email}</p>
               )}
             </div>
-            <div className="flex justify-center items-center gap-0">
+            <div className="flex justify-center items-center ">
               <div>
                 <h1>Enter password</h1>
                 <input
