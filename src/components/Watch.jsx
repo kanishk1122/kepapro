@@ -191,11 +191,7 @@ const Watch = () => {
 
           </div>
         </div>
-            {
-              <form >
-                <input type="text" className="bg-transparent" value={filteredData.id} />
-              </form>
-            }
+            
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) => {
             return item.animename === name && item.quality === 720 && item.season === watchSeason ? (
