@@ -51,6 +51,9 @@ const Registration = () => {
      if(error === 409){
       setflash("user email is invaild")
      }
+     else{
+      setflash("it an error")
+     }
       
     }
   };
