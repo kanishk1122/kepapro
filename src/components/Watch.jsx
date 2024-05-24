@@ -128,7 +128,7 @@ const Watch = () => {
       console.error("Error:", error);
     }
   };
-  console.log(filteredData);
+  console.log(filteredData._id);
 
   return (
     <>
