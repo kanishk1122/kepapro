@@ -48,7 +48,7 @@ const Registration = () => {
       setformsubmitred(true);
 
     } catch (error) {
-     if(error === 409){
+     if(error.status === 409){
       setflash("user email is invaild")
      }
      else{
