@@ -46,6 +46,9 @@ const Registration = () => {
       setEmail("");
       setPassword("");
       setformsubmitred(true);
+      if (response.data === 409 ) {
+        setflash("user email is invaild")
+      }
     } catch (error) {
      if(error == 409){
       setflash("user email is invaild")
