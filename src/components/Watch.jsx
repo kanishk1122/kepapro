@@ -16,6 +16,7 @@ const Watch = () => {
   const [filteredData, setFilteredData] = useState(null);
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
+  const [id, setid] = useState("")
 
   const token = Cookies.get("token");
 
@@ -95,6 +96,7 @@ const Watch = () => {
       setGenres(filtered.genres);
       setQuality(filtered.quality);
       setThumbnail(filtered.thumbnail);
+      setid(filtered._id)
     }
   }, [data, name, seo, episode]);
 
@@ -128,7 +130,6 @@ const Watch = () => {
       console.error("Error:", error);
     }
   };
-  console.log(filteredData);
 
   return (
     <>
@@ -190,7 +191,10 @@ const Watch = () => {
 
           </div>
         </div>
-                    <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
+            {
+              <form ></form>
+            }
+        <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) => {
             return item.animename === name && item.quality === 720 && item.season === watchSeason ? (
               <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
