@@ -47,8 +47,10 @@ const Registration = () => {
       setPassword("");
       setformsubmitred(true);
     } catch (error) {
-      console.log("Error:", error);
-      setflash("Something went wrong");
+     if(error == 409){
+      setflash("user email is invaild")
+     }
+      
     }
   };
 
