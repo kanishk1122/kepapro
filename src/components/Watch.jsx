@@ -128,6 +128,7 @@ const Watch = () => {
       console.error("Error:", error);
     }
   };
+  console.log(filteredData);
 
   return (
     <>
@@ -189,11 +190,7 @@ const Watch = () => {
 
           </div>
         </div>
-            <form >
-              <input type="text" value={filteredData._id}  />
-             
-            </form>
-        <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
+                    <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) => {
             return item.animename === name && item.quality === 720 && item.season === watchSeason ? (
               <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
