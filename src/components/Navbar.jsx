@@ -111,7 +111,7 @@ const decodingToken = () => {
 
   const navLinkProps = checkinguser
   ? { to: `/user/${jwt_decode(token).email}` }
-  : { onClick: () => setTemp((prev) => !prev) };
+  : { onClick: () => {setTemp((prev) => !prev) , setSearch(()=>!search)} };
 
   const textcolor = {
     color: "rgb(194,78,92)",
@@ -325,7 +325,7 @@ const decodingToken = () => {
         {isChecked == false && (
         <div className="bg-transparent p-3 bg-red-500 pr-3 w-[400px]  top-[13vh] max-md:absolute max-md:w-full max-md:left-1/2 max-md:-translate-x-1/2  flex justify-end items-end h-fit  max-md:ml-0 gap-3 ">
         <form
-          className={`p-2 flex justify-end max-md:left-1/2  w-full duration-600 gap-2 items-center`}
+          className={`p-2 flex justify-start max-md:left-1/2  w-full duration-600 gap-2 items-center`}
           onSubmit={submitHandler}
           value={result}
           onChange={(e) => setResult(e.target.value)}
