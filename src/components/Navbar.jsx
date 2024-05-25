@@ -83,11 +83,6 @@ const decodingToken = () => {
     return () => {
       document.removeEventListener("mousemove", updateCursorPosition);
     };
-    console.log(decodedToken.email,"jhbcsahj");
-
-    
-     
-    
 
   }, [updateCursorPosition]);
 
@@ -133,7 +128,7 @@ const decodingToken = () => {
   };
 
   return (
-    <nav className="flex text-2xl max-md:h-fit max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
+    <nav className="flex text-2xl max-md:h-[180px] max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
 
 
 
