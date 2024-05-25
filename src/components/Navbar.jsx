@@ -152,7 +152,7 @@ const decodingToken = () => {
         onChange={handleCheckboxChange}
       />
       {isChecked && (
-        <div className={` transition-height duration-1000 rounded-2xl  ease-in-out  ${isChecked ? 'w-fit h-fit': 'w-0 h-0'} bg-zinc-700  w-[300px]`}>
+        <div className={` transition-height duration-1000 rounded-2xl  ease-in-out  ${isChecked ? 'w-fit h-fit': 'w-0 h-0'} bg-zinc-700  w-[100px]`}>
           <div className="p2 flex duration-500 flex-col text-[20vw] w-full z-10 items-start gap-3 pt-3">
           <NavLink
           to="/register"

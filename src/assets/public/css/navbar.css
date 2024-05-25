@@ -10,7 +10,7 @@
 
 .menu {
     margin-top: 20%;
-    --s: 30px; /* control the size */
+    --s: 20px; /* control the size */
     --c: white; /* the color */
     
     height: var(--s);
