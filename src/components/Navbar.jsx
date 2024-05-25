@@ -36,7 +36,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   const [data, setData, result, setResult] = useContext(detailsContext);
   const [styles, setStyles] = useState({ o: 0, t: "scale(0)" });
   const [CursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [search, setSearch] = useState(false);
+  const [search, setSearch] = useState(true);
   const [temp, setTemp] = useState(false);
   const [showmenu,setshowmenu] = useState(false)
   const [isChecked, setIsChecked] = useState(false);
@@ -129,7 +129,7 @@ const decodingToken = () => {
   };
 
   const width = {
-    width: search ? "28vw" : "0px",
+    width: search ? "100vw" : "0px",
   };
 
   return (
@@ -323,25 +323,9 @@ const decodingToken = () => {
         </div>
         </div>
         {isChecked == false && (
-        <div className="bg-transparent pt-3 pr-3 w-[400px] max-md:w-fit top-[13vh] max-md:absolute flex justify-end items-end h-fit  max-md:ml-0 gap-3   ">
-        <button
-          onClick={() => setSearch(!search)}
-          className="navlink text-lg w-fit px-2 py-1 rounded-lg border-0 backdrop-blur-lg border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
-        >
-          <Link to="/">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="32"
-              height="32"
-              fill="currentColor"
-            >
-              <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"></path>
-            </svg>
-          </Link>
-        </button>
+        <div className="bg-transparent p-3 bg-red-500 pr-3 w-[400px]  top-[13vh] max-md:absolute max-md:w-full max-md:left-1/2 max-md:-translate-x-1/2  flex justify-end items-end h-fit  max-md:ml-0 gap-3 ">
         <form
-          className={`p2 flex justify-center duration-600 gap-2 items-center`}
+          className={`p-2 flex justify-end max-md:left-1/2  w-full duration-600 gap-2 items-center`}
           onSubmit={submitHandler}
           value={result}
           onChange={(e) => setResult(e.target.value)}
@@ -349,7 +333,7 @@ const decodingToken = () => {
           <input
             onChange={(e) => setsearchResult(e.target.value)}
             value={resultsearch}
-            className="px-2 w-0 duration-500 max-md:w-[100%] max-md:max-w-[100%] -mt-2 py-1 rounded-xl placeholder:text-zinc-400 bg-transparent border-2 border-zinc-400 max-w-[200px]"
+            className="px-2  duration-500  max-md:w-full -mt-2 py-1 rounded-xl placeholder:text-zinc-400 bg-transparent border-2 border-zinc-400 "
             style={width}
             placeholder="search"
             type="text"
