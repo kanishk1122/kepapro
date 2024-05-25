@@ -133,7 +133,7 @@ const decodingToken = () => {
   };
 
   return (
-    <nav className="flex text-2xl max-md:h-fit max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-20 py-3 px-0 text-white bg-black relative">
+    <nav className="flex text-2xl max-md:h-fit max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
 
 
 
