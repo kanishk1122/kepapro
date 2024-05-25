@@ -133,7 +133,7 @@ const decodingToken = () => {
   };
 
   return (
-    <nav className="flex text-2xl max-md:h-fit max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-18 py-3 px-0 text-white bg-black relative">
+    <nav className="flex text-2xl max-md:h-fit max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-20 py-3 px-0 text-white bg-black relative">
 
 
 
@@ -224,13 +224,13 @@ const decodingToken = () => {
       )}
     </div>
 
-      <div className={`p1 h-14 w-[330px] flex text-2xl  z-30 gap-8 justify-evenly px-1 py-3 text-white bg-transparent relative `}>
+      <div className={`p1 h-16 w-[330px] flex text-2xl  z-30 gap-8 justify-evenly px-1 py-3 text-white bg-transparent relative `}>
         <NavLink
           to="/"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           id="logo"
-          className="navlink w-fit px-2 py-1 text-gradient-to-r from-red-600 via-red-900 to-blue-300 backdrop-blur-lg font-['monument'] rounded-lg border-0 border-12 font-black border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink w-fit px-2 py-1 text-gradient-to-r from-red-600 via-red-900 to-blue-300 text-[35px] backdrop-blur-lg font-['monument'] rounded-lg border-0 border-12 font-black border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={textcolor}
         >
           kepapro
