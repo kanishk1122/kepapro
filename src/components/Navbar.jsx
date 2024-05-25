@@ -279,27 +279,7 @@ const decodingToken = () => {
       </div>
       <div className=" h-fit pt-3 flex w-fit  flex-wrap z-2 text-2xl gap-4 justify:center items-center  max-md:justify-evenly max-md:items-end  text-white  overflow-hidden bg-transparent duration-600">
         <div className="flex flex-wrap">
-          <NavLink
-            to="/populer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className="navlink text-lg w-fit px-1 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
-            style={(e) =>
-              e.isActive
-                ? { backdropFilter: "blur(10px)", fontWeight: "700" }
-                : { background: "transparent" }
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="32"
-              height="32"
-              fill="currentColor"
-            >
-              <path d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4194 19.7761 22.6434 19.5 22.6434C19.4061 22.6434 19.314 22.6168 19.2344 22.5669L12 18.0313L4.76559 22.5669C4.53163 22.7136 4.22306 22.6429 4.07637 22.4089C4.02647 22.3293 4 22.2373 4 22.1433V3C4 2.44772 4.44772 2 5 2ZM18 4H6V19.4324L12 15.6707L18 19.4324V4Z"></path>
-            </svg>
-          </NavLink>
+         
           <div className="flex flex-col justify-start items-start w-fit">
             <NavLink
               {...navLinkProps}
