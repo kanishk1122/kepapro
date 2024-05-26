@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 
 const Watch = () => {
   const { name, seo, episode } = useParams();
+  const [userdata, setuserdata] = useState({})
   const [video, setVideo] = useState("");
   const [disc, setDisc] = useState("");
   const [thumbnail, setThumbnail] = useState("");
@@ -47,8 +48,10 @@ const Watch = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("/userdetail");
-        set(response.data);
+        const response = await axios.post("/userdetail",{
+          email:jwtDecode(token).email
+        },{withCredentials:true});
+        setuserdata(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
