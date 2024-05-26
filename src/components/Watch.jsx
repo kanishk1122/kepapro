@@ -79,6 +79,8 @@ const Watch = () => {
     fetchData();
   }, []);
 
+
+
   useEffect(() => {
     const filterData = () => {
       if (data.length === 0) {
@@ -154,10 +156,11 @@ const Watch = () => {
 
       console.log(response.data);
 
-      if (response.data.message === "comment added") {
+      if (response.data.message === "Comment added successfully") {
         alert("comment added");
         setcomment(""); // Clear the comment input after successful submission
-        setallcomment(prevComments => [...prevComments, { image: userdata.userpic, comment: comment }]); // Update the comment list
+        // Fetch updated comments if needed
+        setallcomment([...allcomment, { image: userdata.userpic, comment: comment }]); // Update the comment list
       } else {
         console.error("Failed to add comment");
       }
@@ -232,8 +235,10 @@ const Watch = () => {
                 </div>
               </div>
             )}
-            {/* Uncomment and modify this section if you need it */}
-            {/* {jwtDecode(token).Admin === 'yes' ? () => {} : null} */}
+            {/* {
+              jwtDecode(token).Admin === 'yes' ? ()
+            } */}
+
           </div>
         </div>
 
@@ -249,7 +254,7 @@ const Watch = () => {
           ))}
         </div>
       </div>
-      <div className="max-m:h-fit bg-zinc-800 flex flex-col gap-3 p-3 h-fit">
+      <div className="max-m:h-fit bg-zinc-800 flex flex-col gap-3 p-3 h-fit ">
         {allcomment.map((item, index) => (
           <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
@@ -261,7 +266,7 @@ const Watch = () => {
           </div>
         ))}
 
-        <div className="w-full h-fit px-3 flex">
+        <div className="w-full h-fit px-3 flex ">
           <form onSubmit={commenthandler} className="w-full h-fit flex flex-col gap-5 justify-end items-end">
             <textarea value={comment} onChange={(e) => setcomment(e.target.value)} style={{ resize: "none" }} className="w-2/3 bg-transparent rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full" id=""></textarea>
             <input type="submit" value="Add comment" className="bg-zinc-100 text-black rounded-lg font-semibold px-2 py-1" />
