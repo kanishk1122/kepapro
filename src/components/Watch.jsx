@@ -154,7 +154,7 @@ const Watch = () => {
         withCredentials: true,
       });
 
-      console.log(response.data);
+      setallcomment(response.data);
 
       if (response.data.message === "Comment added successfully") {
         alert("comment added");
