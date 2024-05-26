@@ -140,7 +140,10 @@ const Watch = () => {
       const response = await axios.post("https://kepapro-back.onrender.com/comment", {
         email: jwtDecode(token).email,
         comment:comment,
-      }, {
+        animename: desiredPart[0],
+        season: seo,
+        ep: episode,
+    }, {
         withCredentials: true,
       });
 
