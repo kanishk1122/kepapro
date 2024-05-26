@@ -147,7 +147,7 @@ const Watch = () => {
           })}
         </div>
         <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
-          {data.map((item, index) => {
+          {/* {data.map((item, index) => {
             return item.animename === name && item.quality === 720 && item.ep === 1 ? (
               <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
                 <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
@@ -155,7 +155,7 @@ const Watch = () => {
                 </div>
               </Link>
             ) : null;
-          })}
+          })} */}
         </div>
         <div className="h-fit pb-5 w-full p-4 flex flex-wrap gap-4">
           <div className="w-[930px] overflow-hidden min-w-[300px] h-[60vw] max-h-[400px] rounded-lg relative">
