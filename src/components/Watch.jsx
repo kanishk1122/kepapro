@@ -16,7 +16,8 @@ const Watch = () => {
   const [filteredData, setFilteredData] = useState(null);
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
-  const [id, setid] = useState("")
+  const [id, setid] = useState("");
+  const [comment, setcomment] = useState("")
 
   const token = Cookies.get("token");
 
@@ -131,6 +132,29 @@ const Watch = () => {
     }
   };
 
+  const commenthandler = async (e) => {
+    e.preventDefault();
+    if (!token) return;
+
+    try {
+      const response = await axios.post("https://kepapro-back.onrender.com/comment", {
+        email: jwtDecode(token).email,
+        comment:comment,
+      }, {
+        withCredentials: true,
+      });
+
+      console.log(response.data);
+
+      if (response.data.message === "comment added") {
+        alert("comment added");
+      } else {
+        console.error("Failed to add comment");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <>
       <div className="bg-neutral-900 text-white w-full">
@@ -217,12 +241,22 @@ const Watch = () => {
       </div>
       <div className="max-m:h-fit bg-zinc-800 flex flex-col gap-3 p-3 h-fit ">
           <div className="w-fit h-fit flex gap-3 flex-wrap ">
-            <div className="w-[50px] h-[50px] rounded-full bg-black"></div>
+            <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
+              <img src=""className="w-full h-full object-cover" alt="" />
+            </div>
 
             
-          <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl  h-fit">
+          <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw]  h-fit"><p></p>
           </div>
           </div>
+
+          <div className="w-full h-fit px-3 flex ">
+            <form onSubmit={commenthandler}  className="w-full h-fit flex flex-col gap-5 justify-end items-end">
+              <textarea value={comment} onChange={(e)=>setcomment(e.target.value)} style={{resize:"none"}} className="w-2/3 bg-transparent rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full"  id=""></textarea>
+              <input type="submit"  value="Add comment" className="bg-zinc-100 text-black rounded-lg font-semibold px-2 py-1" />
+            </form>
+          </div>
+          
       </div>
       <Footer />
     </>
