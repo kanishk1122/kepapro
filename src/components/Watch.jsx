@@ -18,7 +18,8 @@ const Watch = () => {
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
   const [id, setid] = useState("");
-  const [comment, setcomment] = useState("")
+  const [comment, setcomment] = useState("");
+  const [allcomment, setallcomment] = useState({})
 
   const token = Cookies.get("token");
 
@@ -100,7 +101,8 @@ const Watch = () => {
       setGenres(filtered.genres);
       setQuality(filtered.quality);
       setThumbnail(filtered.thumbnail);
-      setid(filtered._id)
+      setid(filtered._id);
+      setallcomment(filtered.comments)
     }
   }, [data, name, seo, episode]);
 
@@ -247,15 +249,17 @@ const Watch = () => {
         </div>
       </div>
       <div className="max-m:h-fit bg-zinc-800 flex flex-col gap-3 p-3 h-fit ">
-          <div className="w-fit h-fit flex gap-3 flex-wrap ">
+          {allcomment.map((item,index)=>{
+            <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
-              <img src=""className="w-full h-full object-cover" alt="" />
+              <img src={item.image} className="w-full h-full object-cover" alt="" />
             </div>
 
             
-          <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw]  h-fit"><p></p>
+          <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw]  h-fit"><p>{item.comment}</p>
           </div>
           </div>
+          })}
 
           <div className="w-full h-fit px-3 flex ">
             <form onSubmit={commenthandler}  className="w-full h-fit flex flex-col gap-5 justify-end items-end">
