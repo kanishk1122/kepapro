@@ -79,6 +79,8 @@ const Watch = () => {
     fetchData();
   }, []);
 
+  useEffect(()=>{},[allcomment])
+
   useEffect(() => {
     const filterData = () => {
       if (data.length === 0) {
