@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 const Watch = () => {
   const { name, seo, episode } = useParams();
-  const [userdata, setuserdata] = useState({})
+  const [userdata, setuserdata] = useState({});
   const [video, setVideo] = useState("");
   const [disc, setDisc] = useState("");
   const [thumbnail, setThumbnail] = useState("");
@@ -19,7 +19,7 @@ const Watch = () => {
   const [userLoginMenu, setUserLoginMenu] = useState(false);
   const [id, setid] = useState("");
   const [comment, setcomment] = useState("");
-  const [allcomment, setallcomment] = useState({})
+  const [allcomment, setallcomment] = useState([]);
 
   const token = Cookies.get("token");
 
@@ -49,9 +49,9 @@ const Watch = () => {
       if (!token) return;
 
       try {
-        const response = await axios.post("/userdetail",{
-          email:jwtDecode(token).email
-        },{withCredentials:true});
+        const response = await axios.post("/userdetail", {
+          email: jwtDecode(token).email
+        }, { withCredentials: true });
         setuserdata(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -80,7 +80,6 @@ const Watch = () => {
   }, []);
 
   useEffect(() => {
-  
     const filterData = () => {
       if (data.length === 0) {
         return null;
@@ -102,9 +101,9 @@ const Watch = () => {
       setQuality(filtered.quality);
       setThumbnail(filtered.thumbnail);
       setid(filtered._id);
-      setallcomment(filtered.comments)
+      setallcomment(filtered.comments);
     }
-  }, [data, name, seo, episode]);
+  }, [data, desiredPart]);
 
   const userLogger = () => {
     setUserLoginMenu(!userLoginMenu);
@@ -144,12 +143,12 @@ const Watch = () => {
     try {
       const response = await axios.post("https://kepapro-back.onrender.com/comment", {
         email: jwtDecode(token).email,
-        image:userdata.userpic,
-        comment:comment,
+        image: userdata.userpic,
+        comment: comment,
         animename: desiredPart[0],
         season: seo,
         ep: episode,
-    }, {
+      }, {
         withCredentials: true,
       });
 
@@ -157,6 +156,9 @@ const Watch = () => {
 
       if (response.data.message === "comment added") {
         alert("comment added");
+        setcomment(""); // Clear the comment input after successful submission
+        // Fetch updated comments if needed
+        setallcomment([...allcomment, { image: userdata.userpic, comment: comment }]); // Update the comment list
       } else {
         console.error("Failed to add comment");
       }
@@ -164,31 +166,33 @@ const Watch = () => {
       console.error("Error:", error);
     }
   };
+
   return (
     <>
       <div className="bg-neutral-900 text-white w-full">
         <Navbar />
         <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
-          {data.map((item, index) => {
-            return item.animename === name && item.quality === 720 && item.ep === 1 ? (
+          {data.map((item, index) => (
+            item.animename === name && item.quality === 720 && item.ep === 1 ? (
               <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
                 <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
                   <p>season : {item.season}</p>
                 </div>
               </Link>
-            ) : null;
-          })}
+            ) : null
+          ))}
         </div>
         <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
-          {/* {data.map((item, index) => {
-            return item.animename === name && item.quality === 720 && item.ep === 1 ? (
+          {/* Uncomment and modify this section if you need it */}
+          {/* {data.map((item, index) => (
+            item.animename === name && item.quality === 720 && item.ep === 1 ? (
               <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
                 <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
                   <p>language : {item.language}</p>
                 </div>
               </Link>
-            ) : null;
-          })} */}
+            ) : null
+          ))} */}
         </div>
         <div className="h-fit pb-5 w-full p-4 flex flex-wrap gap-4">
           <div className="w-[930px] overflow-hidden min-w-[300px] h-[60vw] max-h-[400px] rounded-lg relative">
@@ -235,39 +239,37 @@ const Watch = () => {
 
           </div>
         </div>
-            
+
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
-          {data.map((item, index) => {
-            return item.animename === name && item.quality === 720 && item.season === watchSeason ? (
+          {data.map((item, index) => (
+            item.animename === name && item.quality === 720 && item.season === watchSeason ? (
               <Link key={index} to={`/watch/${item.animename}/${item.season}/${item.ep}`}>
                 <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
                   <p>ep: {item.ep}</p>
                 </div>
               </Link>
-            ) : null;
-          })}
+            ) : null
+          ))}
         </div>
       </div>
       <div className="max-m:h-fit bg-zinc-800 flex flex-col gap-3 p-3 h-fit ">
-          {allcomment.map((item,index)=>{
-            <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
+        {allcomment.map((item, index) => (
+          <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
               <img src={item.image} className="w-full h-full object-cover" alt="" />
             </div>
+            <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw] h-fit">
+              <p>{item.comment}</p>
+            </div>
+          </div>
+        ))}
 
-            
-          <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw]  h-fit"><p>{item.comment}</p>
-          </div>
-          </div>
-          })}
-
-          <div className="w-full h-fit px-3 flex ">
-            <form onSubmit={commenthandler}  className="w-full h-fit flex flex-col gap-5 justify-end items-end">
-              <textarea value={comment} onChange={(e)=>setcomment(e.target.value)} style={{resize:"none"}} className="w-2/3 bg-transparent rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full"  id=""></textarea>
-              <input type="submit"  value="Add comment" className="bg-zinc-100 text-black rounded-lg font-semibold px-2 py-1" />
-            </form>
-          </div>
-          
+        <div className="w-full h-fit px-3 flex ">
+          <form onSubmit={commenthandler} className="w-full h-fit flex flex-col gap-5 justify-end items-end">
+            <textarea value={comment} onChange={(e) => setcomment(e.target.value)} style={{ resize: "none" }} className="w-2/3 bg-transparent rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full" id=""></textarea>
+            <input type="submit" value="Add comment" className="bg-zinc-100 text-black rounded-lg font-semibold px-2 py-1" />
+          </form>
+        </div>
       </div>
       <Footer />
     </>
