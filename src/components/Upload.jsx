@@ -15,6 +15,7 @@ const Login = () => {
     thumnail: "",
     animename: "",
     rating: "",
+    seasonname:"",
   });
 
 
@@ -42,6 +43,7 @@ const Login = () => {
           thumnail: "",
           animename: "",
           rating: "",
+          seasonname:"",
         });
       } else {
         console.error("Failed to add video details.");
@@ -204,6 +206,14 @@ const Login = () => {
               value={formData.animename}
               onChange={(e) => setFormData({ ...formData, animename: e.target.value })}
               name="animename"
+            />
+            <input
+              type="text"
+              className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
+              placeholder="Enter season name"
+              value={formData.seasonname}
+              onChange={(e) => setFormData({ ...formData, seasonname: e.target.value })}
+              name="seasonname"
             />
             <input
               type="number"
