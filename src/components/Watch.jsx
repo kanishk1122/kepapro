@@ -203,7 +203,19 @@ const Watch = () => {
     } catch (error) {
       console.error("Error:", error);
     }
-  };
+  }; 
+
+  const updatevideohandler = async (e)=>{
+    e.preventDefault();
+
+    try {
+      const updatevideo = await axios.post("updatevideo",
+        newformdata,{withCredentials:true})
+        console.log(response.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -319,9 +331,11 @@ const Watch = () => {
           </div>
         </div>
         
-            {
-              jwtDecode(token).Admin === 'yes' ? (<div className="flex justify-center items-center h-fit w-full  ">
-              <form className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300 *:border *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
+            {/* {
+              jwtDecode(token).Admin === 'yes' ?  */}
+              {/* ( */}
+                <div className="flex justify-center items-center h-fit w-full  ">
+              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300 *:border *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
                 {/* 
       season: req.body.season,
       ep: req.body.ep,
@@ -458,12 +472,12 @@ const Watch = () => {
                     <input
                       type="radio"
                       id="No"
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          popular: e.target.value === "false",
-                        })
-                      }
+                      // onClick={(e) =>
+                      //   setNewformdata({
+                      //     ...newformdata,
+                      //     popular: e.target.value === "false",
+                      //   })
+                      // }
                       value="false"
                       name="popular"
                     />
@@ -493,9 +507,15 @@ const Watch = () => {
                     <label htmlFor="off">No</label>
                   </div>
                 </fieldset>
+                <div className="flex justify-center items-center">
+                <input type="submit" value="update" className="bg-blue-600 rounded-lg px-2 py-1" />
+                </div>
               </form>
-            </div>):null
-            }
+
+            </div>
+            {/* )
+             :null
+             } */}
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) =>
             item.animename === name &&
