@@ -321,59 +321,34 @@ const Home = () => {
             </div>
             <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
-              
-              <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
-              <h1 className="text-3xl font-semibold">Newly Added</h1>
-              <div className="w-full h-fit rounded-lg overflow-hidden">
-                <div className="scroll-ps-6 w-full h-fit flex overflow-x-auto">
-                  <div
-                    className="h-fit rounded-lg flex gap-4 overflow-auto flex-shrink-0"
-                    style={{
-                      width: "fitContent",
-                      WebkitScrollbar: { display: "none" },
-                      msOverflowStyle: "none",
-                      scrollbarWidth: "none",
-                    }}
-                  >
-                    {newlyAddedData.map((item, index) => (
-                      <Link
+              <h1 className="text-3xl font-semibold">newly added</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {data.map((item, index) =>
+                  item.new === true ? (
+                    <Link
+                      key={index}
+                      to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                    >
+                      <div
                         key={index}
-                        to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-[40vw] h-[69vw] max-w-[300px] max-h-[500px] rounded-lg overflow-hidden object-cover relative">
-                          <div className="absolute flex flex-col gap-5 duration-500 w-full h-full bg-[#00000099] text-white flex p-4 felx-col opacity-0 hover:opacity-100">
-                            <h1 className="font-semibold">{item.animename}</h1>
-                            <div className="w-[30vw] h-fit">
-                              <div
-                                style={{ flexDirection: "row" }}
-                                className="w-full overflow-hidden h-fit"
-                              >
-                                <div className="w-full" style={{ flexShrink: 0 }}>
-                                  {item.description}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="">
-                              <Link
-                                to="/"
-                                className="bg-[rgba(255,0,0,0.5)] text-2xl p-2 w-fit px-6 font-semibold rounded-lg"
-                              >
-                                Watch now
-                              </Link>
-                            </div>
-                          </div>
+                        <div className="w-full h-2/3 rounded bg-black">
                           <img
+                            src={item.thumnail}
                             className="w-full h-full object-cover"
-                            src={item.thumbnail}
                             alt=""
                           />
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                      
+                    </Link>
+                  ) : null
+                )}
               </div>
-            </div>
               <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">ALL</h1>
