@@ -34,9 +34,6 @@ const Home = () => {
     return itemDate >= date10DaysAgo;
   })
   
-filteredData.map((item,index)=>{
-  console.log(item);
-})
 
 
   // Reverse the filtered data
@@ -331,7 +328,7 @@ filteredData.map((item,index)=>{
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
               <h1 className="text-3xl font-semibold">newly added</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {filteredData.map((item, index) =>
+                {reversedData.map((item, index) =>
                   item.new === true ? (
                     <Link
                       key={index}
