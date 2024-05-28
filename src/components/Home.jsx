@@ -35,7 +35,7 @@ const Home = () => {
   })
   
   data.map((item,index)=>{
-      console.log(item);
+      console.log(item.dou);
   })
 
 
