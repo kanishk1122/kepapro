@@ -42,6 +42,16 @@ console.log(filteredData);
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
 
+  const allAction =  data.filter(item=>item.genres.includes("Action"))
+
+  const alldrame =  data.filter(item=>item.genres.includes("Drama"))
+
+  const alladventure =  data.filter(item=>item.genres.includes("Advanture"))
+
+  const allcomedy =  data.filter(item=>item.genres.includes("Comedy"))
+
+  const allromentic =  data.filter(item=>item.genres.includes("Romentic"))
+
   const divstyle = {
     background: `linear-gradient(#000000 50%, transparent 100%)`,
   };

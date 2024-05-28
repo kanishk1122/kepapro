@@ -40,25 +40,15 @@ console.log(filteredData);
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
 
- const allAction =  data.filter(item=>item.genres.includes("Action")).map((item,index)=>{
-    console.log(item.animename);
-  })
+ const allAction =  data.filter(item=>item.genres.includes("Action"))
 
-  const alldrame =  data.filter(item=>item.genres.includes("Drama")).map((item,index)=>{
-    console.log(item.animename);
-  })
+  const alldrame =  data.filter(item=>item.genres.includes("Drama"))
 
-  const alladventure =  data.filter(item=>item.genres.includes("Advanture")).map((item,index)=>{
-    console.log(item.animename);
-  })
+  const alladventure =  data.filter(item=>item.genres.includes("Advanture"))
 
-  const allcomedy =  data.filter(item=>item.genres.includes("Comedy")).map((item,index)=>{
-    console.log(item.animename);
-  })
+  const allcomedy =  data.filter(item=>item.genres.includes("Comedy"))
 
-  const allromentic =  data.filter(item=>item.genres.includes("Romentic")).map((item,index)=>{
-    console.log(item.animename);
-  })
+  const allromentic =  data.filter(item=>item.genres.includes("Romentic"))
   
 
   const divstyle = {
