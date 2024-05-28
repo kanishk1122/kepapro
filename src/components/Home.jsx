@@ -20,33 +20,25 @@ const Home = () => {
   const discription = data.discription;
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
-  
 
   console.log(Cookies.get("token"))
 
 
+  const currentDate = new Date();
+  const date10DaysAgo = new Date(currentDate);
+  date10DaysAgo.setDate(currentDate.getDate() - 10);
+
+  // Filter the data to include only entries from the last 10 days
+  const filteredData = data.filter(item => {
+    const itemDate = new Date(item.dou.$date);
+    return itemDate >= date10DaysAgo;
+  });
 
 
-const currentDate = new Date();
-const date10DaysAgo = new Date(currentDate);
-date10DaysAgo.setDate(currentDate.getDate() - 10);
-
-// Filter the data to include only entries from the last 10 days
-const filteredData = data.filter(item => {
-  const itemDate = new Date(item.dou.$date);
-  return itemDate >= date10DaysAgo;
-});
-
-useEffect(()=>{
- filteredData()
-},[filteredData])
-
-console.log(filteredData);
 
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
 
-  
   
 
   const divstyle = {
