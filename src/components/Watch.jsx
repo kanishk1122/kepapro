@@ -533,7 +533,7 @@ const Watch = () => {
           )}
         </div>
       </div>
-      <div className="max-m:h-fit bg-zinc-800 flex flex-col gap-3 p-3 h-fit ">
+      <div className="max-m:h-fit bg-black  flex flex-col gap-3 p-3 h-fit ">
         {allcomment.map((item, index) => (
           <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
