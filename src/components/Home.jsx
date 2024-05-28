@@ -32,11 +32,11 @@ const Home = () => {
   const filteredData = data.filter(item => {
     const itemDate = new Date(item.dou.$date);
     return itemDate >= date10DaysAgo;
-  });
-
-  console.log(data.map((item,index)=>{
-    item
-  }));
+  })
+  
+  data.map((item,index)=>{
+      console.log(item);
+  })
 
 
   // Reverse the filtered data
