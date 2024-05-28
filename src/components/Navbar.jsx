@@ -128,7 +128,7 @@ const decodingToken = () => {
   };
 
   return (
-    <nav className="flex text-2xl max-md:h-[180px] max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
+    <nav className="flex text-2xl max-md:h-fit  max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
 
 
 
@@ -147,13 +147,13 @@ const decodingToken = () => {
         onChange={handleCheckboxChange}
       />
       {isChecked && (
-        <div className={` transition-height duration-1000 rounded-2xl  ease-in-out  ${isChecked ? 'w-fit h-fit': 'w-0 h-0'} bg-zinc-700  w-[100px]`}>
+        <div className={` transition-height duration-1000 rounded-2xl *:w-full *:text-xl  ease-in-out  ${isChecked ? 'w-fit h-fit': 'w-0 h-0'} bg-zinc-700  w-[100px]`}>
           <div className="p2 flex duration-500 flex-col text-[20vw] w-full z-10 items-start gap-3 pt-3">
           <NavLink
           to="/register"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="navlink text-[7vw] w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink  w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={(e) =>
             e.isActive
               ? { backdropFilter: "blur(10px)", fontWeight: "700" }
@@ -166,7 +166,7 @@ const decodingToken = () => {
           to="/login"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="navlink text-[7vw] w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink  w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={(e) =>
             e.isActive
               ? { backdropFilter: "blur(10px)", fontWeight: "700" }
@@ -179,7 +179,7 @@ const decodingToken = () => {
           to="/all/popular"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="navlink text-[7vw] w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink  w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={(e) =>
             e.isActive
               ? { backdropFilter: "blur(10px)", fontWeight: "700" }
@@ -192,7 +192,7 @@ const decodingToken = () => {
           to="/all/trending"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="navlink text-[7vw] w-fit px-2 py-1 backdrop-blur-lg rounded-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink  w-fit px-2 py-1 backdrop-blur-lg rounded-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={(e) =>
             e.isActive
               ? { backdropFilter: "blur(10px)", fontWeight: "700" }
@@ -205,7 +205,7 @@ const decodingToken = () => {
           to="/news"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="navlink text-[7vw] w-fit px-2 py-1 rounded-lg border-0 backdrop-blur-lg border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink  w-fit px-2 py-1 rounded-lg border-0 backdrop-blur-lg border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={(e) =>
             e.isActive
               ? { backdropFilter: "blur(10px)", fontWeight: "700" }
