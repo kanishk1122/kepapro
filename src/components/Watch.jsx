@@ -238,11 +238,11 @@ const Watch = () => {
         <div className="h-fit px-2 flex flex-wrap w-screen gap-3"></div>
         <div className="h-fit pb-5 w-full p-4 flex flex-wrap gap-4">
           <div className="w-[930px] overflow-hidden min-w-[300px] h-[60vw] max-h-[400px] rounded-lg relative">
-            <div className="w-full h-[50px] top-3 text-black left-[90%] bg-transparent absolute z-20"></div>
+            <div className="w-[100vw] h-[50px] top-3 text-black  bg-transparent absolute z-20"></div>
             <iframe
               title="videoplayer"
               className="w-full h-full rounded-lg z-10"
-              src={video}
+              src="https://drive.google.com/file/d/1b0tSrUUYuy9k-8A4FeS4A7SPgQe_KBaX/preview"
               scrolling="no"
               frameBorder="0"
               allowFullScreen
