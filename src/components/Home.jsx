@@ -364,6 +364,110 @@ console.log(filteredData);
                 )}
               </div>
 
+              <h1 className="text-3xl font-semibold">Action</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {allAction.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                  >
+                    <div
+                        key={index}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                      >
+                        <div className="w-full h-2/3 rounded bg-black">
+                          <img
+                            src={item.thumnail}
+                            className="w-full h-full object-cover"
+                            alt=""
+                          />
+                        </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                  </Link>
+                ))}
+              </div>
+
+              <h1 className="text-3xl font-semibold">Adventure</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {alladventure.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                  >
+                    <div
+                        key={index}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                      >
+                        <div className="w-full h-2/3 rounded bg-black">
+                          <img
+                            src={item.thumnail}
+                            className="w-full h-full object-cover"
+                            alt=""
+                          />
+                        </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                  </Link>
+                ))}
+              </div>
+
+              <h1 className="text-3xl font-semibold">Comedy</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {allcomedy.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                  >
+                    <div
+                        key={index}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                      >
+                        <div className="w-full h-2/3 rounded bg-black">
+                          <img
+                            src={item.thumnail}
+                            className="w-full h-full object-cover"
+                            alt=""
+                          />
+                        </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                  </Link>
+                ))}
+              </div>
+
+              <h1 className="text-3xl font-semibold">Comedy</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {allcomedy.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                  >
+                    <div
+                        key={index}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                      >
+                        <div className="w-full h-2/3 rounded bg-black">
+                          <img
+                            src={item.thumnail}
+                            className="w-full h-full object-cover"
+                            alt=""
+                          />
+                        </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                  </Link>
+                ))}
+              </div>
+
               <h1 className="text-3xl font-semibold">Drama</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {alldrame.map((item, index) => (
