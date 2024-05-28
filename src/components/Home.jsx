@@ -354,7 +354,7 @@ const Home = () => {
                   ) : null
                 )}
               </div>
-              <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
+              {/* <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">Action</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
@@ -380,9 +380,9 @@ const Home = () => {
                       </div>
                   </Link>
                 ))}
-              </div>
+              </div> */}
               
-              <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
+              {/* <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">Drama</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
@@ -408,7 +408,7 @@ const Home = () => {
                       </div>
                   </Link>
                 ))}
-              </div>
+              </div> */}
               <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">ALL</h1>
