@@ -34,6 +34,9 @@ const Home = () => {
     return itemDate >= date10DaysAgo;
   });
 
+  console.log(data.map((item,index)=>{
+    item.dou
+  }));
 
 
   // Reverse the filtered data
