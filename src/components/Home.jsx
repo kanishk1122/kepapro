@@ -358,7 +358,7 @@ const Home = () => {
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">Action</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {data.filter(item=>item.genres.Action ||item.genres.action ).map((item, index) => (
+                {data.filter(item=>item.genres.Action).map((item, index) => (
                   <Link
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
@@ -386,7 +386,7 @@ const Home = () => {
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">Drama</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {data.filter(item=>item.genres.Drama ||item.genres.drama ).map((item, index) => (
+                {data.filter(item=>item.genres.Drama).map((item, index) => (
                   <Link
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
