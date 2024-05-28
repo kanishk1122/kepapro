@@ -25,6 +25,22 @@ const Home = () => {
 
 
 
+  
+  const currentDate = new Date();
+  const date10DaysAgo = new Date(currentDate);
+  date10DaysAgo.setDate(currentDate.getDate() - 10);
+
+  // Filter the data to include only entries from the last 10 days
+  const filteredData = data.filter(item => {
+    const itemDate = new Date(item.dou);
+    return itemDate >= date10DaysAgo;
+  })
+  
+
+console.log(filteredData);
+
+  // Reverse the filtered data
+  const reversedData = filteredData.slice().reverse();
 
   const divstyle = {
     background: `linear-gradient(#000000 50%, transparent 100%)`,
@@ -311,7 +327,7 @@ const Home = () => {
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
               <h1 className="text-3xl font-semibold">newly added</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {data.map((item, index) =>
+                {reversedData.map((item, index) =>
                   item.new === true ? (
                     <Link
                       key={index}
