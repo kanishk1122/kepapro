@@ -24,17 +24,20 @@ const Home = () => {
   console.log(Cookies.get("token"))
 
 
-   // Sort the data from newest to oldest
-  const sortedData = data.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));
+  const currentDate = new Date();
+  const date10DaysAgo = new Date(currentDate);
+  date10DaysAgo.setDate(currentDate.getDate() - 10);
 
-  // Filter the newly added items to show only those added within the last 10 days
-  const newlyAddedData = sortedData.filter(item => {
-    const addedDate = new Date(item.addedDate);
-    const tenDaysAgo = new Date();
-    tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
-    return addedDate >= tenDaysAgo;
+  // Filter the data to include only entries from the last 10 days
+  const filteredData = data.filter(item => {
+    const itemDate = new Date(item.dou.$date);
+    return itemDate >= date10DaysAgo;
   });
 
+  // Reverse the filtered data
+  const reversedData = filteredData.slice().reverse();
+
+  
 
   const divstyle = {
     background: `linear-gradient(#000000 50%, transparent 100%)`,
@@ -323,7 +326,7 @@ const Home = () => {
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
               <h1 className="text-3xl font-semibold">newly added</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {data.slice().reverse().map((item, index) =>
+                {reversedData.map((item, index) =>
                   item.new === true ? (
                     <Link
                       key={index}
