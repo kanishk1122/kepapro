@@ -356,6 +356,61 @@ const Home = () => {
               </div>
               <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
+              <h1 className="text-3xl font-semibold">Action</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {data.filter(item=>item.genres.Action ||item.genres.action ).map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                  >
+                    <div
+                        key={index}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                      >
+                        <div className="w-full h-2/3 rounded bg-black">
+                          <img
+                            src={item.thumnail}
+                            className="w-full h-full object-cover"
+                            alt=""
+                          />
+                        </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                  </Link>
+                ))}
+              </div>
+              
+              <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
+              <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
+              <h1 className="text-3xl font-semibold">Drama</h1>
+              <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
+                {data.filter(item=>item.genres.Drama ||item.genres.drama ).map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                  >
+                    <div
+                        key={index}
+                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                      >
+                        <div className="w-full h-2/3 rounded bg-black">
+                          <img
+                            src={item.thumnail}
+                            className="w-full h-full object-cover"
+                            alt=""
+                          />
+                        </div>
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                          {item.animename}
+                        </div>
+                      </div>
+                  </Link>
+                ))}
+              </div>
+              <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
+              <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">ALL</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {data.map((item, index) => (
