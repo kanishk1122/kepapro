@@ -442,9 +442,9 @@ console.log(filteredData);
                 ))}
               </div>
 
-              <h1 className="text-3xl font-semibold">Comedy</h1>
+              <h1 className="text-3xl font-semibold">Romentic</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {allcomedy.map((item, index) => (
+                {allromentic.map((item, index) => (
                   <Link
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
