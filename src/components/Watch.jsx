@@ -242,7 +242,7 @@ const Watch = () => {
             <iframe
               title="videoplayer"
               className="w-full h-full rounded-lg z-10"
-              src="https://drive.google.com/file/d/1b0tSrUUYuy9k-8A4FeS4A7SPgQe_KBaX/preview"
+              src={video}
               scrolling="no"
               frameBorder="0"
               allowFullScreen
