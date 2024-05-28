@@ -35,6 +35,7 @@ const Home = () => {
   })
   
 
+console.log(filteredData);
 
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
@@ -413,7 +414,7 @@ const Home = () => {
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">ALL</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {data.map((item, index) => (
+                {data.filter(item=>(item.season == 1 && item.ep == 1)).map((item, index) => (
                   <Link
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
@@ -438,7 +439,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        ) : (<div className="w-full p-5 h-fit p-3  ">
+        ) : (<div className="w-full p-5 h-fit  ">
         <div className="w-full p-1 gap-9  rounded flex-wrap flex  h-fit">
           {data
             .filter((item) =>
