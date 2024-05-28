@@ -20,7 +20,7 @@ const Home = () => {
   const discription = data.discription;
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
-  co
+  
 
   console.log(Cookies.get("token"))
 
