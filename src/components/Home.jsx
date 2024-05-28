@@ -20,23 +20,33 @@ const Home = () => {
   const discription = data.discription;
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
   const [decodedToken, setDecodedToken] = useState(""); 
+  co
 
   console.log(Cookies.get("token"))
 
 
-  const currentDate = new Date();
-  const date10DaysAgo = new Date(currentDate);
-  date10DaysAgo.setDate(currentDate.getDate() - 10);
 
-  // Filter the data to include only entries from the last 10 days
-  const filteredData = data.filter(item => {
-    const itemDate = new Date(item.dou.$date);
-    return itemDate >= date10DaysAgo;
-  });
+
+const currentDate = new Date();
+const date10DaysAgo = new Date(currentDate);
+date10DaysAgo.setDate(currentDate.getDate() - 10);
+
+// Filter the data to include only entries from the last 10 days
+const filteredData = data.filter(item => {
+  const itemDate = new Date(item.dou.$date);
+  return itemDate >= date10DaysAgo;
+});
+
+useEffect(()=>{
+ filteredData()
+},[filteredData])
+
+console.log(filteredData);
 
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
 
+  
   
 
   const divstyle = {
@@ -326,7 +336,7 @@ const Home = () => {
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
               <h1 className="text-3xl font-semibold">newly added</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {reversedData.map((item, index) =>
+                {data.slice().reverse().map((item, index) =>
                   item.new === true ? (
                     <Link
                       key={index}
