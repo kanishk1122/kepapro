@@ -30,13 +30,13 @@ const Home = () => {
 
   // Filter the data to include only entries from the last 10 days
   const filteredData = data.filter(item => {
-    const itemDate = new Date(item.dou.$date);
+    const itemDate = new Date(item.dou);
     return itemDate >= date10DaysAgo;
   })
   
-  data.map((item,index)=>{
-      console.log(item.dou);
-  })
+filteredData.map((item,index)=>{
+  console.log(item);
+})
 
 
   // Reverse the filtered data
