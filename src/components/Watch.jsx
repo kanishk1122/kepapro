@@ -142,7 +142,7 @@ const Watch = () => {
 
     try {
       const response = await axios.post(
-        "https://kepapro-back.onrender.com/user/addBookmark",
+        "https://kepapro-back-pv0z.onrender.com/user/addBookmark",
         {
           email: jwtDecode(token).email,
           animename: desiredPart[0],
@@ -172,7 +172,7 @@ const Watch = () => {
 
     try {
       const response = await axios.post(
-        "https://kepapro-back.onrender.com/comment",
+        "https://kepapro-back-pv0z.onrender.com/comment",
         {
           email: jwtDecode(token).email,
           image: userdata.userpic,
