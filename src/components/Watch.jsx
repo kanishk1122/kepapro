@@ -294,7 +294,7 @@ const Watch = () => {
             </div>
 
             {token ? (
-              <div>
+              <div className="w-full flex gap-3 justify-center items-center">
               <form onSubmit={handleSubmit} className="flex">
                 <input
                   className="bg-transparent hidden"
