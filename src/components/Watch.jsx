@@ -21,18 +21,7 @@ const Watch = () => {
   const [id, setid] = useState("");
   const [comment, setcomment] = useState("");
   const [allcomment, setallcomment] = useState([]);
-  const [newformdata, setNewformdata] = useState({
-    videolink: "",
-    season: "",
-    ep: "",
-    description: "",
-    genres: "",
-    animename: "",
-    thumbnail: "",
-    trending: "",
-    popular: "",
-    seasonname: "",
-  });
+
 
   const token = Cookies.get("token");
 
@@ -207,6 +196,20 @@ const Watch = () => {
     }
   }; 
 
+
+  const [newformdata, setNewformdata] = useState({
+    videolink: video ,
+    season: desiredPart[1],
+    ep: desiredPart[2],
+    description: disc,
+    genres: genres,
+    animename: desiredPart[0],
+    thumbnail: thumbnail,
+    trending: false,
+    popular: false,
+    seasonname: "",
+  });
+
   const updatevideohandler = async (e)=>{
     e.preventDefault();
 
@@ -218,6 +221,8 @@ const Watch = () => {
       console.log(error)
     }
   }
+
+
 
   return (
     <>
@@ -347,7 +352,7 @@ const Watch = () => {
                   <legend>enter videolink</legend>
                   <input
                     type="text"
-                    value={newformdata.videolink ? newformdata.videolink : video}
+                    value={newformdata.videolink}
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, videolink: e.target.value })
@@ -362,8 +367,6 @@ const Watch = () => {
                     type="text"
                     value={
                       newformdata.animename
-                        ? newformdata.animename
-                        : Name
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
@@ -380,8 +383,6 @@ const Watch = () => {
                     type="text"
                     value={
                       newformdata.thumbnail
-                        ? newformdata.thumbnail
-                        : thumbnail
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
@@ -398,8 +399,6 @@ const Watch = () => {
                     type="text"
                     value={
                       newformdata.description
-                        ? newformdata.description
-                        : disc
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
@@ -418,9 +417,7 @@ const Watch = () => {
                   <input
                     type="text"
                     value={
-                      newformdata.genres
-                        ? newformdata.genres
-                        : genres.join(",")
+                      newformdata.genres.join(",")
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
@@ -440,8 +437,6 @@ const Watch = () => {
                     type="Number"
                     value={
                       newformdata.seasonname
-                        ? newformdata.seasonname
-                        : desiredPart[1]
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
@@ -457,8 +452,6 @@ const Watch = () => {
                     type="Number"
                     value={
                       newformdata.ep
-                        ? newformdata.ep
-                        : desiredPart[2]
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
@@ -475,6 +468,7 @@ const Watch = () => {
                     <input
                       type="radio"
                       id="yes"
+
                       onClick={(e) =>
                         setNewformdata({
                           ...newformdata,
@@ -494,7 +488,7 @@ const Watch = () => {
                       onClick={(e) =>
                         setNewformdata({
                           ...newformdata,
-                          popular: e.target.value === "false",
+                          popular: false,
                         })
                       }
                       value="false"
@@ -509,7 +503,12 @@ const Watch = () => {
                     <input
                       type="radio"
                       value="yes"
-                      onClick={(e) => console.log(e.target.value)}
+                      onClick={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          trending:true,
+                        })
+                      }
                       name="trending"
                       id="yse"
                     />
@@ -518,7 +517,12 @@ const Watch = () => {
                   <div>
                     <input
                       type="radio"
-                      onClick={(e) => console.log(e.target.value)}
+                      onClick={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          trending:false,
+                        })
+                      }
                       value="no"
                       name="trending"
                       id="off"
