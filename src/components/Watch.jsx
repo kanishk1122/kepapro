@@ -223,20 +223,23 @@ const Watch = () => {
       console.log(error)
     }
   }
-  if (video && desiredPart && disc && genres && Thumbnail) {
-    setNewformdata({
-      videolink: video,
-      season: desiredPart[2],
-      ep: desiredPart[2],
-      description: disc,
-      genres: genres,
-      animename: desiredPart[0],
-      thumbnail: Thumbnail,
-      trending: false,
-      popular: false,
-      seasonname: "",
-    });
-  }else{null}
+
+   
+
+    useEffect(()=>{
+      setNewformdata({
+        videolink: video,
+        season: desiredPart[2],
+        ep: desiredPart[2],
+        description: disc,
+        genres: genres,
+        animename: desiredPart[0],
+        thumbnail: Thumbnail,
+        trending: false,
+        popular: false,
+        seasonname: "",
+      });
+    },[video,desiredPart,disc,genres,Thumbnail])
 
 
   return (
