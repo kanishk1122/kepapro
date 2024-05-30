@@ -328,7 +328,7 @@ const Watch = () => {
                
                 
               </form>
-              {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS &&<button className="bg-blue-500 w-24 rounded-full" onClick={updateformdata}>
+              {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS &&<button className="bg-blue-500  px-2 py-1a rounded-full" onClick={updateformdata}>
               EDIT
            </button>}
               
