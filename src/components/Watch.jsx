@@ -211,7 +211,7 @@ const Watch = () => {
     e.preventDefault();
 
     try {
-      const updatevideo = await axios.post("/updatevideo",
+      const response = await axios.post("/updatevideo",
         newformdata,{withCredentials:true})
         console.log(response.data);
     } catch (error) {
