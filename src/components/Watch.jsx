@@ -20,6 +20,7 @@ const Watch = () => {
   const [userLoginMenu, setUserLoginMenu] = useState(false);
   const [id, setid] = useState("");
   const [comment, setcomment] = useState("");
+  const [updatefromshow, setupdatefromshow] = useState(false)
   const [allcomment, setallcomment] = useState([]);
   const [newformdata, setNewformdata] = useState({
     videolink: "" ,
@@ -241,6 +242,7 @@ const Watch = () => {
         popular: false,
         seasonname: "",
       });
+      setupdatefromshow(()=>!updatefromshow)
     }
 
 
@@ -292,13 +294,14 @@ const Watch = () => {
             </div>
 
             {token ? (
+              <div>
               <form onSubmit={handleSubmit} className="flex">
                 <input
                   className="bg-transparent hidden"
                   type="text"
                   value={jwtDecode(token).email}
                   name="email"
-                />
+                  />
                 <input
                   className="bg-transparent hidden"
                   type="text"
@@ -320,11 +323,16 @@ const Watch = () => {
                 <input
                   type="submit"
                   value="Add to favorites"
-                  className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold"
+                  className="bg-yellow-700 px-2 py-1 text-2xl rounded-full font-semibold"
                 />
                
                 
               </form>
+              {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS &&<button className="bg-blue-500 w-24 rounded-full" onClick={updateformdata}>
+              EDIT
+           </button>}
+              
+              </div>
               
             ) : (
               <div className="w-fit flex justify-center flex-col rounded-3xl items-center bg-zinc-600 p-3">
@@ -369,10 +377,8 @@ const Watch = () => {
               Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
               (
                 <div className="flex flex-col justify-center items-center h-fit w-full  ">
-                <button className="bg-blue-500 w-24" onClick={updateformdata}>
-                      EDIT
-                   </button>
-              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300  *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
+                
+             {updatefromshow&& <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300  *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
                 {/* 
       season: req.body.season,
       ep: req.body.ep,
@@ -578,7 +584,7 @@ const Watch = () => {
                 <div className="flex justify-center items-center">
                 <input type="submit" value="update" className="bg-blue-600 rounded-lg px-2 py-1" />
                 </div>
-              </form>
+              </form>}
 
             </div>
              )
