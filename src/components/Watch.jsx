@@ -218,7 +218,7 @@ const Watch = () => {
   }
 
   return (
-    <>
+    <div>
       <div className="bg-neutral-900 text-white w-full">
         <Navbar />
         <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
@@ -307,7 +307,7 @@ const Watch = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
