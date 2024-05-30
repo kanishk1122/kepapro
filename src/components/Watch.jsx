@@ -223,7 +223,7 @@ const Watch = () => {
       console.log(error)
     }
   }
-  if (video && desiredPart && disc && genres && thumbnail) {
+  if (video && desiredPart && disc && genres && Thumbnail) {
     setNewformdata({
       videolink: video,
       season: desiredPart[2],
