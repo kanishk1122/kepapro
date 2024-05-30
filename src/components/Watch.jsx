@@ -237,7 +237,7 @@ const Watch = () => {
     popular: false,
     seasonname: "",
   });
- },[newformdata])
+ },[])
 
 
 
