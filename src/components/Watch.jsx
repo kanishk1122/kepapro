@@ -10,7 +10,7 @@ const Watch = () => {
   const [userdata, setuserdata] = useState({});
   const [video, setVideo] = useState("");
   const [disc, setDisc] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [Thumbnail, setThumbnail] = useState("");
   const [Name, setName] = useState("")
   const [genres, setGenres] = useState([]);
   const [quality, setQuality] = useState("");
@@ -23,7 +23,7 @@ const Watch = () => {
   const [allcomment, setallcomment] = useState([]);
   const [newformdata, setNewformdata] = useState({
     videolink: "" ,
-    season: "",
+    season: 0,
     ep:"",
     description: "",
     genres: "",
@@ -227,12 +227,12 @@ const Watch = () => {
  useEffect(()=>{
   setNewformdata({
     videolink: video ,
-    season: desiredPart[1],
+    season: desiredPart[2],
     ep: desiredPart[2],
     description: disc,
     genres: genres,
     animename: desiredPart[0],
-    thumbnail: thumbnail,
+    thumbnail: Thumbnail,
     trending: false,
     popular: false,
     seasonname: "",
@@ -449,7 +449,7 @@ const Watch = () => {
                 </fieldset>
     
                 <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter season</legend>
+                  <legend>enter season name</legend>
                   <input
                     type="Number"
                     value={
@@ -458,6 +458,21 @@ const Watch = () => {
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, seasonname: e.target.value })
+                    }
+                    name=""
+                    id=""
+                  />
+                </fieldset>
+                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+                  <legend>enter season no</legend>
+                  <input
+                    type="Number"
+                    value={
+                      newformdata.season
+                    }
+                    className="w-full h-5  "
+                    onChange={(e) =>
+                      setNewformdata({ ...newformdata, ep: e.target.value })
                     }
                     name=""
                     id=""
