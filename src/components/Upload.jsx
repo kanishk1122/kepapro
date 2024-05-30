@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 
 
 const Login = () => {
-  const [temp, setTemp] = useState("");
   const [formData, setFormData] = useState({
     links: [""],
     languages: [""],
@@ -122,13 +121,6 @@ const Login = () => {
 
   return (
     <div>
-      <input
-        type="password"
-        className="w-1/4 m-4 bg-transparent"
-        placeholder="Enter password"
-        value={temp}
-        onChange={(e) => setTemp(e.target.value)}
-      />
       {/* import.meta.env.VITE_ADMIN_PASS */}
 
       {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS  && (

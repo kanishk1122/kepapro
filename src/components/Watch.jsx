@@ -335,7 +335,7 @@ const Watch = () => {
               Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
               (
                 <div className="flex justify-center items-center h-fit w-full  ">
-              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300 *:border *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
+              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300  *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
                 {/* 
       season: req.body.season,
       ep: req.body.ep,
@@ -345,7 +345,7 @@ const Watch = () => {
                   <legend>enter videolink</legend>
                   <input
                     type="text"
-                    // value={newformdata.videolink ? newformdata.videolink : video}
+                    value={newformdata.videolink ? newformdata.videolink : video}
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, videolink: e.target.value })
@@ -358,11 +358,11 @@ const Watch = () => {
                   <legend>enter animename</legend>
                   <input
                     type="text"
-                    // value={
-                    //   newformdata.animename
-                    //     ? newformdata.animename
-                    //     : filteredData.animename
-                    // }
+                    value={
+                      newformdata.animename
+                        ? newformdata.animename
+                        : filteredData.animename
+                    }
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, animename: e.target.value })
@@ -376,11 +376,11 @@ const Watch = () => {
                   <legend>enter thumbnail</legend>
                   <input
                     type="text"
-                    // value={
-                    //   newformdata.thumbnail
-                    //     ? newformdata.thumbnail
-                    //     : filteredData.thumnail
-                    // }
+                    value={
+                      newformdata.thumbnail
+                        ? newformdata.thumbnail
+                        : filteredData.thumnail
+                    }
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, thumbnail: e.target.value })
@@ -394,11 +394,11 @@ const Watch = () => {
                   <legend>enter description</legend>
                   <input
                     type="text"
-                    // value={
-                    //   newformdata.description
-                    //     ? newformdata.description
-                    //     : filteredData.description
-                    // }
+                    value={
+                      newformdata.description
+                        ? newformdata.description
+                        : filteredData.description
+                    }
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({
@@ -415,11 +415,11 @@ const Watch = () => {
                   <legend>enter genres</legend>
                   <input
                     type="text"
-                    // value={
-                    //   newformdata.genres
-                    //     ? newformdata.genres
-                    //     : filteredData.genres.join(",")
-                    // }
+                    value={
+                      newformdata.genres
+                        ? newformdata.genres
+                        : filteredData.genres.join(",")
+                    }
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({
@@ -436,11 +436,11 @@ const Watch = () => {
                   <legend>enter genres</legend>
                   <input
                     type="text"
-                    // value={
-                    //   newformdata.seasonname
-                    //     ? newformdata.seasonname
-                    //     : filteredData.seasonname
-                    // }
+                    value={
+                      newformdata.seasonname
+                        ? newformdata.seasonname
+                        : filteredData.seasonname
+                    }
                     className="w-full h-5  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, seasonname: e.target.value })
@@ -472,12 +472,12 @@ const Watch = () => {
                     <input
                       type="radio"
                       id="No"
-                      // onClick={(e) =>
-                      //   setNewformdata({
-                      //     ...newformdata,
-                      //     popular: e.target.value === "false",
-                      //   })
-                      // }
+                      onClick={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          popular: e.target.value === "false",
+                        })
+                      }
                       value="false"
                       name="popular"
                     />
