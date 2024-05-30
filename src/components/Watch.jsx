@@ -131,6 +131,18 @@ const Watch = () => {
       setid(filtered._id);
       setName(filtered.animename)
       setallcomment(filtered.comments);
+      setNewformdata({
+        videolink:filtered.videolink ,
+        season: desiredPart[2],
+        ep: desiredPart[2],
+        description: filtered.description,
+        genres:filtered.genres,
+        animename: filtered.animename,
+        thumbnail:filtered.thumnail,
+        trending: false,
+        popular: false,
+        seasonname: "",
+      });
     }
   }, [data, desiredPart]);
 
@@ -227,22 +239,7 @@ const Watch = () => {
 
   
 
- useEffect(()=>{
-  const update=
-    setNewformdata({
-      videolink: video ,
-      season: desiredPart[2],
-      ep: desiredPart[2],
-      description: disc,
-      genres: genres,
-      animename: desiredPart[0],
-      thumbnail: Thumbnail,
-      trending: false,
-      popular: false,
-      seasonname: "",
-    });
-  
- },[])
+
 
 
 
