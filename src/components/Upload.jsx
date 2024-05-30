@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "../utils/Axios";
+import Cookies from "js-cookie";
 
 
 const Login = () => {
@@ -17,6 +18,24 @@ const Login = () => {
     rating: "",
     seasonname:"",
   });
+
+  const token = Cookies.get("token");
+
+  const jwtDecode = (token) => {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map((c) => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  };
 
 
 
@@ -112,7 +131,7 @@ const Login = () => {
       />
       {/* import.meta.env.VITE_ADMIN_PASS */}
 
-      {temp === import.meta.env.VITE_ADMIN_PASS  && (
+      {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS  && (
         <div className="bg-neutral-900 text-white">
           <form
             className="flex justify-center w-full flex-col gap-8 items-center"
