@@ -332,7 +332,7 @@ const Watch = () => {
         </div>
         
             {
-              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
+              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_ADMIN_PASS ?  
               (
                 <div className="flex justify-center items-center h-fit w-full  ">
               <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300 *:border *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
