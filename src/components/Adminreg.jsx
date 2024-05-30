@@ -38,7 +38,7 @@ const Registration = () => {
         password,
       };
 
-      const response = await axios.post("/register", user, { withCredentials: true });
+      const response = await axios.post("/createadmin", user, { withCredentials: true });
       settoken(response.data);
 
       // Reset form fields after successful submission
