@@ -21,6 +21,18 @@ const Watch = () => {
   const [id, setid] = useState("");
   const [comment, setcomment] = useState("");
   const [allcomment, setallcomment] = useState([]);
+  const [newformdata, setNewformdata] = useState({
+    videolink: "" ,
+    season: "",
+    ep:"",
+    description: "",
+    genres: "",
+    animename:"",
+    thumbnail:"",
+    trending: false,
+    popular: false,
+    seasonname: "",
+  });
 
 
   const token = Cookies.get("token");
@@ -197,18 +209,8 @@ const Watch = () => {
   }; 
 
 
-  const [newformdata, setNewformdata] = useState({
-    videolink: video ,
-    season: desiredPart[1],
-    ep: desiredPart[2],
-    description: disc,
-    genres: genres,
-    animename: desiredPart[0],
-    thumbnail: thumbnail,
-    trending: false,
-    popular: false,
-    seasonname: "",
-  });
+
+
 
   const updatevideohandler = async (e)=>{
     e.preventDefault();
@@ -221,6 +223,21 @@ const Watch = () => {
       console.log(error)
     }
   }
+
+ useEffect(()=>{
+  setNewformdata({
+    videolink: video ,
+    season: desiredPart[1],
+    ep: desiredPart[2],
+    description: disc,
+    genres: genres,
+    animename: desiredPart[0],
+    thumbnail: thumbnail,
+    trending: false,
+    popular: false,
+    seasonname: "",
+  });
+ },[newformdata])
 
 
 
@@ -417,7 +434,7 @@ const Watch = () => {
                   <input
                     type="text"
                     value={
-                      newformdata.genres.join(",")
+                      newformdata.genres
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
