@@ -226,7 +226,9 @@ const Watch = () => {
 
    
 
-    useEffect(()=>{
+
+
+    const updateformdata =()=>{
       setNewformdata({
         videolink: video,
         season: desiredPart[2],
@@ -239,7 +241,9 @@ const Watch = () => {
         popular: false,
         seasonname: "",
       });
-    },[video,desiredPart,disc,genres,Thumbnail])
+    }
+
+
 
 
   return (
@@ -288,7 +292,7 @@ const Watch = () => {
             </div>
 
             {token ? (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className="flex">
                 <input
                   className="bg-transparent hidden"
                   type="text"
@@ -318,7 +322,10 @@ const Watch = () => {
                   value="Add to favorites"
                   className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold"
                 />
+               
+                
               </form>
+              
             ) : (
               <div className="w-fit flex justify-center flex-col rounded-3xl items-center bg-zinc-600 p-3">
                 <button
@@ -355,11 +362,16 @@ const Watch = () => {
 
           </div>
         </div>
+
+       
         
-            {/* {
-              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?   */}
+            {
+              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
               (
-                <div className="flex justify-center items-center h-fit w-full  ">
+                <div className="flex flex-col justify-center items-center h-fit w-full  ">
+                <button className="bg-blue-500 w-24" onClick={updateformdata}>
+                      EDIT
+                   </button>
               <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300  *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
                 {/* 
       season: req.body.season,
@@ -570,8 +582,8 @@ const Watch = () => {
 
             </div>
              )
-             {/* :null 
-             } */}
+            :null 
+             } 
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) =>
             item.animename === name &&
