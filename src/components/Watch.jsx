@@ -250,326 +250,63 @@ const Watch = () => {
           </div>
 
           <div className="w-[380px] bg-zinc-800 p-4 flex flex-col gap-2 rounded-lg">
-            <div className="flex flex-col gap-3">
-              <h1>Name: {filteredData ? filteredData.animename : ""}</h1>
-              <h1>
-                Description: {filteredData ? filteredData.description : ""}
-              </h1>
-              <h1>
-                Genres: {filteredData ? filteredData.genres.join(" | ") : ""}
-              </h1>
-              <h1>Season: {seo}</h1>
-              <h1>Episode: {episode}</h1>
-            </div>
-
-            {token ? (
-              <form onSubmit={handleSubmit}>
-                <input
-                  className="bg-transparent hidden"
-                  type="text"
-                  value={jwtDecode(token).email}
-                  name="email"
-                />
-                <input
-                  className="bg-transparent hidden"
-                  type="text"
-                  value={desiredPart[0]}
-                  name="animename"
-                />
-                <input
-                  className="bg-transparent hidden"
-                  type="number"
-                  value={seo}
-                  name="season"
-                />
-                <input
-                  className="bg-transparent hidden"
-                  type="number"
-                  value={episode}
-                  name="ep"
-                />
-                <input
-                  type="submit"
-                  value="Add to favorites"
-                  className="bg-yellow-600 px-2 py-1 text-2xl rounded-full font-semibold"
-                />
-              </form>
+            {filteredData ? (
+              <>
+                <div className="flex flex-col gap-3">
+                  <h1>Name: {filteredData.animename}</h1>
+                  <h1>Description: {filteredData.description}</h1>
+                  <h1>Genres: {filteredData.genres.join(" | ")}</h1>
+                  <h1>Season: {seo}</h1>
+                  <h1>Episode: {episode}</h1>
+                </div>
+                {token ? (
+                  <form onSubmit={handleSubmit}>
+                    <input
+                      className="bg-transparent hidden"
+                      type="text"
+                      value={jwtDecode(token).email}
+                      name="email"
+                    />
+                    <input
+                      className="bg-transparent hidden"
+                      type="text"
+                      value={desiredPart[0]}
+                      name="animename"
+                    />
+                    <input
+                      className="bg-transparent hidden"
+                      type="text"
+                      value={seo}
+                      name="season"
+                    />
+                    <input
+                      className="bg-transparent hidden"
+                      type="text"
+                      value={episode}
+                      name="episode"
+                    />
+                    <button
+                      className="p-3 bg-orange-600 rounded mt-3 w-full"
+                      type="submit"
+                    >
+                      Add to Watchlist
+                    </button>
+                  </form>
+                ) : (
+                  <button
+                    onClick={userLogger}
+                    className="p-3 bg-orange-600 rounded mt-3 w-full"
+                  >
+                    Add to Watchlist
+                  </button>
+                )}
+              </>
             ) : (
-              <div className="w-fit flex justify-center flex-col rounded-3xl items-center bg-zinc-600 p-3">
-                <button
-                  onClick={userLogger}
-                  className="bg-yellow-600 w-fit px-2 py-1 text-2xl rounded-full font-semibold"
-                >
-                  Add to favorites
-                </button>
-                <div
-                  className={`${
-                    userLoginMenu ? "h-fit" : "h-0"
-                  } duration-700 w-1/2 flex flex-col justify-center items-center text-center`}
-                >
-                  <Link
-                    className={`${
-                      userLoginMenu ? "text-[100%]" : "text-[0%]"
-                    } duration-700`}
-                    to="/register"
-                  >
-                    Register
-                  </Link>
-                  <hr className={`${userLoginMenu ? "w-full" : "w-0"}`} />
-                  <Link
-                    className={`${
-                      userLoginMenu ? "text-[100%]" : "text-[0%]"
-                    } duration-700`}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                </div>
-              </div>
+              <p>Loading...</p>
             )}
-
           </div>
         </div>
-        
-            {
-              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
-              (
-                <div className="flex justify-center items-center h-fit w-full  ">
-              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300  *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
-                {/* 
-      season: req.body.season,
-      ep: req.body.ep,
-      trending: req.body.trending,
-      popular: req.body.populer, */}
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter videolink</legend>
-                  <input
-                    type="text"
-                    value={newformdata.videolink ? newformdata.videolink : video}
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, videolink: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter animename</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.animename
-                        ? newformdata.animename
-                        : filteredData.animename
-                    }
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, animename: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter thumbnail</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.thumbnail
-                        ? newformdata.thumbnail
-                        : filteredData.thumnail
-                    }
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, thumbnail: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter description</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.description
-                        ? newformdata.description
-                        : filteredData.description
-                    }
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        description: e.target.value,
-                      })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter genres</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.genres
-                        ? newformdata.genres
-                        : filteredData.genres.join(",")
-                    }
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        genres: e.target.value.split(","),
-                      })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter genres</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.seasonname
-                        ? newformdata.seasonname
-                        : filteredData.seasonname
-                    }
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, seasonname: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:gap-1 ">
-                  <legend>Select popular</legend>
-                  <div>
-                    <input
-                      type="radio"
-                      id="yes"
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          popular: e.target.value === "true",
-                        })
-                      }
-                      value="true"
-                      name="popular"
-                    />
-    
-                    <label htmlFor="yes">yes</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="No"
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          popular: e.target.value === "false",
-                        })
-                      }
-                      value="false"
-                      name="popular"
-                    />
-                    <label htmlFor="No">No</label>
-                  </div>
-                </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:gap-1 ">
-                  <legend>select trending</legend>
-                  <div>
-                    <input
-                      type="radio"
-                      value="yes"
-                      onClick={(e) => console.log(e.target.value)}
-                      name="trending"
-                      id="yse"
-                    />
-                    <label htmlFor="yse">yes</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      onClick={(e) => console.log(e.target.value)}
-                      value="no"
-                      name="trending"
-                      id="off"
-                    />
-                    <label htmlFor="off">No</label>
-                  </div>
-                </fieldset>
-                <div className="flex justify-center items-center">
-                <input type="submit" value="update" className="bg-blue-600 rounded-lg px-2 py-1" />
-                </div>
-              </form>
-
-            </div>
-             )
-             :null 
-             }
-        <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
-          {data.map((item, index) =>
-            item.animename === name &&
-            item.quality === 720 &&
-            item.season === watchSeason ? (
-              <Link
-                key={index}
-                to={`/watch/${item.animename}/${item.season}/${item.ep}`}
-              >
-                <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
-                  <p>ep: {item.ep}</p>
-                </div>
-              </Link>
-            ) : null
-          )}
-        </div>
       </div>
-      <div className="max-m:h-fit bg-black  flex flex-col gap-3 p-3 h-fit ">
-        {allcomment.map((item, index) => (
-          <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
-            <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
-              <img
-                src={item.image}
-                className="w-full h-full object-cover"
-                alt=""
-              />
-            </div>
-            <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw] h-fit">
-              <p>{item.comment}</p>
-            </div>
-          </div>
-        ))}
-
-        <div className="w-full h-fit px-3 flex ">
-          <form
-            onSubmit={commenthandler}
-            className="w-full h-fit flex flex-col gap-5 justify-end items-end"
-          >
-            <textarea
-              value={comment}
-              onChange={(e) => setcomment(e.target.value)}
-              style={{ resize: "none" }}
-              className="w-2/3 bg-transparent rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full"
-              id=""
-            ></textarea>
-            <input
-              type="submit"
-              value="Add comment"
-              className="bg-zinc-100 text-black rounded-lg font-semibold px-2 py-1"
-            />
-          </form>
-        </div>
-      </div>
-      <Footer />
     </>
   );
 };
