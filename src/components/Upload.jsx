@@ -112,7 +112,7 @@ const Login = () => {
       />
       {/* import.meta.env.VITE_ADMIN_PASS */}
 
-      {temp === "cpsoni@321"  && (
+      {temp === import.meta.env.VITE_ADMIN_PASS  && (
         <div className="bg-neutral-900 text-white">
           <form
             className="flex justify-center w-full flex-col gap-8 items-center"
