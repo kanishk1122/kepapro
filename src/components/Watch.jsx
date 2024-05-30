@@ -387,7 +387,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata({ ...newformdata, animename: e.target.value })
+                      setNewformdata.animename(e.target.value)
                     }
                     name=""
                     id=""
@@ -403,7 +403,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata({ ...newformdata, thumbnail: e.target.value })
+                      setNewformdata.thumbnail(e.target.value)
                     }
                     name=""
                     id=""
@@ -419,10 +419,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        description: e.target.value,
-                      })
+                      setNewformdata.description(e.target.value)
                     }
                     name=""
                     id=""
@@ -438,10 +435,8 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        genres: e.target.value.split(","),
-                      })
+                      setNewformdata.genres(
+                         e.target.value.split(","))
                     }
                     name=""
                     id=""
@@ -457,7 +452,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata({ ...newformdata, seasonname: e.target.value })
+                      setNewformdata.seasonname(e.target.value)
                     }
                     name=""
                     id=""
@@ -472,7 +467,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata({ ...newformdata, ep: e.target.value })
+                      setNewformdata.ep(e.target.value)
                     }
                     name=""
                     id=""
