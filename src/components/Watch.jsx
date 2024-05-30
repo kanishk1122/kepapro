@@ -224,19 +224,24 @@ const Watch = () => {
     }
   }
 
+
+  
+
  useEffect(()=>{
-  setNewformdata({
-    videolink: video ,
-    season: desiredPart[2],
-    ep: desiredPart[2],
-    description: disc,
-    genres: genres,
-    animename: desiredPart[0],
-    thumbnail: Thumbnail,
-    trending: false,
-    popular: false,
-    seasonname: "",
-  });
+  const update=
+    setNewformdata({
+      videolink: video ,
+      season: desiredPart[2],
+      ep: desiredPart[2],
+      description: disc,
+      genres: genres,
+      animename: desiredPart[0],
+      thumbnail: Thumbnail,
+      trending: false,
+      popular: false,
+      seasonname: "",
+    });
+  
  },[])
 
 
