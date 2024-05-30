@@ -10,7 +10,7 @@ const Watch = () => {
   const [userdata, setuserdata] = useState({});
   const [video, setVideo] = useState("");
   const [disc, setDisc] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [Thumbnail, setThumbnail] = useState("");
   const [Name, setName] = useState("")
   const [genres, setGenres] = useState([]);
   const [quality, setQuality] = useState("");
@@ -232,12 +232,12 @@ const Watch = () => {
     description: disc,
     genres: genres,
     animename: desiredPart[0],
-    thumbnail: thumbnail,
+    thumbnail: Thumbnail,
     trending: false,
     popular: false,
     seasonname: "",
   });
- },[])
+ },[newformdata])
 
 
 
@@ -387,7 +387,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata.animename(e.target.value)
+                      setNewformdata({ ...newformdata, animename: e.target.value })
                     }
                     name=""
                     id=""
@@ -403,7 +403,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata.thumbnail(e.target.value)
+                      setNewformdata({ ...newformdata, thumbnail: e.target.value })
                     }
                     name=""
                     id=""
@@ -419,7 +419,10 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata.description(e.target.value)
+                      setNewformdata({
+                        ...newformdata,
+                        description: e.target.value,
+                      })
                     }
                     name=""
                     id=""
@@ -435,8 +438,10 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata.genres(
-                         e.target.value.split(","))
+                      setNewformdata({
+                        ...newformdata,
+                        genres: e.target.value.split(","),
+                      })
                     }
                     name=""
                     id=""
@@ -444,7 +449,7 @@ const Watch = () => {
                 </fieldset>
     
                 <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter season</legend>
+                  <legend>enter season name</legend>
                   <input
                     type="Number"
                     value={
@@ -452,7 +457,22 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata.seasonname(e.target.value)
+                      setNewformdata({ ...newformdata, seasonname: e.target.value })
+                    }
+                    name=""
+                    id=""
+                  />
+                </fieldset>
+                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+                  <legend>enter season no</legend>
+                  <input
+                    type="Number"
+                    value={
+                      newformdata.season
+                    }
+                    className="w-full h-5  "
+                    onChange={(e) =>
+                      setNewformdata({ ...newformdata, ep: e.target.value })
                     }
                     name=""
                     id=""
@@ -467,7 +487,7 @@ const Watch = () => {
                     }
                     className="w-full h-5  "
                     onChange={(e) =>
-                      setNewformdata.ep(e.target.value)
+                      setNewformdata({ ...newformdata, ep: e.target.value })
                     }
                     name=""
                     id=""
