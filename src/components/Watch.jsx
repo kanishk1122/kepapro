@@ -127,7 +127,7 @@ const Watch = () => {
       setDisc(filtered.description);
       setGenres(filtered.genres);
       setQuality(filtered.quality);
-      setThumbnail(filtered.thumbnail);
+      setThumbnail(filtered.thumnail);
       setid(filtered._id);
       setName(filtered.animename)
       setallcomment(filtered.comments);
