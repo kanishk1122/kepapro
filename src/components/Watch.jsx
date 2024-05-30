@@ -223,45 +223,20 @@ const Watch = () => {
       console.log(error)
     }
   }
-  async function renderWithData() {
-    let dataReady = false;
-    
-    while (!dataReady) {
-      try {
-  
-        // Check if all necessary data is available
-        if (video && desiredPart && disc && genres && Thumbnail) {
-          setNewformdata({
-            videolink: video,
-            season: desiredPart[2],
-            ep: desiredPart[2],
-            description: disc,
-            genres: genres,
-            animename: desiredPart[0],
-            thumbnail: Thumbnail,
-            trending: false,
-            popular: false,
-            seasonname: "",
-          });
-          
-          // Set dataReady to true to exit the loop
-          dataReady = true;
-        } else {
-          // If any data is missing, wait for a short time before retrying
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // If an error occurs, you might want to handle it here
-        // For example, you could break out of the loop or retry fetching data
-      }
-    }
-  }
-  
-  // Call the renderWithData function to start rendering with data
-  renderWithData();
-  
-
+  if (video && desiredPart && disc && genres && thumbnail) {
+    setNewformdata({
+      videolink: video,
+      season: desiredPart[2],
+      ep: desiredPart[2],
+      description: disc,
+      genres: genres,
+      animename: desiredPart[0],
+      thumbnail: Thumbnail,
+      trending: false,
+      popular: false,
+      seasonname: "",
+    });
+  }else{null}
 
 
   return (
