@@ -373,8 +373,8 @@ const Watch = () => {
 
        
         
-            {/* {
-              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  */}
+           {
+              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
               ( 
                 <div className="flex flex-col justify-center items-center h-fit w-full  ">
                 
@@ -611,8 +611,8 @@ const Watch = () => {
 
             </div>
               )
-            {/*:null 
-             }  */}
+            :null 
+             }  
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) =>
             item.animename === name &&
