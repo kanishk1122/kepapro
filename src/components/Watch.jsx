@@ -391,7 +391,7 @@ const Watch = () => {
                   <iframe
               title="videoplayer"
               className="w-full h-full rounded-lg z-10 "
-              src="https://youtu.be/GTgDILqgzJU?si=Y3-RX1IetesiysIm"
+              src={newformdata.videolink}
               scrolling="no"
               frameBorder="0"
               allowFullScreen
