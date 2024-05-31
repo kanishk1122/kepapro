@@ -63,6 +63,7 @@ const Edituser = () => {
       formData.append('email', userdata.email);
       formData.append('username', newusername);
       formData.append('userpic', userpic);
+      console.log('FormData:', formData);
 
       const response = await axios.post('/userdetailupdate', formData, {
         withCredentials: true,
