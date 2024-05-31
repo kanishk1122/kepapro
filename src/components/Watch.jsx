@@ -133,7 +133,7 @@ const Watch = () => {
       setName(filtered.animename)
       setallcomment(filtered.comments);
     }
-  }, [data, desiredPart]);
+  }, [data, desiredPart,newformdata]);
 
   const userLogger = () => {
     setUserLoginMenu(!userLoginMenu);
