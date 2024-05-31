@@ -33,6 +33,9 @@ const Watch = () => {
     trending: false,
     popular: false,
     seasonname: "",
+    oldanimename:"",
+    oldseason:0,
+    oldep:0,
   });
 
 
@@ -241,6 +244,9 @@ const Watch = () => {
         trending: false,
         popular: false,
         seasonname: "",
+        oldanimename:desiredPart[0],
+        oldseason:desiredPart[1],
+        oldep:desiredPart[2],
       });
       setupdatefromshow(()=>!updatefromshow)
     }
