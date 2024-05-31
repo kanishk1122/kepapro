@@ -11,7 +11,7 @@ const Edituser = () => {
   const [userdata, setUserData] = useState({});
   const [gettoken, setTokenState] = useState('');
   const { username } = useParams();
-  const [newusername, setNewusername] = useState('s');
+  const [newusername, setNewusername] = useState('');
 
   const jwt_decode = (token) => {
     try {
@@ -59,13 +59,16 @@ const Edituser = () => {
     e.preventDefault();
 
     try {
+      const formData = new FormData();
+      formData.append('email', userdata.email);
+      formData.append('username', newusername);
+      formData.append('userpic', userpic);
 
-      const response = await axios.post('/userdetailupdate', {
-        email:userdata.email,
-        username: newusername,
-        userpic: userpic,
-      }, {
+      const response = await axios.post('/userdetailupdate', formData, {
         withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
       setTokenState(response.data.token);
 
@@ -97,11 +100,10 @@ const Edituser = () => {
                 />
               </div>
               <input
-                type='text'
+                type='file'
                 className='h-[30px] px-2 outline-none w-full  bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
-                placeholder='Enter your image link'
-                value={userpic}
-                onChange={(e) => setUserpic(e.target.value)}
+                placeholder='Choose a profile picture'
+                onChange={(e) => setUserpic(e.target.files[0])}
               />
             </div>
             <div className='bg-zinc-700 w-1/2 p-3 max-sm:w-full rounded-2xl flex justify-center items-center flex-col gap-4'>
