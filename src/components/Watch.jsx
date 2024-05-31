@@ -158,7 +158,7 @@ const Watch = () => {
         }
       );
 
-      console.log(response.data);
+      alert(response.data.message);
 
       if (response.data.message === "Bookmark added successfully") {
         alert("This video added to favorites");
