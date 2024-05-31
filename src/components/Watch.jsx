@@ -373,38 +373,54 @@ const Watch = () => {
 
        
         
-            {
-              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
-              (
+            {/* {
+              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  */}
+              ( 
                 <div className="flex flex-col justify-center items-center h-fit w-full  ">
                 
-             {updatefromshow&& <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3 *:bg-transparent *:border-zinc-300  *:rounded-lg *:h-10 px-14 rounded-lg *:w-[300px] bg-black ">
+             {/* {updatefromshow&& */}
+              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3    *:rounded-lg  px-14 rounded-lg  bg-black ">
                 {/* 
       season: req.body.season,
       ep: req.body.ep,
       trending: req.body.trending,
       popular: req.body.populer, */}
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter videolink</legend>
+                <div className=" h-fit flex flex-wrap w-full   justify-between gap-5 items-center">
+                <fieldset className="flex justify-center w-[40%] flex-col  p-3 h-fit items-center gap-7   *:bg-transparent   ">
+                  <div>
+                  <iframe
+              title="videoplayer"
+              className="w-full h-full rounded-lg z-10 "
+              src="https://youtu.be/GTgDILqgzJU?si=Y3-RX1IetesiysIm"
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+                  </div>
+                 <div className="w-full h-full flex flex-wrap justify-center items-center">
+                 <h3>enter videolink</h3>
                   <input
                     type="text"
                     value={newformdata.videolink}
-                    className="w-full h-5  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, videolink: e.target.value })
                     }
                     name=""
                     id=""
                   />
+                 </div>
                 </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+               
+               <div className="flex flex-col h-fit w-[40%]  p-3 justify-center items-center">
+               <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7    ">
                   <legend>enter animename</legend>
                   <input
                     type="text"
                     value={
                       newformdata.animename
                     }
-                    className="w-full h-5  "
+                    className="w-full h-fit rounded-lg order border-zinc-200  bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, animename: e.target.value })
                     }
@@ -412,15 +428,29 @@ const Watch = () => {
                     id=""
                   />
                 </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+                <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7     ">
+                  <legend>enter season name</legend>
+                  <input
+                    type="Number"
+                    value={
+                      newformdata.seasonname
+                    }
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    onChange={(e) =>
+                      setNewformdata({ ...newformdata, seasonname: e.target.value })
+                    }
+                    name=""
+                    id=""
+                  />
+                </fieldset>
+                <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7     ">
                   <legend>enter thumbnail</legend>
                   <input
                     type="text"
                     value={
                       newformdata.thumbnail
                     }
-                    className="w-full h-5  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, thumbnail: e.target.value })
                     }
@@ -428,34 +458,19 @@ const Watch = () => {
                     id=""
                   />
                 </fieldset>
+               </div>
+               </div>
     
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter description</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.description
-                    }
-                    className="w-full h-5  "
-                    onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        description: e.target.value,
-                      })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+              <div className="flex-wrap justify-center items-center gap-4 w-full h-fit">
+              <fieldset className=" p-3 h-fit w-full border-zinc-400 border  gap-7 flex rounded-lg justify-center items-center   ">
                   <legend>enter genres</legend>
                   <input
                     type="text"
                     value={
                       newformdata.genres
                     }
-                    className="w-full h-5  "
+                    style={{resize:"none"}}
+                    className="w-full h-fit p-3 rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
                       setNewformdata({
                         ...newformdata,
@@ -467,29 +482,34 @@ const Watch = () => {
                   />
                 </fieldset>
     
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
-                  <legend>enter season name</legend>
-                  <input
-                    type="Number"
+                <fieldset className=" p-3 h-fit w-full border-zinc-400 border rounded-lg gap-7 flex justify-center items-center   ">
+                  <legend>enter description</legend>
+                  <textarea
+                    type="text"
                     value={
-                      newformdata.seasonname
+                      newformdata.description
                     }
-                    className="w-full h-5  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
-                      setNewformdata({ ...newformdata, seasonname: e.target.value })
+                      setNewformdata({
+                        ...newformdata,
+                        description: e.target.value,
+                      })
                     }
                     name=""
                     id=""
                   />
                 </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+              </div>
+                <div className="flex flex-wrap gap-4">
+                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 border-zinc-400 border rounded-lg  ">
                   <legend>enter season no</legend>
                   <input
                     type="Number"
                     value={
                       newformdata.season
                     }
-                    className="w-full h-5  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, ep: e.target.value })
                     }
@@ -497,14 +517,14 @@ const Watch = () => {
                     id=""
                   />
                 </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:bg-transparent *:border-zinc-200  ">
+                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center border-zinc-400 border rounded-lg  ">
                   <legend>enter episode</legend>
                   <input
                     type="Number"
                     value={
                       newformdata.ep
                     }
-                    className="w-full h-5  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, ep: e.target.value })
                     }
@@ -513,7 +533,7 @@ const Watch = () => {
                   />
                 </fieldset>
     
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:gap-1 ">
+                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 border-zinc-400 rounded-lg *:flex *:justify-center *:items-center *:gap-1 border order-zinc-200 ">
                   <legend>Select popular</legend>
                   <div>
                     <input
@@ -548,7 +568,7 @@ const Watch = () => {
                     <label htmlFor="No">No</label>
                   </div>
                 </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center *:items-center *:gap-1 ">
+                <fieldset className="flex justify-center p-3 h-20 items-center gap-7   rounded-lg *:flex *:justify-center *:items-center *:gap-1 border border-zinc-200 ">
                   <legend>select trending</legend>
                   <div>
                     <input
@@ -581,15 +601,18 @@ const Watch = () => {
                     <label htmlFor="off">No</label>
                   </div>
                 </fieldset>
+                
+                </div>
                 <div className="flex justify-center items-center">
                 <input type="submit" value="update" className="bg-blue-600 rounded-lg px-2 py-1" />
                 </div>
-              </form>}
+              </form>
+              {/* } */}
 
             </div>
-             )
-            :null 
-             } 
+              )
+            {/*:null 
+             }  */}
         <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
           {data.map((item, index) =>
             item.animename === name &&
