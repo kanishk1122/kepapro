@@ -431,7 +431,7 @@ const Watch = () => {
                 <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7     ">
                   <legend>enter season name</legend>
                   <input
-                    type="Number"
+                    type="text"
                     value={
                       newformdata.seasonname
                     }
