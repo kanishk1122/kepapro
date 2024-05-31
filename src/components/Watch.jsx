@@ -378,7 +378,7 @@ const Watch = () => {
               ( 
                 <div className="flex flex-col justify-center items-center h-fit w-full  ">
                 
-             {/* {updatefromshow&& */}
+             {updatefromshow&&
               <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3    *:rounded-lg  px-14 rounded-lg  bg-black ">
                 {/* 
       season: req.body.season,
@@ -607,7 +607,7 @@ const Watch = () => {
                 <input type="submit" value="update" className="bg-blue-600 rounded-lg px-2 py-1" />
                 </div>
               </form>
-              {/* } */}
+               }
 
             </div>
               )
