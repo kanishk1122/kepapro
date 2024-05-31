@@ -57,25 +57,20 @@ const Edituser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const formData = new FormData();
-      formData.append('email', userdata.email);
-      formData.append('username', newusername);
-      formData.append('userpic', userpic);
-      console.log('FormData:', formData);
-      console.log('Email:', userdata.email);
-      console.log('New Username:', newusername);
-      console.log('Userpic:', userpic);
-
-      const response = await axios.post('/userdetailupdate', formData, {
+      const response = await axios.post('/userdetailupdate', {
+        email: userdata.email,
+        username: newusername,
+        userpic: userpic,
+      }, {
         withCredentials: true,
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json' // Set content type to JSON
         }
       });
       setTokenState(response.data.token);
-
+  
       if (response.data.token) {
         alert('User is updated');
         Cookies.set('token', response.data.token, { expires: 30 });
@@ -84,6 +79,7 @@ const Edituser = () => {
       console.log('Error:', error);
     }
   };
+  
 
   return (
     <div>
