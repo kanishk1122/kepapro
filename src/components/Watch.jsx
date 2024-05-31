@@ -232,7 +232,7 @@ const Watch = () => {
     const updateformdata =()=>{
       setNewformdata({
         videolink: video,
-        season: desiredPart[2],
+        season: desiredPart[1],
         ep: desiredPart[2],
         description: disc,
         genres: genres,
