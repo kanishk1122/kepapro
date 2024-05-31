@@ -526,7 +526,7 @@ const Watch = () => {
                     }
                     className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
                     onChange={(e) =>
-                      setNewformdata({ ...newformdata, ep: e.target.value })
+                      setNewformdata({ ...newformdata, season: e.target.value })
                     }
                     name=""
                     id=""
