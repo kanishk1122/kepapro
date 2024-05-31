@@ -219,7 +219,7 @@ const Watch = () => {
     try {
       const response = await axios.post("/updatevideo",
         newformdata,{withCredentials:true})
-        console.log(response.data);
+        alert(response.data.message);
     } catch (error) {
       console.log(error)
     }
