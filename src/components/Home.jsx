@@ -87,7 +87,7 @@ console.log(filteredData);
                 modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper h-[80vh] z-1 max-sm:h-[50vh]"
               >
-                {data.slice(0, 5).map((item, index) => (
+                {data.filter(item=>item.trending).map((item, index)=> (
                   <Link key={index} to={``}>
                     <SwiperSlide className="relative w-full h-full  ">
                       <Link
