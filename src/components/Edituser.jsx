@@ -75,10 +75,7 @@ const Edituser = () => {
   
       setTokenState(response.data.token);
   
-      if (response.data.token) {
-        alert('User is updated');
-        Cookies.set('token', response.data.token, { expires: 30 });
-      }
+      alert(response.data.message) 
     } catch (error) {
       console.log('Error:', error);
     }
