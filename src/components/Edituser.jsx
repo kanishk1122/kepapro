@@ -98,13 +98,15 @@ const Edituser = () => {
                   src={userpic instanceof File ? URL.createObjectURL(userpic) : userpic}
                   alt=''
                 />
-              </div>
+             
               <input
                 type='file'
-                className='h-[30px] px-2 outline-none w-full bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
+                className=' w-full px-2 outline-none h-full bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
                 placeholder='Choose a profile picture'
                 onChange={(e) => setUserpic(e.target.files[0])}
+                accept="image/jpeg"
               />
+               </div>
             </div>
             <div className='bg-zinc-700 w-1/2 p-3 max-sm:w-full rounded-2xl flex justify-center items-center flex-col gap-4'>
               <h2 className='text-xl font-semibold'>Enter your new username</h2>
