@@ -103,7 +103,7 @@ const Edituser = () => {
              
               <input
                 type='file'
-                className=' w-[200px] px-2 opacity-0 top-1/2 left-1/2  outline-none h-[200px] bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
+                className=' w-[200px] px-2 opacity-0 hidden  outline-none h-[200px] bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
                 placeholder='Choose a profile picture'
                 onChange={(e) => setUserpic(e.target.files[0])}
                 accept="image/jpeg"
