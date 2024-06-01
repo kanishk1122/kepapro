@@ -123,7 +123,7 @@ const Edituser = () => {
           </div>
           <input
             type='submit'
-            className='bg-blue-700 px-3 py-2 rounded-full text-xl'
+            className='bg-blue-700 w-fit px-3 py-2 rounded-full text-xl'
             value='Update'
           />
         </form>
