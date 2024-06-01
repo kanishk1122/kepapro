@@ -124,7 +124,7 @@ const decodingToken = () => {
   };
 
   const width = {
-    width: search ? "100vw" : "0px",
+    width: search ? "100%" : "0px",
   };
 
   return (
@@ -318,9 +318,12 @@ const decodingToken = () => {
         </div>
         </div>
         {isChecked == false && (
-        <div className="bg-transparent p-3 bg-red-500 pr-3 w-[400px]  top-[13vh] max-md:absolute max-md:w-full max-md:left-1/2 max-md:-translate-x-1/2  flex justify-end items-end h-fit  max-md:ml-0 gap-3 ">
+        <div className={`bg-transparent  max-w-[400px] p-3  pr-3 w-[400px]  top-[10vh] max-md:absolute max-md:w-full max-md:left-1/2 max-md:-translate-x-1/2  flex justify-end items-end h-fit  max-md:ml-0 gap-3 `}
+        style={width}
+        >
         <form
-          className={`p-2 flex justify-start max-md:left-1/2  w-full duration-600 gap-2 items-center`}
+          className={`p-2 flex justify-start   max-md:left-1/2  w-0 duration-600 gap-2 items-center`}
+          style={width}
           onSubmit={submitHandler}
           value={result}
           onChange={(e) => setResult(e.target.value)}
