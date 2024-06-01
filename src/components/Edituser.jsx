@@ -5,7 +5,7 @@ import axios from '../utils/Axios';
 import Cookies from 'js-cookie';
 
 const Edituser = () => {
-  const [userpic, setUserpic] = useState('');
+  const [userpic, setUserpic] = useState(null);
   const [token, setToken] = useState(Cookies.get('token'));
   const [decodedToken, setDecodedToken] = useState(null);
   const [userdata, setUserData] = useState({});
@@ -59,16 +59,20 @@ const Edituser = () => {
     e.preventDefault();
   
     try {
-      const response = await axios.post('/userdetailupdate', {
-        email: userdata.email,
-        username: newusername,
-        userpic: userpic,
-      }, {
+      const formData = new FormData();
+      formData.append('email', userdata.email);
+      formData.append('username', newusername);
+      if (userpic && userpic instanceof File) {
+        formData.append('userpic', userpic);
+      }
+  
+      const response = await axios.post('/userdetailupdate', formData, {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/json' // Set content type to JSON
+          'Content-Type': 'multipart/form-data'
         }
       });
+  
       setTokenState(response.data.token);
   
       if (response.data.token) {
@@ -79,7 +83,6 @@ const Edituser = () => {
       console.log('Error:', error);
     }
   };
-  
 
   return (
     <div>
@@ -91,17 +94,17 @@ const Edituser = () => {
           className='bg-zinc-800 overflow-hidden rounded-3xl w-full h-fit flex flex-col gap-7 items-center'
         >
           <div className='w-full h-fit flex flex-wrap justify-around items-center gap-5 p-3 bg-zinc-600'>
-            <div className='w-[200px]  h-full flex flex-col justify-center items-center gap-3'>
+            <div className='w-[200px] h-full flex flex-col justify-center items-center gap-3'>
               <div className='w-[160px] overflow-hidden h-[160px] bg-zinc-700 rounded-full'>
                 <img
                   className='w-full h-full object-cover'
-                  src={userpic}
+                  src={userpic instanceof File ? URL.createObjectURL(userpic) : userpic}
                   alt=''
                 />
               </div>
               <input
                 type='file'
-                className='h-[30px] px-2 outline-none w-full  bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
+                className='h-[30px] px-2 outline-none w-full bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
                 placeholder='Choose a profile picture'
                 onChange={(e) => setUserpic(e.target.files[0])}
               />
