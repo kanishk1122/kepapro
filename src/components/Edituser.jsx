@@ -92,7 +92,7 @@ const Edituser = () => {
         >
           <div className='w-full h-fit flex flex-wrap justify-around items-center gap-5 p-3 bg-zinc-600'>
             <div className='w-[200px] h-full flex flex-col justify-center items-center gap-3'>
-              <div className='w-[160px] overflow-hidden h-[160px] bg-zinc-700 rounded-full'>
+              <div className='w-[160px] relative overflow-hidden h-[160px] bg-zinc-700 rounded-full'>
                 <img
                   className='w-full h-full object-cover'
                   src={userpic instanceof File ? URL.createObjectURL(userpic) : userpic}
@@ -101,7 +101,7 @@ const Edituser = () => {
              
               <input
                 type='file'
-                className=' w-full px-2 outline-none h-full bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
+                className=' w-[200px] px-2 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2  outline-none h-[200px] bg-zinc-900 rounded-full placeholder:text-zinc-600 min-w-[200px]'
                 placeholder='Choose a profile picture'
                 onChange={(e) => setUserpic(e.target.files[0])}
                 accept="image/jpeg"
