@@ -497,7 +497,7 @@ console.log(filteredData);
               <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4"></div>
               <h1 className="text-3xl font-semibold">ALL</h1>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
-                {data.map((item, index) => (
+                {data.sort().map((item, index) => (
                   <Link
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
