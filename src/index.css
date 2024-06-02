@@ -8,6 +8,7 @@
 }
 body{
     background-color: black;
+    width: 99.1vw;
 }
 body::-webkit-scrollbar-track
 {
