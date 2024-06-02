@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
 
+
 const Watch = () => {
   const { name, seo, episode } = useParams();
   const [userdata, setuserdata] = useState({});
@@ -14,7 +15,6 @@ const Watch = () => {
   const [Name, setName] = useState("")
   const [genres, setGenres] = useState([]);
   const [quality, setQuality] = useState("");
-  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
@@ -93,6 +93,7 @@ const Watch = () => {
   const decodedUrl = decodeURIComponent(url);
   const parts = decodedUrl.split("/");
   const desiredPart = parts.slice(4);
+  const [showSeasons, setShowSeasons] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -252,42 +253,89 @@ const Watch = () => {
     }
 
 
+    const handleToggleSeasons = () => {
+      setShowSeasons(!showSeasons);
+    };
 
+    const bgImage = {
+      backgroundImage: `url(${Thumbnail})`,
+      objectFit:"cover"
+    };
+    const bgab={
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backdropFilter: 'blur(30px)', // Apply blur effect
+    }
 
   return (
-    <>
-      <div className="bg-neutral-900 text-white w-full">
+    <div style={bgImage} >
+    <div style={bgab}>
+      <div className="bg-[rgb(0,0,0,0.5)] text-white w-full">
         <Navbar />
-        <div className="h-fit px-2 flex flex-wrap w-screen gap-3">
-          {data.map((item, index) =>
-            item.animename === name && item.quality === 720 && item.ep === 1 ? (
-              <Link
-                key={index}
-                to={`/watch/${item.animename}/${item.season}/${item.ep}`}
-              >
-                <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
-                  <p>season : {item.season}</p>
-                </div>
-              </Link>
-            ) : null
-          )}
+        <div className="h-fit px-2 mt-5 justify-center items-center flex flex-wrap w-full ">
+         <img src={Thumbnail} className="w-[300px] rounded-3xl object-cover h-[400px] " alt="" />
         </div>
-        <div className="h-fit px-2 flex flex-wrap w-screen gap-3"></div>
-        <div className="h-fit pb-5 w-full p-4 flex flex-wrap gap-4">
-          <div className="w-[930px] overflow-hidden min-w-[300px] h-[60vw] max-h-[400px] rounded-lg relative">
-            <div className="w-[100vw] h-[50px] top-3 text-black  bg-transparent absolute z-20"></div>
-            <iframe
+        <div className=" px-2 flex flex-wrap w-screen gap-3"></div>
+        <div className="h-fit pb-5 w-full p-2 flex justify-center items-center  flex-wrap gap-1">
+          <div className="w-[70%] justify-center items-center  flex flex-wrap-reverse gap-6    min-w-[300px] max-md:w`-full h-fit   relative">
+          <div className="w-[30%] rounded-2xl max-md:w-full min-h-[200px] min-w-[300px] justify-center items-center bg-[rgb(0,0,0,0.5)] p-5 flex flex-col gap-2">
+  <button
+    onClick={handleToggleSeasons}
+    className="bg-red-700 text-white p-2 rounded"
+  >
+    {showSeasons ? 'Hide Seasons' : 'Show Seasons'}
+  </button>
+  <div className={`w-full ${showSeasons ? "h-20" : 'h-0'} overflow-scroll flex flex-col gap-3 duration-500`}>
+    {showSeasons && (
+      <div className="flex flex-col gap-3">
+        {data
+          .filter((item) => item.animename === name && item.quality === 720 && item.ep === 1)
+          .map((item, index) => (
+            <Link
+              key={index}
+              to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+            >
+              <div className="w-full flex gap-3 rounded p-4 h-fit bg-zinc-700">
+                <p>Season: {item.season}</p>
+              </div>
+            </Link>
+          ))}
+      </div>
+    )}
+  </div>
+  <div className="w-full h-60 overflow-scroll flex justify-center items-center flex-wrap gap-3">
+    {data
+      .filter((item) => item.animename === name && item.quality === 720 && item.season === watchSeason)
+      .map((item, index) => (
+        <Link
+          key={index}
+          to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+        >
+          <div className="w-[100%] flex gap-1 rounded p-2 h-fit bg-zinc-700">
+            <p>Episode: {item.ep}</p>
+          </div>
+        </Link>
+      ))}
+  </div>
+</div>
+
+   <div className="w-full md:w-[60%] min-h-[400px] h-[500px] relative max-md:h-[300px] rounded-2xl overflow-hidden  z-10 ">
+   <div className=" bg-transparent absolute w-full top-4 h-[10%]"></div>
+    <iframe
               title="videoplayer"
-              className="w-full h-full rounded-lg z-10"
+              className="w-full h-full object-cover"
               src={video}
               scrolling="no"
               frameBorder="0"
               allowFullScreen
             ></iframe>
+            </div>
+            
           </div>
+           
+          
 
-          <div className="w-[380px] bg-zinc-800 p-4 flex flex-col gap-2 rounded-lg">
-            <div className="flex flex-col gap-3">
+          <div className="w-[380px] h-fit bg-zinc-800 p-4 flex flex-col gap-2 rounded-lg">
+            <div className="flex h-fit flex-col gap-3">
               <h1>Name: {filteredData ? filteredData.animename : ""}</h1>
               <h1>
                 Description: {filteredData ? filteredData.description : ""}
@@ -303,25 +351,25 @@ const Watch = () => {
               <div className="w-full flex gap-3 justify-center items-center">
               <form onSubmit={handleSubmit} className="flex">
                 <input
-                  className="bg-transparent hidden"
+                  className="bg-[rgb(0,0,0,0.5)] hidden"
                   type="text"
                   value={jwtDecode(token).email}
                   name="email"
                   />
                 <input
-                  className="bg-transparent hidden"
+                  className="bg-[rgb(0,0,0,0.5)] hidden"
                   type="text"
                   value={desiredPart[0]}
                   name="animename"
                 />
                 <input
-                  className="bg-transparent hidden"
+                  className="bg-[rgb(0,0,0,0.5)] hidden"
                   type="number"
                   value={seo}
                   name="season"
                 />
                 <input
-                  className="bg-transparent hidden"
+                  className="bg-[rgb(0,0,0,0.5)] hidden"
                   type="number"
                   value={episode}
                   name="ep"
@@ -329,7 +377,7 @@ const Watch = () => {
                 <input
                   type="submit"
                   value="Add to favorites"
-                  className="bg-yellow-700 px-2 py-1 text-2xl rounded-full font-semibold"
+                  className="bg-red-700 px-2 py-1 text-2xl rounded-full font-semibold"
                 />
                
                 
@@ -344,7 +392,7 @@ const Watch = () => {
               <div className="w-fit flex justify-center flex-col rounded-3xl items-center bg-zinc-600 p-3">
                 <button
                   onClick={userLogger}
-                  className="bg-yellow-600 w-fit px-2 py-1 text-2xl rounded-full font-semibold"
+                  className="bg-red-700 w-fit px-2 py-1 text-2xl rounded-full font-semibold"
                 >
                   Add to favorites
                 </button>
@@ -385,14 +433,14 @@ const Watch = () => {
                 <div className="flex flex-col justify-center items-center h-fit w-full  ">
                 
              {updatefromshow&&
-              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3    *:rounded-lg  px-14 rounded-lg  bg-black ">
+              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3    *:rounded-lg  px-14 rounded-lg  bg-[rgb(0,0,0,0.5)] ">
                 {/* 
       season: req.body.season,
       ep: req.body.ep,
       trending: req.body.trending,
       popular: req.body.populer, */}
                 <div className=" h-fit flex flex-wrap w-full   justify-between gap-5 items-center">
-                <fieldset className="flex justify-center w-[40%] flex-col  p-3 h-fit items-center gap-7   *:bg-transparent   ">
+                <fieldset className="flex justify-center w-[40%] flex-col  p-3 h-fit items-center gap-7   *:bg-[rgb(0,0,0,0.5)]   ">
                   <div>
                   <iframe
               title="videoplayer"
@@ -408,7 +456,7 @@ const Watch = () => {
                   <input
                     type="text"
                     value={newformdata.videolink}
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, videolink: e.target.value })
                     }
@@ -426,7 +474,7 @@ const Watch = () => {
                     value={
                       newformdata.animename
                     }
-                    className="w-full h-fit rounded-lg order border-zinc-200  bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200  bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, animename: e.target.value })
                     }
@@ -441,7 +489,7 @@ const Watch = () => {
                     value={
                       newformdata.seasonname
                     }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, seasonname: e.target.value })
                     }
@@ -456,7 +504,7 @@ const Watch = () => {
                     value={
                       newformdata.thumbnail
                     }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, thumbnail: e.target.value })
                     }
@@ -476,7 +524,7 @@ const Watch = () => {
                       newformdata.genres
                     }
                     style={{resize:"none"}}
-                    className="w-full h-fit p-3 rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit p-3 rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({
                         ...newformdata,
@@ -495,7 +543,7 @@ const Watch = () => {
                     value={
                       newformdata.description
                     }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({
                         ...newformdata,
@@ -515,7 +563,7 @@ const Watch = () => {
                     value={
                       newformdata.season
                     }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, season: e.target.value })
                     }
@@ -530,7 +578,7 @@ const Watch = () => {
                     value={
                       newformdata.ep
                     }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-transparent  "
+                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
                     onChange={(e) =>
                       setNewformdata({ ...newformdata, ep: e.target.value })
                     }
@@ -619,27 +667,12 @@ const Watch = () => {
               )
             :null 
              }  
-        <div className="w-fit h-fit bg-black p-5 flex flex-wrap rounded gap-2">
-          {data.map((item, index) =>
-            item.animename === name &&
-            item.quality === 720 &&
-            item.season === watchSeason ? (
-              <Link
-                key={index}
-                to={`/watch/${item.animename}/${item.season}/${item.ep}`}
-              >
-                <div className="w-fit flex gap-3 rounded p-4 h-fit bg-zinc-700">
-                  <p>ep: {item.ep}</p>
-                </div>
-              </Link>
-            ) : null
-          )}
-        </div>
+       
       </div>
-      <div className="max-m:h-fit bg-black  flex flex-col gap-3 p-3 h-fit ">
-        {allcomment.map((item, index) => (
+      <div className="max-m:h-fit bg-[rgb(0,0,0,0.5)]  flex flex-col gap-3 p-3 h-fit ">
+        {/* {allcomment.map((item, index) => (
           <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
-            <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-black">
+            <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-[rgb(0,0,0,0.5)]">
               <img
                 src={item.image}
                 className="w-full h-full object-cover"
@@ -650,7 +683,7 @@ const Watch = () => {
               <p>{item.comment}</p>
             </div>
           </div>
-        ))}
+        ))} */}
 
         <div className="w-full h-fit px-3 flex ">
           <form
@@ -661,7 +694,7 @@ const Watch = () => {
               value={comment}
               onChange={(e) => setcomment(e.target.value)}
               style={{ resize: "none" }}
-              className="w-2/3 bg-transparent rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full"
+              className="w-2/3 bg-[rgb(0,0,0,0.5)] rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full"
               id=""
             ></textarea>
             <input
@@ -673,7 +706,8 @@ const Watch = () => {
         </div>
       </div>
       <Footer />
-    </>
+      </div>
+    </div>
   );
 };
 
