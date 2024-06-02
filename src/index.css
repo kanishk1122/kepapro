@@ -8,25 +8,34 @@
 }
 body{
     background-color: black;
-    width: 99.1vw;
 }
-body::-webkit-scrollbar-track
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #272727;
 }
 
-body::-webkit-scrollbar
+html::-webkit-scrollbar
 {
 	width: 12px;
 	background-color: #121111;
 }
 
-body::-webkit-scrollbar-thumb
+html::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background: linear-gradient(180deg, rgba(194,78,92,1) 0%, rgba(121,9,19,1) 13%, rgba(242,6,33,1) 27%, rgba(168,69,82,1) 56%, rgba(243,6,42,1) 70%, rgba(0,212,255,1) 100%);
- ;
+ 
 }
