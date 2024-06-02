@@ -4,7 +4,6 @@ import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
-import videodata from "./test.videos.json";
 
 
 const Watch = () => {
