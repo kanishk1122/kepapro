@@ -671,7 +671,7 @@ const Watch = () => {
        
       </div>
       <div className="max-m:h-fit bg-[rgb(0,0,0,0.5)]  flex flex-col gap-3 p-3 h-fit ">
-        {/* {allcomment.map((item, index) => (
+        {allcomment.map((item, index) => (
           <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-[rgb(0,0,0,0.5)]">
               <img
@@ -684,7 +684,7 @@ const Watch = () => {
               <p>{item.comment}</p>
             </div>
           </div>
-        ))} */}
+        ))}
 
         <div className="w-full h-fit px-3 flex ">
           <form
