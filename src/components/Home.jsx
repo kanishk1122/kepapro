@@ -530,7 +530,7 @@ console.log(filteredData);
             )
             .map((filteredItem, index) => (
               <Link key={index} to={`/watch/${filteredItem.animename}/${filteredItem.season}/1`}>
-            <div className='w-[40vw] max-w-[140px] flex flex-col h-[30vh] rounded-lg justify-center items-center bg-zinc-800 p-3'>
+            <div className='w-fit max-w-[140px] flex flex-col h-[30vh] rounded-lg justify-center items-center bg-zinc-800 p-3'>
               {/* Render your item details here */}
               <div className='w-full h-[200px] rounded  overflow-hidden'>
 
