@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
+import videodata from "./test.videos.json";
 
 
 const Watch = () => {
@@ -15,6 +16,7 @@ const Watch = () => {
   const [Name, setName] = useState("")
   const [genres, setGenres] = useState([]);
   const [quality, setQuality] = useState("");
+  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
