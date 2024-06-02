@@ -28,8 +28,8 @@ const Routing = () => {
           <Route path='/user/:username' element={<User />} />
           <Route path='/edit/:username' element={<Edituser />} />
           <Route path='/news' element={<News />} />
-          <Route path='/register' element={<Registration />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/*/register' element={<Registration />} />
+          <Route path='/*/login' element={<Login />} />
           <Route path='/adminlogin' element={<Adminlogin />} />
           <Route path='/adminreg' element={<Adminreg />} />
           <Route path='/upload' element={<Upload />} />
