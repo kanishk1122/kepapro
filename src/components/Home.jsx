@@ -87,7 +87,7 @@ console.log(filteredData);
                 modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper h-[80vh] z-1 max-sm:h-[50vh]"
               >
-                {data.reverse().slice(0,5).filter(item=>item.trending).map((item, index)=> (
+                {data.reverse().filter(item=>item.trending).slice(0,5).map((item, index)=> (
                   <Link key={index} to={``}>
                     <SwiperSlide className="relative w-full h-full  ">
                       <Link
@@ -169,8 +169,8 @@ console.log(filteredData);
                       scrollbarWidth: "none",
                     }}
                   >
-                    {data.reverse().slice(0,5).map((item, index) =>
-                      item.trending ? (
+                    {data.reverse().filter(item=>item.trending).slice(0,5).map((item, index) =>
+                       (
                         <Link
                           key={index}
                           to={`/watch/${item.animename}/${item.season}/${item.ep}`}
@@ -213,7 +213,7 @@ console.log(filteredData);
                             </div>
                           </div>
                         </Link>
-                      ) : null
+                      ) 
                     )}
 
                     <card className="w-[40vw]  max-w-[300px] max-h-[200px]rounded-lg overflow-hidden object-cover relative">
@@ -258,8 +258,8 @@ console.log(filteredData);
                       scrollbarWidth: "none",
                     }}
                   >
-                    {data.reverse().slice(0,5).map((item, index) =>
-                      item.popular ? (
+                    {data.reverse().filter(item=>item.trending).slice(0,5).map((item, index) =>
+                       (
                         <Link
                           key={index}
                           to={`/watch/${item.animename}/${item.season}/${item.ep}`}
@@ -302,7 +302,7 @@ console.log(filteredData);
                             </div>
                           </div>
                         </Link>
-                      ) : null
+                      ) 
                     )}
 
                     <card className="w-[40vw]  max-w-[300px] max-h-[200px]rounded-lg overflow-hidden object-cover relative">
