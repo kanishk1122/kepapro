@@ -258,7 +258,7 @@ console.log(filteredData);
                       scrollbarWidth: "none",
                     }}
                   >
-                    {data.reverse().filter(item=>item.trending).slice(0,5).map((item, index) =>
+                    {data.reverse().filter(item=>item.popular).slice(0,5).map((item, index) =>
                        (
                         <Link
                           key={index}
