@@ -43,7 +43,7 @@ const Watch = () => {
 
   useEffect(()=>{
     setLoading(true)
-  },[loading])
+  },[])
 
   const token = Cookies.get("token");
 
