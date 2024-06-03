@@ -33,7 +33,7 @@ function getUserFromToken() {
 const Navbar = ({ setsearchResult, resultsearch }) => {
   const checkinguser = useMemo(() => getUserFromToken(), []);
 
-  const [data, setData, result, setResult] = useContext(detailsContext);
+  const {data, setData, result, setResult} = useContext(detailsContext);
   const [styles, setStyles] = useState({ o: 0, t: "scale(0)" });
   const [CursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [search, setSearch] = useState(true);

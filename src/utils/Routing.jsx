@@ -14,11 +14,13 @@ import Ads from "../components/ads.txt";
 import Allpopular from "../components/Allpopular.jsx";
 import DecodedToken from '../components/DecodeToken.jsx';
 import Edituser from '../components/Edituser.jsx';
+import Loding from '../components/Loding.jsx';
 
 const Routing = () => {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
+      <Route path='/loading' element={<Loding />} />
       <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
       <Route path='/watch/:name/:seo/:episode/register' element={<Registration />} />
       <Route path='/watch/:name/:seo/:episode/login' element={<Login />} />

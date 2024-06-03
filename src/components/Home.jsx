@@ -15,7 +15,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "../utils/Axios";
 
 const Home = () => {
-  const [data] = useContext(detailsContext);// State to hold the JWT string
+  const {data} = useContext(detailsContext);// State to hold the JWT string
   const [resultsearch, setsearchResult] = useState();
   const discription = data.discription;
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
@@ -522,7 +522,7 @@ console.log(filteredData);
               </div>
             </div>
           </div>
-        ) : (<div className="w-full p-5 h-fit p-3  ">
+        ) : (<div className="w-full p-5 h-fit   ">
         <div className="w-full p-1 gap-9  rounded flex-wrap flex  h-fit">
           {data
             .filter((item) =>

@@ -5,14 +5,13 @@ import Cookies from 'js-cookie';
 export const detailsContext = createContext();
 
 const Context = (props) => {
-
     const [data, setData] = useState([]);
     const [gettoken, settoken] = useState("");
-    
+    const [loading, setLoading] = useState(true);  // Initial loading state to true
 
     const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
     const [decodedToken, setDecodedToken] = useState({}); 
- 
+
     async function jwt_decode(token) {
         if (token) {
             try {
@@ -44,40 +43,46 @@ const Context = (props) => {
         } catch (error) {
             console.error("Error decoding token:", error); // Log any errors that occur during decoding
         }
-        
     };
-
 
     useEffect(() => {
         console.log("Component mounted");
         decodingToken();
         
-       
-
         const fetchData = async () => {
             try {
+                 // Set loading to true before fetching data
                 const response = await axios.get("/getall");
                 setData(response.data);
+                if(response.data){
+                    setLoading(false)
+                } // Set loading to false after data is fetched
             } catch (error) {
                 console.error("Error fetching data:", error);
-                // Handle error if needed
+                 // Set loading to false if an error occurs
             }
         };
 
-        fetchData(); // Fetch data every 5 seconds
+        fetchData(); // Fetch data on component mount
     
-    }, [setData]); // Add setData as a dependency
+    }, [token]); // Add token as a dependency
 
+    useEffect(() => {
+        console.log(loading);
+    }, [loading]); // Log loading state when it changes
 
+    const [userdata, setuserdata] = useState(null);
 
-    const [userdata, setuserdata] = useState(jwt_decode(token));
-    const checkinguser = useMemo(() => jwt_decode(), []);
+    useEffect(() => {
+        if (token) {
+            jwt_decode(token).then(decoded => setuserdata(decoded));
+        }
+    }, [token]);
 
-    console.log(userdata)
+    console.log(userdata);
 
- 
     return (
-        <detailsContext.Provider value={[data, setData, gettoken, settoken ,userdata, setuserdata]}>
+        <detailsContext.Provider value={{data, loading, setLoading, setData, gettoken, settoken, userdata, setuserdata}}>
             {props.children}
         </detailsContext.Provider>
     );
