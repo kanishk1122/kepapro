@@ -268,7 +268,8 @@ const Watch = () => {
 
     const bgImage = {
       backgroundImage: `url(${Thumbnail})`,
-      objectFit:"cover"
+      objectFit:"cover",
+      backgroundRepeat: "no-repeat",
     };
     const bgab={
       backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
