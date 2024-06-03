@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
+import { detailsContext } from "../utils/Context";
 
 
 const Watch = () => {
   const { name, seo, episode } = useParams();
+  const {loading, setLoading} = useContext(detailsContext)
   const [userdata, setuserdata] = useState({});
   const [video, setVideo] = useState("");
   const [disc, setDisc] = useState("");
@@ -39,6 +41,9 @@ const Watch = () => {
     oldep:0,
   });
 
+  useEffect(()=>{
+    setLoading(true)
+  },[loading])
 
   const token = Cookies.get("token");
 
@@ -101,6 +106,9 @@ const Watch = () => {
       try {
         const response = await axios.get("/watchall");
         setData(response.data);
+        if (response.data) {
+          setLoading(false)
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
