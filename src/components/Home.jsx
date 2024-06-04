@@ -157,7 +157,7 @@ console.log(filteredData);
             </div>
             <hr className="p-3 m-1  border-transparent bottom-2 h-[-10px] rounded-full" />
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
-              <h1 className="text-3xl font-semibold">Trending</h1>
+              <h2 className="text-3xl font-semibold">Trending</h2>
               <div className="w-full h-fit rounded-lg overflow-hidden">
                 <div className="scroll-ps-6 w-full h-fit flex  overflow-x-auto">
                   <div
@@ -246,7 +246,7 @@ console.log(filteredData);
             </div>
             <hr className="p-3 mt-3 border-zinc-500 h-[1px] rounded-full" />
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
-              <h1 className="text-3xl font-semibold">Populer</h1>
+              <h2 className="text-3xl font-semibold">Populer</h2>
               <div className="w-full h-fit rounded-lg overflow-hidden">
                 <div className="scroll-ps-6 w-full h-fit flex  overflow-x-auto">
                   <div
@@ -308,7 +308,7 @@ console.log(filteredData);
                     <card className="w-[40vw]  max-w-[300px] max-h-[200px]rounded-lg overflow-hidden object-cover relative">
                       <Link to="/all/popular">
                         <div className="absolute flex flex-col items-center gap-[1vw] justify-center  duration-500 w-full h-full bg-[#00000099] text-white felx p-4 felx-col opacity-100   ">
-                          <h1 className="text-[10vw]">View all</h1>
+                          <p className="text-[10vw]">View all</p>
                           <div className="mt-[20px]">
                             <Link
                               to="/"
@@ -335,7 +335,7 @@ console.log(filteredData);
             </div>
             <hr className="p-3 mt-3 border-transparent h-[1px] rounded-full" />
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
-              <h1 className="text-3xl font-semibold">newly added</h1>
+              <h2 className="text-3xl font-semibold">newly added</h2>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {reversedData.map((item, index) =>
                   item.new === true ? (
@@ -364,7 +364,7 @@ console.log(filteredData);
                 )}
               </div>
 
-              <h1 className="text-3xl font-semibold">Action</h1>
+              <h2 className="text-3xl font-semibold">Action</h2>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {allAction.map((item, index) => (
                   <Link
@@ -390,7 +390,7 @@ console.log(filteredData);
                 ))}
               </div>
 
-              <h1 className="text-3xl font-semibold">Adventure</h1>
+              <h2 className="text-3xl font-semibold">Adventure</h2>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {alladventure.map((item, index) => (
                   <Link
@@ -416,7 +416,7 @@ console.log(filteredData);
                 ))}
               </div>
 
-              <h1 className="text-3xl font-semibold">Comedy</h1>
+              <h2 className="text-3xl font-semibold">Comedy</h2>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {allcomedy.map((item, index) => (
                   <Link
@@ -442,7 +442,7 @@ console.log(filteredData);
                 ))}
               </div>
 
-              <h1 className="text-3xl font-semibold">Romentic</h1>
+              <h2 className="text-3xl font-semibold">Romentic</h2>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {allromentic.map((item, index) => (
                   <Link
@@ -468,7 +468,7 @@ console.log(filteredData);
                 ))}
               </div>
 
-              <h1 className="text-3xl font-semibold">Drama</h1>
+              <h2 className="text-3xl font-semibold">Drama</h2>
               <div className="w-full flex flex-wrap gap-4 h-fit p-3 ">
                 {alldrame.map((item, index) => (
                   <Link
