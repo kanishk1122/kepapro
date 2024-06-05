@@ -37,7 +37,7 @@ const Home = () => {
   })
   
 
-console.log(filteredData);
+
 
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
