@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 
 const AllAnime = () => {
   const { type } = useParams();
-  const [data] = useContext(detailsContext);
+  const {data} = useContext(detailsContext);
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
