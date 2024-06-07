@@ -7,8 +7,8 @@ export const detailsContext = createContext();
 const Context = (props) => {
     const [data, setData] = useState([]);
     const [gettoken, settoken] = useState("");
-    const [loading, setLoading] = useState(true);  // Initial loading state to true
-
+    const [loading, setLoading] = useState();  // Initial loading state to true
+    const [allvidoedata, setallvidoedata] = useState([])
     const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
     const [decodedToken, setDecodedToken] = useState({}); 
 
@@ -44,6 +44,22 @@ const Context = (props) => {
             console.error("Error decoding token:", error); // Log any errors that occur during decoding
         }
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("/watchall");
+            setallvidoedata(response.data);
+            if (response.data) {
+              setLoading(false)
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     useEffect(() => {
         console.log("Component mounted");
@@ -82,7 +98,7 @@ const Context = (props) => {
     console.log(userdata);
 
     return (
-        <detailsContext.Provider value={{data, loading, setLoading, setData, gettoken, settoken, userdata, setuserdata}}>
+        <detailsContext.Provider value={{data, loading,allvidoedata, setallvidoedata, setLoading, setData, gettoken, settoken, userdata, setuserdata}}>
             {props.children}
         </detailsContext.Provider>
     );

@@ -15,7 +15,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "../utils/Axios";
 
 const Home = () => {
-  const {data} = useContext(detailsContext);// State to hold the JWT string
+  const {data,allvidoedata, setallvidoedata} = useContext(detailsContext);// State to hold the JWT string
   const [resultsearch, setsearchResult] = useState();
   const discription = data.discription;
   const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
@@ -24,6 +24,7 @@ const Home = () => {
   console.log(Cookies.get("token"))
 
 
+  
 
   
   const currentDate = new Date();
@@ -37,7 +38,22 @@ const Home = () => {
   })
   
 
+  function findCurrentEpisodeNumber(content) {
+    // Filter the video data based on the anime name
+    const currentContent = allvidoedata.filter(video => video.animename === content.animename);
+    
+    // Extract the episode numbers
+    const episodeNumbers = currentContent.map(video => video.ep);
+    
+    // Find the maximum episode number
+    const maxEpisodeNumber = Math.max(...episodeNumbers);
+    
+    return maxEpisodeNumber;
+  }
+  
+  
 
+  console.log(allvidoedata);
 
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
@@ -59,6 +75,15 @@ const Home = () => {
     background: `linear-gradient(to right,#00000099 75%, transparent 100%)`,
   };
 
+  const verticalTextStyle = {
+    display: 'flex',
+    justifyContent: 'start',
+    alignItems: 'center',
+    writingMode: 'vertical-lr',
+    textOrientation: 'right',
+    whiteSpace: 'nowrap',
+    transform: 'rotate(180deg)',
+};
   const clipPathStyle = {
     clipPath: "polygon(0 0, 84% 0, 75% 100%, 0% 100%)",
   };// Expires in 7 days
@@ -155,7 +180,8 @@ const Home = () => {
                 ))}
               </Swiper>
             </div>
-            <hr className="p-3 m-1  border-transparent bottom-2 h-[-10px] rounded-full" />
+                <div>    
+               <hr className="p-3 m-1  border-transparent bottom-2 h-[-10px] rounded-full" />
             <div className="h-fit w-full relative bg-transparent flex flex-col gap-4 p-4">
               <h2 className="text-3xl font-semibold">Trending</h2>
               <div className="w-full h-fit rounded-lg overflow-hidden">
@@ -175,15 +201,23 @@ const Home = () => {
                           key={index}
                           to={`/watch/${item.animename}/${item.season}/${item.ep}`}
                         >
-                          <div className="w-[40vw] h-[69vw] max-w-[300px] max-h-[500px] rounded-lg overflow-hidden object-cover relative">
-                            <div className="absolute flex flex-col gap-5 duration-500 w-full h-full bg-[#00000099] text-white flex p-4 felx-col opacity-0 hover:opacity-100  ">
+                          <div className="w-[50vw] h-[69vw] max-w-[300px] overflow-hidden max-h-[500px] rounded-lg  object-cover relative flex ">
+                          <div className="w-[10vw] h-full bg-black ">
+
+                            <div className="text-white flex p-3 w-full h-full justify-end items-end  text-end" style={verticalTextStyle}>
+                             <div className="text-yellow-500 font-semibold max-md:text-[100%] text-2xl ">Episode : {findCurrentEpisodeNumber(item)}</div>
+                             
+                            </div>
+                          </div>
+                          <div className="w-[40vw] h-[69vw] max-w-[300px] ml-[-1.3vw] max-h-[500px] rounded-lg overflow-hidden object-cover relative">
+                            <div className="absolute flex flex-col overflow-hidden gap-5 duration-500 w-full h-full bg-[#00000099] text-white  p-4 felx-col opacity-0 hover:opacity-100  ">
                               <h1 className="font-semibold">
                                 {item.animename}
                               </h1>
                               <div className="w-[30vw] h-fit ">
                                 <div
                                   style={{ flexDirection: "row" }}
-                                  className="w-full overflow-hidden h-fit"
+                                  className="w-[50%] overflow-hidden h-fit"
                                 >
                                   <div
                                     className="w-full"
@@ -208,9 +242,10 @@ const Home = () => {
                               src={item.thumnail}
                               alt=""
                             />
-                            <div className="absolute text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
+                            <div className="absolute  overflow-hidden text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
                               {item.animename}
                             </div>
+                          </div>
                           </div>
                         </Link>
                       ) 
@@ -264,15 +299,23 @@ const Home = () => {
                           key={index}
                           to={`/watch/${item.animename}/${item.season}/${item.ep}`}
                         >
-                          <div className="w-[40vw] h-[69vw] max-w-[300px] max-h-[500px] rounded-lg overflow-hidden object-cover relative">
-                            <div className="absolute flex flex-col gap-5 duration-500 w-full h-full bg-[#00000099] text-white flex p-4 felx-col opacity-0 hover:opacity-100  ">
+                          <div className="w-[50vw] h-[69vw] max-w-[300px] overflow-hidden max-h-[500px] rounded-lg  object-cover relative flex ">
+                          <div className="w-[10vw] h-full bg-black ">
+
+                            <div className="text-white flex p-3 w-full h-full justify-end items-end  text-end" style={verticalTextStyle}>
+                             <div className="text-yellow-500 font-semibold max-md:text-[100%] text-2xl ">Episode : {findCurrentEpisodeNumber(item)}</div>
+                             
+                            </div>
+                          </div>
+                          <div className="w-[40vw] h-[69vw] max-w-[300px] ml-[-1.3vw] max-h-[500px] rounded-lg overflow-hidden object-cover relative">
+                            <div className="absolute flex flex-col overflow-hidden gap-5 duration-500 w-full h-full bg-[#00000099] text-white  p-4 felx-col opacity-0 hover:opacity-100  ">
                               <h1 className="font-semibold">
                                 {item.animename}
                               </h1>
                               <div className="w-[30vw] h-fit ">
                                 <div
                                   style={{ flexDirection: "row" }}
-                                  className="w-full overflow-hidden h-fit"
+                                  className="w-[50%] overflow-hidden h-fit"
                                 >
                                   <div
                                     className="w-full"
@@ -297,18 +340,19 @@ const Home = () => {
                               src={item.thumnail}
                               alt=""
                             />
-                            <div className="absolute text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
+                            <div className="absolute  overflow-hidden text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
                               {item.animename}
                             </div>
+                          </div>
                           </div>
                         </Link>
                       ) 
                     )}
 
                     <card className="w-[40vw]  max-w-[300px] max-h-[200px]rounded-lg overflow-hidden object-cover relative">
-                      <Link to="/all/popular">
+                      <Link to="/all/trending">
                         <div className="absolute flex flex-col items-center gap-[1vw] justify-center  duration-500 w-full h-full bg-[#00000099] text-white felx p-4 felx-col opacity-100   ">
-                          <p className="text-[10vw]">View all</p>
+                          <h1 className="text-[10vw]">View all</h1>
                           <div className="mt-[20px]">
                             <Link
                               to="/"
@@ -520,6 +564,7 @@ const Home = () => {
                   </Link>
                 ))}
               </div>
+            </div>
             </div>
           </div>
         ) : (<div className="w-full p-5 h-fit   ">
