@@ -242,7 +242,7 @@ const Home = () => {
                               src={item.thumnail}
                               alt=""
                             />
-                            <div className="absolute  overflow-hidden text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
+                            <div className="absolute  overflow-hidden text-center top-3/4 text-3xl font-semibold max-md:text-[4vw] text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
                               {item.animename}
                             </div>
                           </div>
@@ -340,7 +340,7 @@ const Home = () => {
                               src={item.thumnail}
                               alt=""
                             />
-                            <div className="absolute  overflow-hidden text-center top-3/4 text-3xl font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
+                            <div className="absolute  overflow-hidden text-center top-3/4 text-3xl max-md:text-[4vw] font-semibold text-white left-0 z-20 w-full h-2/3 bg-[#000000a6] backdrop-blur-lg">
                               {item.animename}
                             </div>
                           </div>
@@ -417,18 +417,18 @@ const Home = () => {
                   >
                     <div
                         key={index}
-                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                        className="h-[28vw] min-h-[260px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-full h-2/3 rounded bg-black">
+                        <div className="w-full h-[78%] mt-[-10px] rounded bg-black">
                           <img
                             src={item.thumnail}
                             className="w-full h-full object-cover"
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
-                          {item.animename}<br/>
-                          <p>season: {item.season}  </p>
+                        <div className="w-full h-[2/3] text-center pt-3  max-md:text-[3vw] text-2xl flex flex-col font-semibold ">
+                          {item.animename}
+                          <p>season: {item.season} </p> 
 
                         </div>
                       </div>
@@ -443,20 +443,20 @@ const Home = () => {
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
                   >
-                    <div
+                   <div
                         key={index}
-                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                        className="h-[28vw] min-h-[260px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-full h-2/3 rounded bg-black">
+                        <div className="w-full h-[78%] mt-[-10px] rounded bg-black">
                           <img
                             src={item.thumnail}
                             className="w-full h-full object-cover"
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
-                          {item.animename}<br/>
-                          <p>season: {item.season}  </p>
+                        <div className="w-full h-[2/3] text-center pt-3  max-md:text-[3vw] text-2xl flex flex-col font-semibold ">
+                          {item.animename}
+                          <p>season: {item.season} </p> 
 
                         </div>
                       </div>
@@ -473,18 +473,18 @@ const Home = () => {
                   >
                     <div
                         key={index}
-                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                        className="h-[28vw] min-h-[260px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-full h-2/3 rounded bg-black">
+                        <div className="w-full h-[78%] mt-[-10px] rounded bg-black">
                           <img
                             src={item.thumnail}
                             className="w-full h-full object-cover"
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
-                          {item.animename}<br/>
-                          <p>season: {item.season}  </p>
+                        <div className="w-full h-[2/3] text-center pt-3  max-md:text-[3vw] text-2xl flex flex-col font-semibold ">
+                          {item.animename}
+                          <p>season: {item.season} </p> 
 
                         </div>
                       </div>
@@ -501,18 +501,18 @@ const Home = () => {
                   >
                     <div
                         key={index}
-                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                        className="h-[28vw] min-h-[260px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-full h-2/3 rounded bg-black">
+                        <div className="w-full h-[78%] mt-[-10px] rounded bg-black">
                           <img
                             src={item.thumnail}
                             className="w-full h-full object-cover"
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
-                          {item.animename}<br/>
-                          <p>season: {item.season}  </p>
+                        <div className="w-full h-[2/3] text-center pt-3  max-md:text-[3vw] text-2xl flex flex-col font-semibold ">
+                          {item.animename}
+                          <p>season: {item.season} </p> 
 
                         </div>
                       </div>
@@ -527,20 +527,20 @@ const Home = () => {
                     key={index}
                     to={`/watch/${item.animename}/${item.season}/${item.ep}`}
                   >
-                    <div
+                   <div
                         key={index}
-                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                        className="h-[28vw] min-h-[260px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-full h-2/3 rounded bg-black">
+                        <div className="w-full h-[78%] mt-[-10px] rounded bg-black">
                           <img
                             src={item.thumnail}
                             className="w-full h-full object-cover"
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
-                          {item.animename}<br/>
-                          <p>season: {item.season}  </p>
+                        <div className="w-full h-[2/3] text-center pt-3  max-md:text-[3vw] text-2xl flex flex-col font-semibold ">
+                          {item.animename}
+                          <p>season: {item.season} </p> 
 
                         </div>
                       </div>
@@ -558,18 +558,18 @@ const Home = () => {
                   >
                     <div
                         key={index}
-                        className="h-[28vw] min-h-[160px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
+                        className="h-[28vw] min-h-[260px] min-w-[140px] flex justify-center items-center flex-col rounded-lg overflow-hidden w-[20vw] bg-zinc-700"
                       >
-                        <div className="w-full h-2/3 rounded bg-black">
+                        <div className="w-full h-[78%] mt-[-10px] rounded bg-black">
                           <img
                             src={item.thumnail}
                             className="w-full h-full object-cover"
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
-                          {item.animename}<br/>
-                          <p>season: {item.season}  </p>
+                        <div className="w-full h-[2/3] text-center pt-3  max-md:text-[3vw] text-2xl flex flex-col font-semibold ">
+                          {item.animename}
+                          <p>season: {item.season} </p> 
 
                         </div>
                       </div>
