@@ -398,7 +398,7 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
+                        <div className="w-full h-1/3 text-center pt-3 text-[3vw]  font-semibold ">
                           {item.animename}
                         </div>
                       </div>
@@ -426,8 +426,10 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
-                          {item.animename}
+                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
+                          {item.animename}<br/>
+                          <p>season: {item.season}  </p>
+
                         </div>
                       </div>
                   </Link>
@@ -452,8 +454,10 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
-                          {item.animename}
+                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
+                          {item.animename}<br/>
+                          <p>season: {item.season}  </p>
+
                         </div>
                       </div>
                   </Link>
@@ -478,8 +482,10 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
-                          {item.animename}
+                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
+                          {item.animename}<br/>
+                          <p>season: {item.season}  </p>
+
                         </div>
                       </div>
                   </Link>
@@ -504,8 +510,10 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
-                          {item.animename}
+                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
+                          {item.animename}<br/>
+                          <p>season: {item.season}  </p>
+
                         </div>
                       </div>
                   </Link>
@@ -530,8 +538,10 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
-                          {item.animename}
+                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
+                          {item.animename}<br/>
+                          <p>season: {item.season}  </p>
+
                         </div>
                       </div>
                   </Link>
@@ -557,8 +567,10 @@ const Home = () => {
                             alt=""
                           />
                         </div>
-                        <div className="w-full h-1/3 text-center pt-3 text-[3vw] font-semibold ">
-                          {item.animename}
+                        <div className="w-full h-1/3 text-center pt-3  max-md:text-[3vw] text-2xl font-semibold ">
+                          {item.animename}<br/>
+                          <p>season: {item.season}  </p>
+
                         </div>
                       </div>
                   </Link>
