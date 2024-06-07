@@ -7,7 +7,7 @@ export const detailsContext = createContext();
 const Context = (props) => {
     const [data, setData] = useState([]);
     const [gettoken, settoken] = useState("");
-    const [loading, setLoading] = useState();  // Initial loading state to true
+    const [loading, setLoading] = useState(true);  // Initial loading state to true
     const [allvidoedata, setallvidoedata] = useState([])
     const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
     const [decodedToken, setDecodedToken] = useState({}); 
