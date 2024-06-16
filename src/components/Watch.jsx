@@ -42,7 +42,7 @@ const Watch = () => {
   });
 
   useEffect(()=>{
-    setLoading(true)
+    setLoading(false)
   },[])
 
   const token = Cookies.get("token");
@@ -327,11 +327,11 @@ const Watch = () => {
   </div>
 </div>
 
-   <div className="w-full md:w-[60%] min-h-[400px] h-[500px] relative max-md:h-[300px] rounded-2xl overflow-hidden  z-10 ">
+   <div className="w-full md:w-[60%] max-md:min-h-[200px]   h-[45vh] relative max-md:h-[30vh] rounded-2xl overflow-hidden  z-10 ">
    <div className=" bg-transparent absolute w-full top-4 h-[10%]"></div>
     <iframe
               title="videoplayer"
-              className="w-full h-full object-cover"
+              className="w-full bg-red-600  h-full object-cover"
               src={video}
               scrolling="no"
               frameBorder="0"
@@ -443,11 +443,7 @@ const Watch = () => {
                 
              {updatefromshow&&
               <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3    *:rounded-lg  px-14 rounded-lg  bg-[rgb(0,0,0,0.5)] ">
-                {/* 
-      season: req.body.season,
-      ep: req.body.ep,
-      trending: req.body.trending,
-      popular: req.body.populer, */}
+             
                 <div className=" h-fit flex flex-wrap w-full   justify-between gap-5 items-center">
                 <fieldset className="flex justify-center w-[40%] flex-col  p-3 h-fit items-center gap-7   *:bg-[rgb(0,0,0,0.5)]   ">
                   <div>
@@ -679,7 +675,7 @@ const Watch = () => {
        
       </div>
       <div className="max-m:h-fit bg-[rgb(0,0,0,0.5)]  flex flex-col gap-3 p-3 h-fit ">
-        {allcomment.map((item, index) => (
+         {allcomment.map((item, index) => (
           <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-[rgb(0,0,0,0.5)]">
               <img
@@ -692,7 +688,7 @@ const Watch = () => {
               <p>{item.comment}</p>
             </div>
           </div>
-        ))}
+        ))} 
 
         <div className="w-full h-fit px-3 flex ">
           <form
