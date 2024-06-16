@@ -1,13 +1,16 @@
 import { useState, useEffect, createContext, useMemo } from 'react';
 import axios from './Axios';
 import Cookies from 'js-cookie';
+import videoContent from './test.videos.json'
 
 export const detailsContext = createContext();
 
+//this file is added to gitignore for testing on locally
+
 const Context = (props) => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(videoContent.filter(item=>item.ep===1));
     const [gettoken, settoken] = useState("");
-    const [loading, setLoading] = useState(true);  // Initial loading state to true
+    const [loading, setLoading] = useState(false);  // Initial loading state to true
     const [allvidoedata, setallvidoedata] = useState([])
     const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
     const [decodedToken, setDecodedToken] = useState({}); 
@@ -45,21 +48,21 @@ const Context = (props) => {
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get("/watchall");
-            setallvidoedata(response.data);
-            if (response.data) {
-              setLoading(false)
-            }
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         const response = await axios.get("/watchall");
+    //         setallvidoedata(response.data);
+    //         if (response.data) {
+    //           setLoading(false)
+    //         }
+    //       } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //       }
+    //     };
     
-        fetchData();
-      }, []);
+    //     fetchData();
+    //   }, []);
 
     useEffect(() => {
         console.log("Component mounted");

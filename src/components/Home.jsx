@@ -545,7 +545,9 @@ useEffect(() => {
                           
                           <p><span className="text-red-500 text-3xl font-semibold">season :</span> <span className=" text-3xl font-semibold" >{item.season}</span> </p>
                         <p>{item.description}</p>
+                        <div className=" text-2xl text-center">Watch NOW</div>
                         </div>
+
                       </div>
                     </Link>
                   ))}
