@@ -39,6 +39,7 @@ const Watch = () => {
     oldanimename:"",
     oldseason:0,
     oldep:0,
+    download:'',
   });
 
   useEffect(()=>{
@@ -253,10 +254,11 @@ const Watch = () => {
         thumbnail: Thumbnail,
         trending: false,
         popular: false,
-        seasonname: "",
+        seasonname: filteredData.seasonname ,
         oldanimename:desiredPart[0],
         oldseason:desiredPart[1],
         oldep:desiredPart[2],
+        download:filteredData.download
       });
       setupdatefromshow(()=>!updatefromshow)
     }
@@ -534,6 +536,25 @@ const Watch = () => {
                       setNewformdata({
                         ...newformdata,
                         genres: e.target.value.split(","),
+                      })
+                    }
+                    name=""
+                    id=""
+                  />
+                </fieldset>
+                <fieldset className=" p-3 h-fit w-full border-zinc-400 border  gap-7 flex rounded-lg justify-center items-center   ">
+                  <legend>enter download link</legend>
+                  <input
+                    type="text"
+                    value={
+                      newformdata.download
+                    }
+                    style={{resize:"none"}}
+                    className="w-full h-fit p-3 rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
+                    onChange={(e) =>
+                      setNewformdata({
+                        ...newformdata,
+                        download: e.target.value,
                       })
                     }
                     name=""

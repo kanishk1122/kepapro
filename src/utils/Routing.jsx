@@ -15,6 +15,7 @@ import Allpopular from "../components/Allpopular.jsx";
 import DecodedToken from '../components/DecodeToken.jsx';
 import Edituser from '../components/Edituser.jsx';
 import Loding from '../components/Loding.jsx';
+import Notfound from '../components/Notfound.jsx';
 
 const Routing = () => {
   return (
@@ -42,7 +43,7 @@ const Routing = () => {
       <Route path='/ads.txt' element={<Ads />} />
       <Route path='/decode' element={<DecodedToken />} />
       {/* Add a fallback route for unknown paths */}
-      {/* <Route path='*' element={<Navigate to='/' />} /> */}
+      <Route path='*' element={<Notfound/>} />
     </Routes>
   );
 }
