@@ -47,7 +47,7 @@ const Home = () => {
     return maxEpisodeNumber;
   }
 
-  console.log(allvidoedata);
+  
 
   // Reverse the filtered data
   const reversedData = filteredData.slice().reverse();
@@ -241,6 +241,7 @@ useEffect(() => {
                                 >
                                   <div className="text-yellow-500 font-semibold max-md:text-[100%] text-2xl ">
                                     Episode : {findCurrentEpisodeNumber(item)}
+                                    {console.log(findCurrentEpisodeNumber(item))}
                                   </div>
                                 </div>
                               </div>
