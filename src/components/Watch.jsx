@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
 import { detailsContext } from "../utils/Context";
+import videodetials from  './test.videos.json'
 
 
 const Watch = () => {
@@ -23,7 +24,6 @@ const Watch = () => {
   const [userLoginMenu, setUserLoginMenu] = useState(false);
   const [id, setid] = useState("");
   const [comment, setcomment] = useState("");
-  const [downloadlink, setdownloadlink] = useState('')
   const [updatefromshow, setupdatefromshow] = useState(false)
   const [allcomment, setallcomment] = useState([]);
   const [newformdata, setNewformdata] = useState({
@@ -147,7 +147,6 @@ const Watch = () => {
       setid(filtered._id);
       setName(filtered.animename)
       setallcomment(filtered.comments);
-      setdownloadlink(filtered.download)
     }
   }, [data, desiredPart,newformdata]);
 
@@ -434,11 +433,10 @@ const Watch = () => {
                 </div>
               </div>
             )}
-            <div className="flex w-full justify-end items-end">
-              {downloadlink !== null && downloadlink !== undefined  ?<a className="bg-white cursor-pointer text-black px-3 py-1 text-2xl font-semibold rounded-xl" href={downloadlink}>Download</a> :null}
+            <div>
+              <Link to></Link>
             </div>
 
-            
           </div>
         </div>
 
@@ -702,7 +700,7 @@ const Watch = () => {
        
       </div>
       <div className="max-m:h-fit bg-[rgb(0,0,0,0.5)]  flex flex-col gap-3 p-3 h-fit ">
-         {/* {allcomment.map((item, index) => (
+         {allcomment.map((item, index) => (
           <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
             <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-[rgb(0,0,0,0.5)]">
               <img
@@ -715,7 +713,7 @@ const Watch = () => {
               <p>{item.comment}</p>
             </div>
           </div>
-        ))}  */}
+        ))} 
 
         <div className="w-full h-fit px-3 flex ">
           <form
