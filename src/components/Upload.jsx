@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
-
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +11,11 @@ const Login = () => {
     ep: [""],
     description: "",
     genres: [],
-    thumnail: "",
+    thumbnail: "",
     animename: "",
     rating: "",
-    seasonname:"",
+    download: [""], // Change this line
+    seasonname: "",
   });
 
   const token = Cookies.get("token");
@@ -35,8 +35,6 @@ const Login = () => {
 
     return JSON.parse(jsonPayload);
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,10 +56,11 @@ const Login = () => {
           ep: [""],
           description: "",
           genres: [],
-          thumnail: "",
+          thumbnail: "",
           animename: "",
           rating: "",
-          seasonname:"",
+          download: [""],
+          seasonname: "",
         });
       } else {
         console.error("Failed to add video details.");
@@ -77,12 +76,14 @@ const Login = () => {
       links: [...formData.links, ""],
       languages: [...formData.languages, ""],
       qualities: [...formData.qualities, ""],
-      ep: [...formData.ep, ""]
+      ep: [...formData.ep, ""],
+      download: [...formData.download, ""],
     });
   };
 
   const handleDeleteQuality = (index) => {
     const updatedLinks = formData.links.filter((_, i) => i !== index);
+    const updatedDownload = formData.download.filter((_, i) => i !== index);
     const updatedLanguages = formData.languages.filter((_, i) => i !== index);
     const updatedQualities = formData.qualities.filter((_, i) => i !== index);
     const updatedEp = formData.ep.filter((_, i) => i !== index);
@@ -91,14 +92,20 @@ const Login = () => {
       links: updatedLinks,
       languages: updatedLanguages,
       qualities: updatedQualities,
-      ep: updatedEp
+      ep: updatedEp,
+      download: updatedDownload,
     });
   };
-
   const handleLinkChange = (index, e) => {
     const updatedLinks = [...formData.links];
     updatedLinks[index] = e.target.value;
     setFormData({ ...formData, links: updatedLinks });
+  };
+
+  const handledownloadchange = (index, e) => {
+    const updatedDownload = [...formData.download];
+    updatedDownload[index] = e.target.value;
+    setFormData({ ...formData, download: updatedDownload });
   };
 
   const handleLanguageChange = (index, e) => {
@@ -123,7 +130,9 @@ const Login = () => {
     <div>
       {/* import.meta.env.VITE_ADMIN_PASS */}
 
-      {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS  && (
+      {
+      Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS  &&
+       (
         <div className="bg-neutral-900 text-white">
           <form
             className="flex justify-center w-full flex-col gap-8 items-center"
@@ -138,7 +147,7 @@ const Login = () => {
             </button>
             <div className="flex flex-col gap-3 ">
             {formData.links.map((link, index) => (
-              <div key={index} className="flex gap-2 items-center  flex-wrap justify-center items-center ">
+              <div key={index} className="flex gap-2 items-center  flex-wrap justify-center  ">
                  <iframe
               className="w-full h-full rounded-lg z-10"
               src={formData.links[index]}
@@ -149,6 +158,13 @@ const Login = () => {
                   value={formData.links[index]}
                   onChange={(e) => handleLinkChange(index, e)}
                   placeholder="Enter Video Link"
+                  className="bg-transparent"
+                />
+                <input
+                  type="text"
+                  value={formData.download[index]}
+                  onChange={(e) => handledownloadchange(index, e)}
+                  placeholder="Enter download Link"
                   className="bg-transparent"
                 />
                 <div>
