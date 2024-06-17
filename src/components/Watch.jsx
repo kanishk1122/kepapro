@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 import { detailsContext } from "../utils/Context";
 
 
-
 const Watch = () => {
   const { name, seo, episode } = useParams();
   const {loading, setLoading} = useContext(detailsContext)
@@ -18,7 +17,7 @@ const Watch = () => {
   const [Name, setName] = useState("")
   const [genres, setGenres] = useState([]);
   const [quality, setQuality] = useState("");
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
@@ -64,8 +63,6 @@ const Watch = () => {
 
     return JSON.parse(jsonPayload);
   };
-
-  
 
   useEffect(() => {
     if (token) {
@@ -333,10 +330,10 @@ const Watch = () => {
 </div>
 
    <div className="w-full md:w-[60%] max-md:min-h-[200px]   h-[45vh] relative max-md:h-[30vh] rounded-2xl overflow-hidden  z-10 ">
-   <div className=" bg-transparent absolute w-full top-0 h-[70px]"></div>
+   <div className=" bg-transparent absolute w-full top-4 h-[10%]"></div>
     <iframe
               title="videoplayer"
-              className="w-full  h-full object-cover"
+              className="w-full bg-red-600  h-full object-cover"
               src={video}
               scrolling="no"
               frameBorder="0"
