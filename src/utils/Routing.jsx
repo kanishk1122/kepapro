@@ -16,6 +16,7 @@ import DecodedToken from '../components/DecodeToken.jsx';
 import Edituser from '../components/Edituser.jsx';
 import Loding from '../components/Loding.jsx';
 import Notfound from '../components/Notfound.jsx';
+import Download from '../components/Download.jsx';
 
 const Routing = () => {
   return (
@@ -24,7 +25,8 @@ const Routing = () => {
       <Route path='/loading' element={<Loding />} />
       <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
       <Route path='/watch/:name/:seo/:episode/register' element={<Registration />} />
-      <Route path='/watch/:name/:seo/:episode/login' element={<Login />} />
+      <Route path='/watch/:name/:seo/:episode/download' element={<Download/>} />
+      <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
       <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
       <Route path='/all/trending' element={<Allanime />} />
       <Route path='/all/trending/register' element={<Registration />} />
