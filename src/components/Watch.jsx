@@ -23,6 +23,7 @@ const Watch = () => {
   const [userLoginMenu, setUserLoginMenu] = useState(false);
   const [id, setid] = useState("");
   const [comment, setcomment] = useState("");
+  const [downloadlink, setdownloadlink] = useState('')
   const [updatefromshow, setupdatefromshow] = useState(false)
   const [allcomment, setallcomment] = useState([]);
   const [newformdata, setNewformdata] = useState({
@@ -112,6 +113,9 @@ const Watch = () => {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        if (error) {
+          setLoading(true)
+        }
       }
     };
 
@@ -146,6 +150,7 @@ const Watch = () => {
       setid(filtered._id);
       setName(filtered.animename)
       setallcomment(filtered.comments);
+      setdownloadlink(filtered.download)
     }
   }, [data, desiredPart,newformdata]);
 
@@ -432,8 +437,8 @@ const Watch = () => {
                 </div>
               </div>
             )}
-            <div>
-              <Link to></Link>
+             <div className="flex w-full justify-end items-end">
+              {downloadlink !== null && downloadlink !== undefined  && <a className="bg-white cursor-pointer text-black px-3 py-1 text-2xl font-semibold rounded-xl" href={downloadlink}>Download</a> }
             </div>
 
           </div>
