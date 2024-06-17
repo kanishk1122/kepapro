@@ -335,7 +335,7 @@ const Watch = () => {
 </div>
 
    <div className="w-full md:w-[60%] max-md:min-h-[200px]   h-[45vh] relative max-md:h-[30vh] rounded-2xl overflow-hidden  z-10 ">
-   <div className=" bg-transparent absolute w-full top-1 h-[25vh]"></div>
+   <div className=" bg-transparent absolute w-full top-1 max-md:h-[30%] h-[25vh]"></div>
     <iframe
               title="videoplayer"
               className="w-full   h-full object-cover"
