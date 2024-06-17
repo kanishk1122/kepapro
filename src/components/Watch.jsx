@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
 import { detailsContext } from "../utils/Context";
-import videodetials from  './test.videos.json'
+
 
 
 const Watch = () => {
@@ -64,6 +64,8 @@ const Watch = () => {
 
     return JSON.parse(jsonPayload);
   };
+
+  
 
   useEffect(() => {
     if (token) {
