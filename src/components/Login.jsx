@@ -167,7 +167,7 @@ const Login = () => {
                 <p className="text-red-500 text-sm">{errors.password}</p>
               )}
             </div>
-            {email && password ? (
+           
               <button
                 type="submit"
                 className="bg-blue-900 px-2 py-1 rounded"
@@ -175,7 +175,7 @@ const Login = () => {
               >
                 Create an account
               </button>
-            ) : null}
+           
           </form>
         </div>
       </div>
