@@ -25,6 +25,7 @@ const Routing = () => {
       <Route path='/loading' element={<Loding />} />
       <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
       <Route path='/watch/:name/:seo/:episode/register' element={<Registration />} />
+      <Route path='*/login' element={<Login />} />
       <Route path='/watch/:name/:seo/:episode/download' element={<Download/>} />
       <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
       <Route path='/watch/:name/:seo/:episode' element={<Watch />} />
