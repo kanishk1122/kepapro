@@ -331,8 +331,8 @@ useEffect(() => {
                       }}
                     >
                       {data
-                        .reverse()
                         .filter((item) => item.popular)
+                        .reverse()
                         .slice(0, 5)
                         .map((item, index) => (
                           <Link

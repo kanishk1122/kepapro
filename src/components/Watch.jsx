@@ -43,9 +43,6 @@ const Watch = () => {
     download:'',
   });
 
-  useEffect(()=>{
-    setLoading(false)
-  },[])
 
   const token = Cookies.get("token");
 
@@ -267,7 +264,6 @@ const Watch = () => {
       });
       setupdatefromshow(()=>!updatefromshow)
     }
-
 
     const handleToggleSeasons = () => {
       setShowSeasons(!showSeasons);
