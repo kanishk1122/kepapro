@@ -631,7 +631,7 @@ const Watch = () => {
                       onClick={(e) =>
                         setNewformdata({
                           ...newformdata,
-                          popular: true,
+                          popular:true,
                         })
                       }
                       value="true"
@@ -647,7 +647,7 @@ const Watch = () => {
                       onClick={(e) =>
                         setNewformdata({
                           ...newformdata,
-                          popular: false,
+                          popular:false,
                         })
                       }
                       value="false"
