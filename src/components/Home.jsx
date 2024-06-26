@@ -19,6 +19,7 @@ const Home = () => {
   const [resultsearch, setsearchResult] = useState();
   const [showcatemenu, setShowcatemenu] = useState(false);
   const [currentcategory, setcurrentcategory] = useState("Action");
+  const [popular, setpopular] = useState([])
   const [index, setIndex] = useState(0);
   console.log(Cookies.get("token"));
 
@@ -32,6 +33,18 @@ const Home = () => {
     return itemDate >= date10DaysAgo;
   });
 
+  useEffect(() => {
+    const filterData = () => {
+      if (data.length === 0) {
+        return; // Return if data is empty
+      }
+      // Filter data based on type
+      const filteredByType = data.filter(item => item.season === 1 && item.popular === true);
+      setpopular(filteredByType);
+    };
+
+    filterData(); // Call filter function
+  }, [popular]);
   function findCurrentEpisodeNumber(content) {
     // Filter the video data based on the anime name
     const currentContent = allvidoedata.filter(
@@ -330,9 +343,7 @@ useEffect(() => {
                         scrollbarWidth: "none",
                       }}
                     >
-                      {data
-                        .filter((item) => item.popular)
-                        .reverse()
+                      {popular
                         .slice(0, 5)
                         .map((item, index) => (
                           <Link
