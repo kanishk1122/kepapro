@@ -308,7 +308,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
               {userdata ? (
                 <img
                   src={userdata.userpic}
-                  className="w-[32px] h-[32px] object-cover"
+                  className="w-[32px] rounded-full h-[32px] object-cover"
                   alt="userimage"
                 />
               ) : (
