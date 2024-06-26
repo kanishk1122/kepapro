@@ -297,7 +297,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
               {...navLinkProps}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              className="navlink text-lg w-fit flex flex-col justify-center items-end gap-4 px-1 py-1 backdrop-blur-lg rounded-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+              className="navlink text-lg w-fit flex flex-col justify-center items-end gap-4 px-1 py-1  rounded-full overflow-hidden border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
               style={({ isActive }) =>
                 isActive
                   ? { backdropFilter: "blur(10px)", fontWeight: "700" }
