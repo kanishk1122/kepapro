@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import axios from "../utils/Axios";
 import Cookies from "js-cookie";
 
@@ -11,7 +11,6 @@ const Login = () => {
     ep: [""],
     description: "",
     genres: [],
-    thumnail: "",
     animename: "",
     rating: "",
     download: [""], // Change this line
@@ -56,8 +55,7 @@ const Login = () => {
           ep: [""],
           description: "",
           genres: [],
-          thumnail: "",
-          animename: "",
+                    animename: "",
           rating: "",
           download: [""],
           seasonname: "",
@@ -130,143 +128,167 @@ const Login = () => {
     <div>
       {/* import.meta.env.VITE_ADMIN_PASS */}
 
-      {
-      Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS  &&
-       (
-        <div className="bg-neutral-900 text-white">
-          <form
-            className="flex justify-center w-full flex-col gap-8 items-center"
-            onSubmit={handleSubmit}
-          >
-            <h1 className="text-3xl font-semibold">Video Detail</h1>
-            <button
-              type="submit"
-              className="bg-blue-900 px-2 py-1 rounded"
+      {Cookies.get("token") &&
+        jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS && (
+          <div className="bg-neutral-900 text-white">
+            <form
+              className="flex justify-center w-full flex-col gap-8 items-center"
+              onSubmit={handleSubmit}
             >
-              Add Link
-            </button>
-            <div className="flex flex-col gap-3 ">
-            {formData.links.map((link, index) => (
-              <div key={index} className="flex gap-2 items-center  flex-wrap justify-center  ">
-                 <iframe
-              className="w-full h-full rounded-lg z-10"
-              src={formData.links[index]}
-              allowFullScreen
-            ></iframe>
-                <input
-                  type="text"
-                  value={formData.links[index]}
-                  onChange={(e) => handleLinkChange(index, e)}
-                  placeholder="Enter Video Link"
-                  className="bg-transparent"
-                />
-                <input
-                  type="text"
-                  value={formData.download[index]}
-                  onChange={(e) => handledownloadchange(index, e)}
-                  placeholder="Enter download Link"
-                  className="bg-transparent"
-                />
-                <div>
-                  <label>Language:</label>
-                  <select
-                    value={formData.languages[index]}
-                    onChange={(e) => handleLanguageChange(index, e)}
-                    className="bg-black"
+              <h1 className="text-3xl font-semibold">Video Detail</h1>
+              <button type="submit" className="bg-blue-900 px-2 py-1 rounded">
+                Add Link
+              </button>
+              <div className="flex flex-col gap-3 ">
+                {formData.links.map((link, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-2 items-center  flex-wrap justify-center  "
                   >
-                    <option value="null">select your language</option>
-                    <option value="Hindi">Hindi</option>
-                    <option value="English">English</option>
-                  </select>
-                </div>
-                <div>
-                  <label>Quality:</label>
-                  <select
-                    value={formData.qualities[index]}
-                    onChange={(e) => handleQualityChange(index, e)}
-                    className="bg-black"
-                  >
-                    <option value="null">select your quality</option>
-                    <option value="1080">1080p</option>
-                    <option value="720">720p</option>
-                    <option value="480">480p</option>
-                  </select>
-                </div>
-                <input
-                  type="number"
-                  className="bg-transparent  h-5 focus:bg-transparent  placeholder:text-zinc-400"
-                  placeholder="Enter Episode Number"
-                  value={formData.ep[index]}
-                  onChange={(e) => handleEpChange(index, e)}
-                  name="ep"
-                />
-                <button type="button" onClick={() => handleDeleteQuality(index)} className="bg-red-600 px-2 py-1 rounded">
-                  Delete
-                </button>
+                    <iframe
+                      className="w-full h-full rounded-lg z-10"
+                      src={formData.links[index]}
+                      allowFullScreen
+                    ></iframe>
+                    <input
+                      type="text"
+                      value={formData.links[index]}
+                      onChange={(e) => handleLinkChange(index, e)}
+                      placeholder="Enter Video Link"
+                      className="bg-transparent"
+                    />
+                    <input
+                      type="text"
+                      value={formData.download[index]}
+                      onChange={(e) => handledownloadchange(index, e)}
+                      placeholder="Enter download Link"
+                      className="bg-transparent"
+                    />
+                    <div>
+                      <label>Language:</label>
+                      <select
+                        value={formData.languages[index]}
+                        onChange={(e) => handleLanguageChange(index, e)}
+                        className="bg-black"
+                      >
+                        <option value="null">select your language</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label>Quality:</label>
+                      <select
+                        value={formData.qualities[index]}
+                        onChange={(e) => handleQualityChange(index, e)}
+                        className="bg-black"
+                      >
+                        <option value="null">select your quality</option>
+                        <option value="1080">1080p</option>
+                        <option value="720">720p</option>
+                        <option value="480">480p</option>
+                      </select>
+                    </div>
+                    <input
+                      type="number"
+                      className="bg-transparent  h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                      placeholder="Enter Episode Number"
+                      value={formData.ep[index]}
+                      onChange={(e) => handleEpChange(index, e)}
+                      name="ep"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteQuality(index)}
+                      className="bg-red-600 px-2 py-1 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))}
-            </div>
-            <button type="button" onClick={handleAddQuality} className="bg-green-600 px-2 py-1 rounded">
-              Add quantity
-            </button>
-            {/* Other input fields */}
-            <input
-              type="text"
-              className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter Thumbnail Link"
-              value={formData.thumnail}
-              onChange={(e) => setFormData({ ...formData, thumnail: e.target.value })}
-              name="thumnail"
-            />
-            <input
-              type="number"
-              className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter Season Number"
-              value={formData.season}
-              onChange={(e) => setFormData({ ...formData, season: e.target.value })}
-              name="season"
-            />
-            <input
-              type="text"
-              className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter anime name"
-              value={formData.animename}
-              onChange={(e) => setFormData({ ...formData, animename: e.target.value })}
-              name="animename"
-            />
-            <input
-              type="text"
-              className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter season name"
-              value={formData.seasonname}
-              onChange={(e) => setFormData({ ...formData, seasonname: e.target.value })}
-              name="seasonname"
-            />
-            <input
-              type="number"
-              className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter anime rating"
-              value={formData.rating}
-              onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
-              name="rating"
-            />
-            <textarea
-              className="bg-transparent w-[70vw] h-[100px] focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter Genres (separated by commas)"
-              value={formData.genres.join(",")}
-              onChange={(e) => setFormData({ ...formData, genres: e.target.value.split(",") })}
-              name="genres"
-            />
-            <textarea
-              className="bg-transparent w-[70vw] h-[100px] focus:bg-transparent  placeholder:text-zinc-400"
-              placeholder="Enter Description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              name="description"
-            />
-          </form>
-        </div>
-      )}
+              <button
+                type="button"
+                onClick={handleAddQuality}
+                className="bg-green-600 px-2 py-1 rounded"
+              >
+                Add quantity
+              </button>
+              {/* Other input fields */}
+              {/* <input
+                type="text"
+                className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter Thumbnail Link"
+                value={formData.thumnail}
+                onChange={(e) =>
+                  setFormData({ ...formData, thumnail: e.target.value })
+                }
+                name="thumnail"
+              /> */}
+              <input
+                type="number"
+                className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter Season Number"
+                value={formData.season}
+                onChange={(e) =>
+                  setFormData({ ...formData, season: e.target.value })
+                }
+                name="season"
+              />
+              <input
+                type="text"
+                className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter anime name"
+                value={formData.animename}
+                onChange={(e) =>
+                  setFormData({ ...formData, animename: e.target.value })
+                }
+                name="animename"
+              />
+              <input
+                type="text"
+                className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter season name"
+                value={formData.seasonname}
+                onChange={(e) =>
+                  setFormData({ ...formData, seasonname: e.target.value })
+                }
+                name="seasonname"
+              />
+              <input
+                type="number"
+                className="bg-transparent w-[70vw] h-5 focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter anime rating"
+                value={formData.rating}
+                onChange={(e) =>
+                  setFormData({ ...formData, rating: e.target.value })
+                }
+                name="rating"
+              />
+              <textarea
+                className="bg-transparent w-[70vw] h-[100px] focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter Genres (separated by commas)"
+                value={formData.genres.join(",")}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    genres: e.target.value.split(","),
+                  })
+                }
+                name="genres"
+              />
+              <textarea
+                className="bg-transparent w-[70vw] h-[100px] focus:bg-transparent  placeholder:text-zinc-400"
+                placeholder="Enter Description"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                name="description"
+              />
+            </form>
+          </div>
+        )}
     </div>
   );
 };
