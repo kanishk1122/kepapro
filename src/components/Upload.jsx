@@ -11,7 +11,7 @@ const Login = () => {
     ep: [""],
     description: "",
     genres: [],
-    thumbnail: "",
+    thumnail: "",
     animename: "",
     rating: "",
     download: [""], // Change this line
@@ -56,7 +56,7 @@ const Login = () => {
           ep: [""],
           description: "",
           genres: [],
-          thumbnail: "",
+          thumnail: "",
           animename: "",
           rating: "",
           download: [""],
