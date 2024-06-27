@@ -10,7 +10,7 @@ export const detailsContext = createContext();
 const Context = (props) => {
     const [data, setData] = useState([]);
     const [gettoken, settoken] = useState("");
-    const [loading, setLoading] = useState(true);  // Initial loading state to true
+    const [loading, setLoading] = useState(false);  // Initial loading state to true
     const [allvidoedata, setallvidoedata] = useState([])
     const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
     const [decodedToken, setDecodedToken] = useState({}); 
@@ -90,18 +90,18 @@ const Context = (props) => {
         console.log(loading);
     }, [loading]); // Log loading state when it changes
 
-    const [userdata, setuserdata] = useState(null);
+    const [tokendata, settokendata] = useState(null);
 
     useEffect(() => {
         if (token) {
-            jwt_decode(token).then(decoded => setuserdata(decoded));
+            jwt_decode(token).then(decoded => settokendata(decoded));
         }
     }, [token]);
 
-    console.log(userdata);
+    console.log(tokendata);
 
     return (
-        <detailsContext.Provider value={{data, loading,allvidoedata, setallvidoedata, setLoading, setData, gettoken, settoken, userdata, setuserdata}}>
+        <detailsContext.Provider value={{data,decodedToken, loading,allvidoedata, setallvidoedata, setLoading, setData, gettoken, settoken, tokendata, settokendata}}>
             {props.children}
         </detailsContext.Provider>
     );

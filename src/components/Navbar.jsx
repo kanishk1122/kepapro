@@ -46,6 +46,8 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   const [content, setContent] = useState([]);
 
   function jwt_decode(token) {
+    token = Cookies.get("token");
+    if (!token) return null;
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     var jsonPayload = decodeURIComponent(
@@ -114,7 +116,9 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
     WebkitTextFillColor: "transparent",
   };
 
+if(token){
   useEffect(() => {
+
     const fetchUserDetails = async () => {
       try {
         const response = await axios.post(
@@ -130,6 +134,7 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
 
     fetchUserDetails();
   }, [jwt_decode(token).email]);
+}
 
   const cursorStyle = {
     top: `${CursorPosition.y}px`,
