@@ -310,7 +310,7 @@ if(token){
               }
               
             >
-              {userdata ? (
+              {userdata.userpic ? (
                 <img
                   src={userdata.userpic}
                   className="w-[32px] rounded-full h-[32px] object-cover"
