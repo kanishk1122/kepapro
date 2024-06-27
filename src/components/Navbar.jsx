@@ -155,12 +155,6 @@ if(token){
   }, [jwt_decode(token).email]);
 }
 
-  const cursorStyle = {
-    top: `${CursorPosition.y}px`,
-    left: `${CursorPosition.x}px`,
-    opacity: styles.o,
-    transform: styles.t,
-  };
 
   const width = {
     width: search  ? "100%" : "0px",
@@ -168,10 +162,7 @@ if(token){
 
   return (
     <nav className="flex text-2xl max-md:h-fit  max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
-      <div
-        className="bg-red-600 duration-100 absolute h-5 w-5 rounded-full z-1 border-red-600 max-md:bg-none"
-        style={cursorStyle}
-      ></div>
+      
 
       <div className="p-3 duration-700">
         <input
@@ -260,14 +251,14 @@ if(token){
       </div>
 
       <div
-        className={`p1 h-16 w-[330px] flex text-2xl  z-30 gap-8 justify-evenly px-1 py-3 text-white bg-transparent relative `}
+        className={`p1 h-16 w-[330px]  flex text-2xl  z-30 gap-8 justify-evenly px-1 py-3 text-white bg-transparent relative `}
       >
         <NavLink
           to="/"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           id="logo"
-          className="navlink w-fit px-2 py-1 text-gradient-to-r from-red-600 via-red-900 to-blue-300 text-[35px] backdrop-blur-lg font-['monument'] rounded-lg border-0 border-12 font-black border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink w-fit px-2 py-1 text-gradient-to-r from-red-600 via-red-900 to-blue-300 text-[35px] backdrop-blur-lg  font-['monument'] rounded-lg border-0 border-12 font-black border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={textcolor}
         >
           kepapro
@@ -285,7 +276,20 @@ if(token){
               : { background: "transparent" }
           }
         >
-          Populer 🌟
+          Populer
+        </NavLink>
+        <NavLink
+          to="/"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="navlink text-lg w-fit px-2 py-1 rounded-lg backdrop-blur-lg border-0 border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          style={(e) =>
+            e.isActive
+              ? { backdropFilter: "blur(10px)", fontWeight: "700" }
+              : { background: "transparent" }
+          }
+        >
+          Home
         </NavLink>
         <NavLink
           to="/all/trending"
@@ -300,11 +304,11 @@ if(token){
         >
           trending 🔥
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/news"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="navlink text-lg w-fit px-2 py-1 rounded-lg border-0 backdrop-blur-lg border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
+          className="navlink text-lg w-fit px-2 py-1 rounded-lg hover:text-2xl duration-200 border-0 backdrop-blur-lg border-12 border-[rgba(0, 0, 0,0.8)] border-opacity-40 z-99"
           style={(e) =>
             e.isActive
               ? { backdropFilter: "blur(10px)", fontWeight: "700" }
@@ -312,7 +316,7 @@ if(token){
           }
         >
           News 📰
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className=" h-fit pt-3 flex w-fit  flex-wrap z-2 text-2xl gap-4 justify:center items-center  max-md:justify-evenly max-md:items-end  text-white  overflow-hidden bg-transparent duration-600">
         <div className="flex flex-wrap">
