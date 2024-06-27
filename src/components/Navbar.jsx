@@ -121,9 +121,9 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
 
   const navLinkProps = checkinguser
     ? { to: `/user/${jwt_decode(token).email}` }
-    : isSmallScreen && {
+    :  {
         onClick: () => {
-           setTemp((prev) => !prev), setSearch(() => !search);
+           setTemp((prev) => !prev),isSmallScreen &&(setSearch(() => !search))
         }
       };
 
