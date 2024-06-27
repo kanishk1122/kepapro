@@ -434,7 +434,7 @@ const Watch = () => {
               </div>
             )}
              <div className="flex w-full justify-end items-end">
-              {downloadlink !== null && downloadlink !== undefined  && <a className="bg-white cursor-pointer text-black px-3 py-1 text-2xl font-semibold rounded-xl" href={downloadlink}>Download</a> }
+              {downloadlink !== null && downloadlink !== undefined  && <a className="bg-white cursor-pointer text-black px-3 py-1 text-2xl font-semibold rounded-xl" target="_blank" href={downloadlink}>Download</a> }
             </div>
 
           </div>
