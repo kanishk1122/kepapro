@@ -44,6 +44,25 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   const [decodedToken, setDecodedToken] = useState("");
   const [userdata, setUserData] = useState({});
   const [content, setContent] = useState([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 600);
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Listen to window resize events
+    window.addEventListener("resize", handleResize);
+
+    // Clean up listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   function jwt_decode(token) {
     token = Cookies.get("token");
@@ -102,10 +121,10 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
 
   const navLinkProps = checkinguser
     ? { to: `/user/${jwt_decode(token).email}` }
-    : {
+    : isSmallScreen && {
         onClick: () => {
-          setTemp((prev) => !prev), setSearch(() => !search);
-        },
+           setTemp((prev) => !prev), setSearch(() => !search);
+        }
       };
 
   const textcolor = {
@@ -144,7 +163,7 @@ if(token){
   };
 
   const width = {
-    width: search ? "100%" : "0px",
+    width: search  ? "100%" : "0px",
   };
 
   return (

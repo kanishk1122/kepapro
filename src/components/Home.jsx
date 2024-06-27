@@ -20,7 +20,6 @@ const Home = () => {
   const [showcatemenu, setShowcatemenu] = useState(false);
   const [currentcategory, setcurrentcategory] = useState("Action");
   const [index, setIndex] = useState(0);
-  console.log(Cookies.get("token"));
 
   const currentDate = new Date();
   const date10DaysAgo = new Date(currentDate);
