@@ -453,11 +453,11 @@ useEffect(() => {
                 {/* here his genres section */}
                 <div className="w-full relative h-fit flex px-9 items-center flex-wrap">
                   {" "}
-                  <h2 className="text-3xl text-transform: capitalize font-semibold ">
+                  <h2 className="text-3xl  text-transform: capitalize font-semibold ">
                   <TextTransition springConfig={presets.wobbly}>{currentcategory.toString()}</TextTransition>
                     {}
                   </h2>{" "}
-                  <div className="flex felx-col justify-center items-center">
+                  <div className="flex felx-col   justify-center items-center">
                     <button onClick={showcategorymenu}>
                       <div
                         className={`w-10 h-10 duration-200 ${
@@ -469,7 +469,7 @@ useEffect(() => {
                         </svg>
                       </div>
                     </button>
-                    <div className={`bg-zinc-700 duration-300 overflow-hidden ${showcatemenu? 'h-[50vh] w-[20vw] max-md:w-full' : 'h-0 w-0'} absolute left-[30%] max-md:left-0 max-md:top-[5vh] top-1/2  rounded-2xl gap-1 text-center px-3 py-3 flex flex-col justify-center items-start`}>
+                    <div className={`bg-zinc-700 duration-300 overflow-hidden ${showcatemenu? 'h-[50vh] w-[20vw] max-md:w-full px-3 py-3' : 'h-0 w-0'} absolute left-[30%] max-md:left-0 max-md:top-[5vh] top-1/2  rounded-2xl gap-1 text-center  flex flex-col justify-center items-start`}>
                       {uniqueGenres.map((item, index) => (
                         <div
                         onClick={() =>  settingcurrentcategoery(item.toString())}
