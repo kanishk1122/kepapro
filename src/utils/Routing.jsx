@@ -1,5 +1,4 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from "../components/Home.jsx";
 import Watch from '../components/Watch.jsx';
 import Allanime from '../components/Allanime.jsx';

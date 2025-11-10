@@ -11,28 +11,11 @@ import "../assets/public/css/navbar.css";
 import { detailsContext } from "../utils/Context";
 import Cookies from "js-cookie";
 import axios from "../utils/Axios.jsx";
-
-function getUserFromToken() {
-  const token = Cookies.get("token");
-  if (!token) return null;
-
-  const base64Url = token.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split("")
-      .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-      })
-      .join("")
-  );
-
-  return JSON.parse(jsonPayload);
-}
+// Ensure axios sends credentials (cookies)
+axios.defaults.withCredentials = true;
 
 const Navbar = ({ setsearchResult, resultsearch }) => {
-  const checkinguser = useMemo(() => getUserFromToken(), []);
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { data, setData, result, setResult } = useContext(detailsContext);
   const [styles, setStyles] = useState({ o: 0, t: "scale(0)" });
   const [CursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -40,12 +23,9 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
   const [temp, setTemp] = useState(false);
   const [showmenu, setshowmenu] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [token, setToken] = useState(Cookies.get("token")); // State to hold the JWT string
-  const [decodedToken, setDecodedToken] = useState("");
   const [userdata, setUserData] = useState({});
   const [content, setContent] = useState([]);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,31 +44,38 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
     };
   }, []);
 
-  function jwt_decode(token) {
-    token = Cookies.get("token");
-    if (!token) return null;
-    var base64Url = token.split(".")[1];
-    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    var jsonPayload = decodeURIComponent(
-      window
-        .atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
+  // Fetch session (server reads the cookie and returns user data)
+  useEffect(() => {
+    let mounted = true;
+    const fetchSession = async () => {
+      try {
+        const res = await axios.get("/session");
+        if (!mounted) return;
+        if (res.data && res.data.authenticated) {
+          setUserData(res.data.user || {});
+          setIsAuthenticated(true);
+        } else {
+          setUserData({});
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+        setUserData({});
+        setIsAuthenticated(false);
+      }
+    };
 
-    return JSON.parse(jsonPayload);
-  }
+    fetchSession();
 
-  const decodingToken = () => {
-    try {
-      setDecodedToken(jwt_decode(token).email); // Update the decodedToken state with the decoded token
-    } catch (error) {
-      console.error("Error decoding token:", error); // Log any errors that occur during decoding
-    }
-  };
+    const onAuthChange = () => fetchSession();
+    window.addEventListener("storage", onAuthChange); // cross-tab
+    window.addEventListener("authChange", onAuthChange); // same-tab custom event
+
+    return () => {
+      mounted = false;
+      window.removeEventListener("storage", onAuthChange);
+      window.removeEventListener("authChange", onAuthChange);
+    };
+  }, []);
 
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
@@ -119,13 +106,15 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
     e.preventDefault();
   }, []);
 
-  const navLinkProps = checkinguser
-    ? { to: `/user/${jwt_decode(token).email}` }
-    :  {
-        onClick: () => {
-           setTemp((prev) => !prev),isSmallScreen &&(setSearch(() => !search))
-        }
-      };
+  const navLinkProps =
+    isAuthenticated && userdata?.email
+      ? { to: `/user/${encodeURIComponent(userdata.email)}` }
+      : {
+          onClick: () => {
+            setTemp((prev) => !prev);
+            isSmallScreen && setSearch((s) => !s);
+          },
+        };
 
   const textcolor = {
     color: "rgb(194,78,92)",
@@ -135,35 +124,12 @@ const Navbar = ({ setsearchResult, resultsearch }) => {
     WebkitTextFillColor: "transparent",
   };
 
-if(token){
-  useEffect(() => {
-
-    const fetchUserDetails = async () => {
-      try {
-        const response = await axios.post(
-          "/userdetail",
-          { email: jwt_decode(token).email },
-          { withCredentials: true }
-        );
-        setUserData(response.data);
-      } catch (error) {
-        console.log("Error fetching user details:", error);
-      }
-    };
-
-    fetchUserDetails();
-  }, [jwt_decode(token).email]);
-}
-
-
   const width = {
-    width: search  ? "100%" : "0px",
+    width: search ? "100%" : "0px",
   };
 
   return (
     <nav className="flex text-2xl max-md:h-fit  max-md:pb-[80px] justify-between  transition-height duration-300 ease-in-out h-fit py-3 px-0 text-white bg-black relative">
-      
-
       <div className="p-3 duration-700">
         <input
           type="checkbox"
@@ -249,7 +215,6 @@ if(token){
           </div>
         )}
       </div>
-
       <div
         className={`p1 h-16 w-[330px]  flex text-2xl  z-30 gap-8 justify-evenly px-1 py-3 text-white bg-transparent relative `}
       >
@@ -331,25 +296,30 @@ if(token){
                   ? { backdropFilter: "blur(10px)", fontWeight: "700" }
                   : { background: "transparent" }
               }
-              
             >
-              {userdata.userpic ? (
-                <img
-                  src={userdata.userpic}
-                  className="w-[32px] rounded-full h-[32px] object-cover"
-                  alt="userimage"
-                />
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="32"
-                  height="32"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM6.02332 15.4163C7.49083 17.6069 9.69511 19 12.1597 19C14.6243 19 16.8286 17.6069 18.2961 15.4163C16.6885 13.9172 14.5312 13 12.1597 13C9.78821 13 7.63095 13.9172 6.02332 15.4163ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"></path>
-                </svg>
-              )}
+              <div className="relative">
+                {userdata.userpic ? (
+                  <img
+                    src={userdata.userpic}
+                    className="w-[32px] rounded-full h-[32px] object-cover"
+                    alt="userimage"
+                  />
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="32"
+                    height="32"
+                    fill="currentColor"
+                  >
+                    <path d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM6.02332 15.4163C7.49083 17.6069 9.69511 19 12.1597 19C14.6243 19 16.8286 17.6069 18.2961 15.4163C16.6885 13.9172 14.5312 13 12.1597 13C9.78821 13 7.63095 13.9172 6.02332 15.4163ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"></path>
+                  </svg>
+                )}
+                {/* online marker when authenticated */}
+                {isAuthenticated && (
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 ring-2 ring-black" />
+                )}
+              </div>
             </NavLink>
             <div
               className={`bg-zinc-800   flex justify-start  w-[120px]   rounded-2xl  duration-300 ease-in-out ${
@@ -366,6 +336,12 @@ if(token){
           </div>
         </div>
       </div>
+      {/* optionally show username next to avatar when available */}
+      {isAuthenticated && userdata?.username && (
+        <div className="hidden max-md:block ml-3 text-sm text-zinc-300">
+          {userdata.username}
+        </div>
+      )}
       {isChecked == false && (
         <div
           className={`bg-transparent  max-w-[400px] p-3  pr-3 w-[400px]  top-[10vh] max-md:absolute max-md:w-full max-md:left-1/2 max-md:-translate-x-1/2  flex justify-end items-end h-fit  max-md:ml-0 gap-3 `}

@@ -1,59 +1,66 @@
-import Navbar from './Navbar.jsx';
-import Footer from './Footer.jsx';
-import { Link, useParams } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
-import axios from '../utils/Axios.jsx';
+import Navbar from "./Navbar.jsx";
+import Footer from "./Footer.jsx";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "../utils/Axios.jsx";
+
+// Ensure axios sends credentials
+axios.defaults.withCredentials = true;
 
 const User = () => {
-  const [token, setToken] = useState(Cookies.get("token"));
-  const [decodedToken, setDecodedToken] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null); // from /session
   const [userdata, setUserData] = useState({});
   const [content, setContent] = useState([]);
   const [showBookmark, setShowBookmark] = useState(true);
   const [bookmarks, setBookmarks] = useState([]);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [isLoadingContent, setIsLoadingContent] = useState(true);
 
   const { username } = useParams();
 
-  const jwt_decode = (token) => {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(
-        window.atob(base64).split('').map((c) => {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join('')
-      );
-      return JSON.parse(jsonPayload);
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      return null;
-    }
-  };
-
   useEffect(() => {
-    if (token) {
-      const decoded = jwt_decode(token);
-      setDecodedToken(decoded);
-    }
-  }, [token]);
+    // fetch current session user (if any)
+    const fetchSession = async () => {
+      try {
+        const res = await axios.get("/session");
+        if (res.data?.authenticated) setLoggedInUser(res.data.user);
+        else setLoggedInUser(null);
+      } catch (err) {
+        setLoggedInUser(null);
+      }
+    };
+    fetchSession();
+  }, []);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.post("/userdetail", { email: username }, { withCredentials: true });
-        setUserData(response.data);
+        setIsLoadingUser(true);
+        // this uses protected route; server will read cookie JWT
+        const response = await axios.post(
+          "/userdetail",
+          { email: username },
+          { withCredentials: true }
+        );
+        setUserData(response.data || {});
       } catch (error) {
         console.log("Error fetching user details:", error);
+        setUserData({});
+      } finally {
+        setIsLoadingUser(false);
       }
     };
 
     const fetchContent = async () => {
       try {
+        setIsLoadingContent(true);
         const response = await axios.get("/watchall");
-        setContent(response.data);
+        setContent(response.data || []);
       } catch (error) {
         console.error("Error fetching content:", error);
+        setContent([]);
+      } finally {
+        setIsLoadingContent(false);
       }
     };
 
@@ -62,89 +69,173 @@ const User = () => {
   }, [username]);
 
   useEffect(() => {
-    if (userdata.bookmarks && content.length > 0) {
-      const filteredBookmarks = userdata.bookmarks.map((bookmark) => {
-        return content.find(item => 
-          item.animename === bookmark.animename &&
-          item.season === bookmark.season &&
-          item.ep === bookmark.ep
-        );
-      }).filter(item => item !== undefined);
-      setBookmarks(filteredBookmarks);
+    // map bookmarks to content items safely
+    if (!userdata?.bookmarks || content.length === 0) {
+      setBookmarks([]);
+      return;
     }
-  }, [userdata.bookmarks, content]);
+    const filteredBookmarks = userdata.bookmarks
+      .map((bookmark) =>
+        content.find(
+          (item) =>
+            item.animename === bookmark.animename &&
+            item.season === bookmark.season &&
+            item.ep === bookmark.ep
+        )
+      )
+      .filter(Boolean);
+    setBookmarks(filteredBookmarks);
+  }, [userdata, content]);
 
-  const userLogout = () => {
-    Cookies.remove("token");
-    window.location.href = "/";
+  const userLogout = async () => {
+    try {
+      await axios.post("/logout", {}, { withCredentials: true });
+    } catch (e) {
+      console.warn("Logout failed:", e);
+    } finally {
+      // notify other tabs/components and redirect
+      try {
+        localStorage.setItem("auth", Date.now().toString());
+        window.dispatchEvent(new Event("authChange"));
+      } catch (e) {}
+      window.location.href = "/";
+    }
   };
 
   const toggleBookmarkVisibility = () => {
-    setShowBookmark(prev => !prev);
+    setShowBookmark((prev) => !prev);
   };
+
+  const isOwner = loggedInUser?.email === username;
 
   return (
     <>
       <Navbar />
-      <div>
-        <div className='w-full flex justify-end items-end cursor-pointer '>
-          <svg onClick={userLogout} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
-            <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C15.2713 2 18.1757 3.57078 20.0002 5.99923L17.2909 5.99931C15.8807 4.75499 14.0285 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C14.029 20 15.8816 19.2446 17.2919 17.9998L20.0009 17.9998C18.1765 20.4288 15.2717 22 12 22ZM19 16V13H11V11H19V8L24 12L19 16Z"></path>
-          </svg>
-        </div>
-        {decodedToken && decodedToken.email === username ? (
-          <div className='bg-neutral-900 w-full h-fit text-white'>
-            <div className='min-h-[50vh] justify-center gap-10 items-center h-fit flex flex-wrap relative w-[100vw]'>
-              <div className='w-[200px] overflow-hidden min-w-[200px] min-h-[200px] h-[200px] bg-zinc-700 rounded-full'> <img src={userdata.userpic} className='w-full h-full object-cover' alt="" /> </div>
-              <div className='text-4xl tracking-widest w-[300px] h-full text-center flex flex-col gap-3 px-8 py-3 rounded-2xl '>
-                
-                <h2>{userdata.username}</h2>
-                <Link className='bg-blue-600 px-2 py-1 rounded-full text-xl' to={`/edit/${userdata.email}`}>Edit</Link>
-              </div>
-            </div>
-            <div className='flex p-3 flex-col backdrop-blur-xl h-fit py-10 w-screen max-w-[840px] max-h-fit p-6 rounded-3xl bg-[rgba(48,47,47,0.51)]'>
-              <div className='w-120px flex'>
-                <div className='w-120px h-120px'>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    onClick={toggleBookmarkVisibility}
-                    className={`${showBookmark ? "w-[5vw] h-[5vw]" : "w-[10vw] h-[10vw]"} min-h-[70px] min-w-[70px] duration-700`}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M4 2H20C20.5523 2 21 2.44772 21 3V22.2763C21 22.5525 20.7761 22.7764 20.5 22.7764C20.4298 22.7764 20.3604 22.7615 20.2963 22.7329L12 19.0313L3.70373 22.7329C3.45155 22.8455 3.15591 22.7322 3.04339 22.4801C3.01478 22.4159 3 22.3465 3 22.2763V3C3 2.44772 3.44772 2 4 2ZM19 19.9645V4H5V19.9645L12 16.8412L19 19.9645ZM12 13.5L9.06107 15.0451L9.62236 11.7725L7.24472 9.45492L10.5305 8.97746L12 6L13.4695 8.97746L16.7553 9.45492L14.3776 11.7725L14.9389 15.0451L12 13.5Z"></path>
-                  </svg>
-                </div>
-                <div onClick={toggleBookmarkVisibility} className='text-4xl font-semibold'>
-                  {showBookmark ? <p>Bookmarks</p> : <div>Click to show bookmarks</div>}
-                </div>
-              </div>
-              <div className='flex flex-col gap-3 '>
-                {showBookmark && (
-                  userdata.bookmarks && bookmarks.length > 0 ? (
-                    bookmarks.map((bookmark, index) => (
-                      <div key={index} className='bg-zinc-700 rounded-2xl p-3 flex gap-3  h-fit'>
-                        <div className='w-[150px] h-[100px] rounded-2xl overflow-hidden '><img className='w-full h-full object-cover' src={bookmark.thumnail} alt="" /></div>
-                       <div className='flex flex-col gap-2'>
-                       <div>Anime: {bookmark.animename}</div>
-                        <div>Season: {bookmark.season}</div>
-                        <div>Episode: {bookmark.ep}</div>
-                        <Link to={`/watch/${bookmark.animename}/${bookmark.season}/${bookmark.ep}`}className='bg-red-600 rounded-full px-2 py-1 w-fit' >Watch now </Link>
-                       </div>
-                        
-                      </div>
-                    ))
-                  ) : (
-                    <div>No bookmarks found.</div>
-                  )
+
+      <main className="max-w-7xl mx-auto px-6 py-10">
+        {/* Profile header */}
+        <section className="bg-gradient-to-r from-zinc-900 via-neutral-900 to-black rounded-3xl p-6 shadow-xl mb-8">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="relative">
+              <div className="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-4 ring-red-600/40 shadow-lg bg-zinc-800">
+                {isLoadingUser ? (
+                  <div className="w-full h-full animate-pulse bg-zinc-700" />
+                ) : (
+                  <img
+                    src={userdata.userpic || "/placeholder-avatar.png"}
+                    alt={userdata.username || "User"}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 )}
+              </div>
+              {isOwner && (
+                <Link
+                  to={`/edit/${userdata.email}`}
+                  className="absolute -bottom-2 -right-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full text-sm shadow-md"
+                >
+                  Edit
+                </Link>
+              )}
+            </div>
+
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-white">
+                {isLoadingUser ? (
+                  <span className="inline-block w-48 h-8 bg-zinc-700 rounded animate-pulse" />
+                ) : (
+                  userdata.username || "Unnamed User"
+                )}
+              </h1>
+              <p className="text-sm text-zinc-400 mt-2">
+                {isLoadingUser ? (
+                  <span className="inline-block w-64 h-4 bg-zinc-700 rounded animate-pulse" />
+                ) : (
+                  userdata.bio || `${bookmarks.length} saved bookmarks`
+                )}
+              </p>
+
+              <div className="mt-4 flex gap-3 justify-center md:justify-start">
+                <div className="px-3 py-1 rounded-full bg-zinc-800 text-sm text-zinc-200">
+                  <strong className="text-white">{bookmarks.length}</strong>{" "}
+                  Bookmarks
+                </div>
+                <div className="px-3 py-1 rounded-full bg-zinc-800 text-sm text-zinc-200">
+                  <strong className="text-white">{content.length}</strong>{" "}
+                  Titles
+                </div>
               </div>
             </div>
           </div>
-        ) : (
-          <div>Something went wrong</div>
-        )}
-      </div>
+        </section>
+
+        {/* Bookmarks area */}
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold text-white">Bookmarks</h2>
+            <button
+              onClick={toggleBookmarkVisibility}
+              className="text-sm bg-zinc-800 px-3 py-1 rounded-lg text-zinc-200"
+            >
+              {showBookmark ? "Hide" : "Show"}
+            </button>
+          </div>
+
+          {isLoadingContent || isLoadingUser ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="p-4 bg-zinc-800 rounded-xl animate-pulse h-36"
+                />
+              ))}
+            </div>
+          ) : showBookmark ? (
+            bookmarks.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {bookmarks.map((b, idx) => (
+                  <article
+                    key={idx}
+                    className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-1 transition"
+                  >
+                    <div className="relative h-44 bg-zinc-800">
+                      <img
+                        src={b.thumnail || "/placeholder-thumb.png"}
+                        alt={`${b.animename} - S${b.season}E${b.ep}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute bottom-3 left-3 text-white">
+                        <div className="font-semibold">{b.animename}</div>
+                        <div className="text-xs text-zinc-300">
+                          S{b.season} • E{b.ep}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 flex items-center justify-between gap-3">
+                      <div className="text-sm text-zinc-300">
+                        {b.seasonname || `Season ${b.season}`}
+                      </div>
+                      <Link
+                        to={`/watch/${b.animename}/${b.season}/${b.ep}`}
+                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm"
+                      >
+                        Watch
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="p-8 bg-zinc-800 rounded-xl text-center text-zinc-400">
+                No bookmarks yet — when you add favorites they'll show up here.
+              </div>
+            )
+          ) : null}
+        </section>
+      </main>
+
       <Footer />
     </>
   );

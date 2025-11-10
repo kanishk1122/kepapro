@@ -1,20 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import CommentSection from "./CommentSection";
 import { Link, useParams } from "react-router-dom";
 import axios from "../utils/Axios";
-import Cookies from "js-cookie";
 import { detailsContext } from "../utils/Context";
 
+// Ensure axios sends credentials (cookies) by default for cross-origin requests
+axios.defaults.withCredentials = true;
 
 const Watch = () => {
   const { name, seo, episode } = useParams();
-  const {loading, setLoading} = useContext(detailsContext)
+  const { loading, setLoading } = useContext(detailsContext);
   const [userdata, setuserdata] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [video, setVideo] = useState("");
   const [disc, setDisc] = useState("");
   const [Thumbnail, setThumbnail] = useState("");
-  const [Name, setName] = useState("")
+  const [Name, setName] = useState("");
   const [genres, setGenres] = useState([]);
   const [quality, setQuality] = useState("");
   const [data, setData] = useState([]);
@@ -22,77 +25,41 @@ const Watch = () => {
   const [watchSeason, setWatchSeason] = useState(1);
   const [userLoginMenu, setUserLoginMenu] = useState(false);
   const [id, setid] = useState("");
-  const [comment, setcomment] = useState("");
-  const [downloadlink, setdownloadlink] = useState('')
-  const [updatefromshow, setupdatefromshow] = useState(false)
-  const [allcomment, setallcomment] = useState([]);
+  const [downloadlink, setdownloadlink] = useState("");
+  const [updatefromshow, setupdatefromshow] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [newformdata, setNewformdata] = useState({
-    videolink: "" ,
+    videolink: "",
     season: 0,
-    ep:"",
+    ep: "",
     description: "",
     genres: "",
-    animename:"",
-    thumbnail:"",
+    animename: "",
+    thumbnail: "",
     trending: false,
     popular: false,
     seasonname: "",
-    oldanimename:"",
-    oldseason:0,
-    oldep:0,
-    download:'',
+    oldanimename: "",
+    oldseason: 0,
+    oldep: 0,
+    download: "",
   });
 
-
-  const token = Cookies.get("token");
-
-  const jwtDecode = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      window
-        .atob(base64)
-        .split("")
-        .map((c) => {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-
-    return JSON.parse(jsonPayload);
-  };
-
   useEffect(() => {
-    if (token) {
+    const fetchSession = async () => {
       try {
-        const decodedToken = jwtDecode(token);
-        console.log(decodedToken.email);
+        const response = await axios.get("/session", { withCredentials: true });
+        if (response.data.authenticated) {
+          setIsAuthenticated(true);
+          setuserdata(response.data.user);
+        }
       } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-  }, [token]);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!token) return;
-
-      try {
-        const response = await axios.post(
-          "/userdetail",
-          {
-            email: jwtDecode(token).email,
-          },
-          { withCredentials: true }
-        );
-        setuserdata(response.data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching session:", error);
       }
     };
 
-    fetchUserData();
-  }, [token]);
+    fetchSession();
+  }, []);
 
   const url = window.location.href;
   const decodedUrl = decodeURIComponent(url);
@@ -106,12 +73,12 @@ const Watch = () => {
         const response = await axios.get("/watchall");
         setData(response.data);
         if (response.data) {
-          setLoading(false)
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
         if (error) {
-          setLoading(true)
+          setLoading(true);
         }
       }
     };
@@ -145,26 +112,29 @@ const Watch = () => {
       setQuality(filtered.quality);
       setThumbnail(filtered.thumnail);
       setid(filtered._id);
-      setName(filtered.animename)
-      setallcomment(filtered.comments);
-      setdownloadlink(filtered.download)
+      setName(filtered.animename);
+      setdownloadlink(filtered.download);
     }
-  }, [data, desiredPart,newformdata]);
 
-  const userLogger = () => {
-    setUserLoginMenu(!userLoginMenu);
-    alert("You need an account first. Please register.");
-  };
+    // Check if description is missing and prompt reload
+    if (filtered && !filtered.description) {
+      const shouldReload = window.confirm(
+        "Video data is incomplete. Would you like to reload the page?"
+      );
+      if (shouldReload) {
+        window.location.reload();
+      }
+    }
+  }, [data, desiredPart, newformdata]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!token) return;
+    if (!isAuthenticated) return;
 
     try {
       const response = await axios.post(
         "/user/addBookmark",
         {
-          email: jwtDecode(token).email,
           animename: desiredPart[0],
           season: seo,
           ep: episode,
@@ -175,567 +145,659 @@ const Watch = () => {
       );
 
       alert(response.data.message);
-
-      if (response.data.message === "Bookmark added successfully") {
-        alert("This video added to favorites");
-      } else {
-        console.error("Failed to add video details.");
-      }
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const commenthandler = async (e) => {
-    e.preventDefault();
-    if (!token) return;
-
-    try {
-      const response = await axios.post(
-        "/comment",
-        {
-          email: jwtDecode(token).email,
-          image: userdata.userpic,
-          comment: comment,
-          animename: desiredPart[0],
-          season: seo,
-          ep: episode,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-
-      setallcomment(response.data);
-      setcomment("");
-
-      if (response.data.message === "Comment added successfully") {
-        alert("comment added");
-        // Clear the comment input after successful submission
-        // Fetch updated comments if needed
-        setallcomment([
-          ...allcomment,
-          { image: userdata.userpic, comment: comment },
-        ]); // Update the comment list
-      } else {
-        console.error("Failed to add comment");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }; 
-
-
-
-
-
-  const updatevideohandler = async (e)=>{
+  const updatevideohandler = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/updatevideo",
-        newformdata,{withCredentials:true})
-        alert(response.data.message);
+      const response = await axios.post("/updatevideo", newformdata, {
+        withCredentials: true,
+      });
+      alert(response.data.message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  };
+
+  const updateformdata = () => {
+    setNewformdata({
+      videolink: video,
+      season: desiredPart[1],
+      ep: desiredPart[2],
+      description: disc,
+      genres: genres,
+      animename: desiredPart[0],
+      thumbnail: Thumbnail,
+      trending: false,
+      popular: false,
+      seasonname: filteredData.seasonname,
+      oldanimename: desiredPart[0],
+      oldseason: desiredPart[1],
+      oldep: desiredPart[2],
+      download: filteredData.download,
+    });
+    setupdatefromshow(() => !updatefromshow);
+  };
+
+  const handleToggleSeasons = () => {
+    setShowSeasons(!showSeasons);
+  };
+
+  const bgImage = {
+    backgroundImage: `url(${Thumbnail})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
+  };
+
+  const bgab = {
+    backgroundColor: "rgba(0, 0, 0, 0.85)",
+    backdropFilter: "blur(50px)",
+    minHeight: "100vh",
+  };
+
+  // Use userdata from /session to determine admin status
+  const isAdmin = !!userdata?.isAdmin;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-900">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          {/* Skeleton Hero Section */}
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* Skeleton Thumbnail */}
+            <div className="w-full lg:w-1/4">
+              <div className="w-full rounded-2xl shadow-2xl aspect-[2/3] bg-zinc-800 animate-pulse"></div>
+            </div>
+
+            {/* Skeleton Video Info */}
+            <div className="w-full lg:w-3/4 space-y-6">
+              <div className="bg-zinc-800/50 backdrop-blur-md rounded-2xl p-6 shadow-xl">
+                <div className="h-10 bg-zinc-700 rounded-lg w-3/4 mb-4 animate-pulse"></div>
+                <div className="space-y-3">
+                  <div className="h-6 bg-zinc-700 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-4 bg-zinc-700 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-zinc-700 rounded w-5/6 animate-pulse"></div>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div
+                        key={i}
+                        className="h-8 w-20 bg-zinc-700 rounded-full animate-pulse"
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Skeleton Action Buttons */}
+              <div className="flex flex-wrap gap-4">
+                <div className="h-12 w-48 bg-zinc-700 rounded-lg animate-pulse"></div>
+                <div className="h-12 w-32 bg-zinc-700 rounded-lg animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Skeleton Video Player and Episodes */}
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Skeleton Video Player */}
+            <div className="lg:col-span-2">
+              <div className="bg-zinc-800 rounded-2xl overflow-hidden shadow-2xl aspect-video animate-pulse flex items-center justify-center">
+                <svg
+                  className="w-24 h-24 text-zinc-700"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Skeleton Episodes Sidebar */}
+            <div className="bg-zinc-800/50 backdrop-blur-md rounded-2xl shadow-xl p-6">
+              <div className="h-12 bg-zinc-700 rounded-lg mb-4 animate-pulse"></div>
+              <div className="space-y-3">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div
+                    key={i}
+                    className="h-16 bg-zinc-700 rounded-lg animate-pulse"
+                  ></div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Skeleton Comments Section */}
+          <div className="mt-8 bg-zinc-800/50 backdrop-blur-md rounded-2xl p-8 shadow-xl">
+            <div className="h-8 bg-zinc-700 rounded-lg w-1/4 mb-6 animate-pulse"></div>
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="flex gap-4 bg-zinc-700/30 p-4 rounded-lg"
+                >
+                  <div className="w-12 h-12 rounded-full bg-zinc-700 flex-shrink-0 animate-pulse"></div>
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-zinc-700 rounded w-3/4 animate-pulse"></div>
+                    <div className="h-4 bg-zinc-700 rounded w-1/2 animate-pulse"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
-   
-
-
-
-    const updateformdata =()=>{
-      setNewformdata({
-        videolink: video,
-        season: desiredPart[1],
-        ep: desiredPart[2],
-        description: disc,
-        genres: genres,
-        animename: desiredPart[0],
-        thumbnail: Thumbnail,
-        trending: false,
-        popular: false,
-        seasonname: filteredData.seasonname ,
-        oldanimename:desiredPart[0],
-        oldseason:desiredPart[1],
-        oldep:desiredPart[2],
-        download:filteredData.download
-      });
-      setupdatefromshow(()=>!updatefromshow)
-    }
-
-    const handleToggleSeasons = () => {
-      setShowSeasons(!showSeasons);
-    };
-
-    const bgImage = {
-      backgroundImage: `url(${Thumbnail})`,
-      objectFit:"cover",
-    };
-    const bgab={
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-    backdropFilter: 'blur(30px)', // Apply blur effect
-    }
-
   return (
-    <div style={bgImage} >
-    <div style={bgab}>
-      <div className="bg-[rgb(0,0,0,0.5)] text-white w-full">
+    <div style={bgImage} className="min-h-screen">
+      <div style={bgab}>
         <Navbar />
-        <div className="h-fit px-2 mt-5 justify-center items-center flex flex-wrap w-full ">
-         <img src={Thumbnail} className="w-[300px] rounded-3xl object-cover h-[400px] " alt="" />
-        </div>
-        <div className=" px-2 flex flex-wrap w-screen gap-3"></div>
-        <div className="h-fit pb-5 w-full p-2 flex justify-center items-center  flex-wrap gap-1">
-          <div className="w-[70%] justify-center items-center  flex flex-wrap-reverse gap-6    min-w-[300px] max-md:w`-full h-fit   relative">
-          <div className="w-[30%] rounded-2xl max-md:w-full min-h-[200px] min-w-[300px] justify-center items-center bg-[rgb(0,0,0,0.5)] p-5 flex flex-col gap-2">
-  <button
-    onClick={handleToggleSeasons}
-    className="bg-red-700 text-white p-2 rounded"
-  >
-    {showSeasons ? 'Hide Seasons' : 'Show Seasons'}
-  </button>
-  <div className={`w-full ${showSeasons ? "h-20" : 'h-0'} overflow-scroll flex flex-col gap-3 duration-500`}>
-    {showSeasons && (
-      <div className="flex flex-col gap-3">
-        {data
-          .filter((item) => item.animename === name && item.quality === 720 && item.ep === 1)
-          .map((item, index) => (
-            <Link
-              key={index}
-              to={`/watch/${item.animename}/${item.season}/${item.ep}`}
-            >
-              <div className="w-full flex gap-3 rounded p-4 h-fit bg-zinc-700">
-                <p>Season: {item.season}</p>
-              </div>
-            </Link>
-          ))}
-      </div>
-    )}
-  </div>
-  <div className="w-full h-60 overflow-scroll flex justify-center items-center flex-wrap gap-3">
-    {data
-      .filter((item) => item.animename === name && item.quality === 720 && item.season === watchSeason)
-      .map((item, index) => (
-        <Link
-          key={index}
-          to={`/watch/${item.animename}/${item.season}/${item.ep}`}
-        >
-          <div className="w-[100%] flex gap-1 rounded p-2 h-fit bg-zinc-700">
-            <p>Episode: {item.ep}</p>
-          </div>
-        </Link>
-      ))}
-  </div>
-</div>
 
-   <div className="w-full md:w-[60%] max-md:min-h-[200px]   h-[45vh] relative max-md:h-[30vh] rounded-2xl overflow-hidden  z-10 ">
-   <div className=" bg-transparent absolute w-full top-1 max-md:h-[30%] h-[20%]"></div>
-    <iframe
-              title="videoplayer"
-              className="w-full   h-full object-cover"
-              src={video}
-              scrolling="no"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-            </div>
-            
-          </div>
-           
-          
-
-          <div className="w-[380px] h-fit bg-zinc-800 p-4 flex flex-col gap-2 rounded-lg">
-            <div className="flex h-fit flex-col gap-3">
-              <h1>Name: {filteredData ? filteredData.animename : ""}</h1>
-              <h1>
-                Description: {filteredData ? filteredData.description : ""}
-              </h1>
-              <h1>
-                Genres: {filteredData ? filteredData.genres.join(" | ") : ""}
-              </h1>
-              <h1>Season: {seo}</h1>
-              <h1>Episode: {episode}</h1>
-            </div>
-
-            {token ? (
-              <div className="w-full flex gap-3 justify-center items-center">
-              <form onSubmit={handleSubmit} className="flex">
-                <input
-                  className="bg-[rgb(0,0,0,0.5)] hidden"
-                  type="text"
-                  value={jwtDecode(token).email}
-                  name="email"
-                  />
-                <input
-                  className="bg-[rgb(0,0,0,0.5)] hidden"
-                  type="text"
-                  value={desiredPart[0]}
-                  name="animename"
-                />
-                <input
-                  className="bg-[rgb(0,0,0,0.5)] hidden"
-                  type="number"
-                  value={seo}
-                  name="season"
-                />
-                <input
-                  className="bg-[rgb(0,0,0,0.5)] hidden"
-                  type="number"
-                  value={episode}
-                  name="ep"
-                />
-                <input
-                  type="submit"
-                  value="Add to favorites"
-                  className="bg-red-700 px-2 py-1 text-2xl rounded-full font-semibold"
-                />
-               
-                
-              </form>
-              {Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS &&<button className="bg-blue-500  px-2 py-1a rounded-full" onClick={updateformdata}>
-              EDIT
-           </button>}
-              
-              </div>
-              
-            ) : (
-              <div className="w-fit flex justify-center flex-col rounded-3xl items-center bg-zinc-600 p-3">
-                <button
-                  onClick={userLogger}
-                  className="bg-red-700 w-fit px-2 py-1 text-2xl rounded-full font-semibold"
-                >
-                  Add to favorites
-                </button>
-                <div
-                  className={`${
-                    userLoginMenu ? "h-fit" : "h-0"
-                  } duration-700 w-1/2 flex flex-col justify-center items-center text-center`}
-                >
-                  <Link
-                    className={`${
-                      userLoginMenu ? "text-[100%]" : "text-[0%]"
-                    } duration-700`}
-                    to="/register"
-                  >
-                    Register
-                  </Link>
-                  <hr className={`${userLoginMenu ? "w-full" : "w-0"}`} />
-                  <Link
-                    className={`${
-                      userLoginMenu ? "text-[100%]" : "text-[0%]"
-                    } duration-700`}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                </div>
-              </div>
-            )}
-             <div className="flex w-full justify-end items-end">
-              {downloadlink !== null && downloadlink !== undefined  && <a className="bg-white cursor-pointer text-black px-3 py-1 text-2xl font-semibold rounded-xl" target="_blank" href={downloadlink}>Download</a> }
-            </div>
-
-          </div>
-        </div>
-
-       
-        
-           {
-              Cookies.get("token") && jwtDecode(token).Admin === import.meta.env.VITE_UPDATE_PASS ?  
-              ( 
-                <div className="flex flex-col justify-center items-center h-fit w-full  ">
-                
-             {updatefromshow&&
-              <form  onSubmit={updatevideohandler} className="w-full justify-center items-center m-4  h-fit p-6 flex flex-col gap-3    *:rounded-lg  px-14 rounded-lg  bg-[rgb(0,0,0,0.5)] ">
-             
-                <div className=" h-fit flex flex-wrap w-full   justify-between gap-5 items-center">
-                <fieldset className="flex justify-center w-[40%] flex-col  p-3 h-fit items-center gap-7   *:bg-[rgb(0,0,0,0.5)]   ">
-                  <div>
-                  <iframe
-              title="videoplayer"
-              className="w-full h-full rounded-lg z-10 "
-              src={newformdata.videolink}
-              scrolling="no"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-                  </div>
-                 <div className="w-full h-full flex flex-wrap justify-center items-center">
-                 <h3>enter videolink</h3>
-                  <input
-                    type="text"
-                    value={newformdata.videolink}
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, videolink: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                 </div>
-                </fieldset>
-               
-               <div className="flex flex-col h-fit w-[40%]  p-3 justify-center items-center">
-               <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7    ">
-                  <legend>enter animename</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.animename
-                    }
-                    className="w-full h-fit rounded-lg order border-zinc-200  bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, animename: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-                <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7     ">
-                  <legend>enter season name</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.seasonname
-                    }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, seasonname: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-                <fieldset className="flex justify-center p-3 w-full border-zinc-400 border rounded-xl h-fit items-center gap-7     ">
-                  <legend>enter thumbnail</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.thumbnail
-                    }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, thumbnail: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-               </div>
-               </div>
-    
-              <div className="flex-wrap justify-center items-center gap-4 w-full h-fit">
-              <fieldset className=" p-3 h-fit w-full border-zinc-400 border  gap-7 flex rounded-lg justify-center items-center   ">
-                  <legend>enter genres</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.genres
-                    }
-                    style={{resize:"none"}}
-                    className="w-full h-fit p-3 rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        genres: e.target.value.split(","),
-                      })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-                <fieldset className=" p-3 h-fit w-full border-zinc-400 border  gap-7 flex rounded-lg justify-center items-center   ">
-                  <legend>enter download link</legend>
-                  <input
-                    type="text"
-                    value={
-                      newformdata.download
-                    }
-                    style={{resize:"none"}}
-                    className="w-full h-fit p-3 rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        download: e.target.value,
-                      })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className=" p-3 h-fit w-full border-zinc-400 border rounded-lg gap-7 flex justify-center items-center   ">
-                  <legend>enter description</legend>
-                  <textarea
-                    type="text"
-                    value={
-                      newformdata.description
-                    }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({
-                        ...newformdata,
-                        description: e.target.value,
-                      })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-              </div>
-                <div className="flex flex-wrap gap-4">
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 border-zinc-400 border rounded-lg  ">
-                  <legend>enter season no</legend>
-                  <input
-                    type="Number"
-                    value={
-                      newformdata.season
-                    }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, season: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 *:flex *:justify-center border-zinc-400 border rounded-lg  ">
-                  <legend>enter episode</legend>
-                  <input
-                    type="Number"
-                    value={
-                      newformdata.ep
-                    }
-                    className="w-full h-fit rounded-lg order border-zinc-200 bg-zinc-700 px-2 py-1 bg-[rgb(0,0,0,0.5)]  "
-                    onChange={(e) =>
-                      setNewformdata({ ...newformdata, ep: e.target.value })
-                    }
-                    name=""
-                    id=""
-                  />
-                </fieldset>
-    
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7 border-zinc-400 rounded-lg *:flex *:justify-center *:items-center *:gap-1 border order-zinc-200 ">
-                  <legend>Select popular</legend>
-                  <div>
-                    <input
-                      type="radio"
-                      id="yes"
-
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          popular:true,
-                        })
-                      }
-                      value="true"
-                      name="popular"
-                    />
-    
-                    <label htmlFor="yes">yes</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="No"
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          popular:false,
-                        })
-                      }
-                      value="false"
-                      name="popular"
-                    />
-                    <label htmlFor="No">No</label>
-                  </div>
-                </fieldset>
-                <fieldset className="flex justify-center p-3 h-20 items-center gap-7   rounded-lg *:flex *:justify-center *:items-center *:gap-1 border border-zinc-200 ">
-                  <legend>select trending</legend>
-                  <div>
-                    <input
-                      type="radio"
-                      value="yes"
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          trending:true,
-                        })
-                      }
-                      name="trending"
-                      id="yse"
-                    />
-                    <label htmlFor="yse">yes</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      onClick={(e) =>
-                        setNewformdata({
-                          ...newformdata,
-                          trending:false,
-                        })
-                      }
-                      value="no"
-                      name="trending"
-                      id="off"
-                    />
-                    <label htmlFor="off">No</label>
-                  </div>
-                </fieldset>
-                
-                </div>
-                <div className="flex justify-center items-center">
-                <input type="submit" value="update" className="bg-blue-600 rounded-lg px-2 py-1" />
-                </div>
-              </form>
-               }
-
-            </div>
-              )
-            :null 
-             }  
-       
-      </div>
-      <div className="max-m:h-fit bg-[rgb(0,0,0,0.5)]  flex flex-col gap-3 p-3 h-fit ">
-         {allcomment.map((item, index) => (
-          <div key={index} className="w-fit h-fit flex gap-3 flex-wrap ">
-            <div className="w-[50px] h-[50px] rounded-full overflow-hidden bg-[rgb(0,0,0,0.5)]">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* Thumbnail */}
+            <div className="w-full lg:w-1/4">
               <img
-                src={item.image}
-                className="w-full h-full object-cover"
-                alt=""
+                src={Thumbnail}
+                className="w-full rounded-2xl shadow-2xl object-cover aspect-[2/3]"
+                alt={Name}
               />
             </div>
-            <div className="bg-zinc-400 rounded-md w-fit mt-4 max-w-[800px] p-3 text-black font-semibold text-xl max-md:text-[4vw] h-fit">
-              <p>{item.comment}</p>
+
+            {/* Video Info */}
+            <div className="w-full lg:w-3/4 space-y-6">
+              <div className="bg-zinc-800/50 backdrop-blur-md rounded-2xl p-6 shadow-xl">
+                <h1 className="text-4xl font-bold text-white mb-4">{Name}</h1>
+                <div className="space-y-3 text-zinc-300">
+                  <p className="text-lg">
+                    <span className="text-red-500 font-semibold">Season:</span>{" "}
+                    {seo}
+                    <span className="mx-4">|</span>
+                    <span className="text-red-500 font-semibold">
+                      Episode:
+                    </span>{" "}
+                    {episode}
+                  </p>
+                  <p className="text-base leading-relaxed">{disc}</p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {genres.map((genre, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-red-600/80 rounded-full text-sm font-medium"
+                      >
+                        {genre}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-4">
+                {isAuthenticated ? (
+                  <>
+                    <form onSubmit={handleSubmit}>
+                      <button
+                        type="submit"
+                        className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
+                      >
+                        <span>❤️</span> Add to Favorites
+                      </button>
+                    </form>
+                    {isAdmin && (
+                      <button
+                        onClick={() => {
+                          updateformdata();
+                          setShowUpdateForm(!showUpdateForm);
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+                      >
+                        {showUpdateForm ? "Cancel Edit" : "Edit Video"}
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <div className="bg-zinc-700/50 backdrop-blur-md p-4 rounded-lg">
+                    <p className="text-white mb-3">
+                      Sign in to add to favorites
+                    </p>
+                    <div className="flex gap-3">
+                      <Link
+                        to="/login"
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all"
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        to="/register"
+                        className="bg-zinc-600 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg transition-all"
+                      >
+                        Register
+                      </Link>
+                    </div>
+                  </div>
+                )}
+                {downloadlink && (
+                  <a
+                    href={downloadlink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
+                  >
+                    <span>⬇️</span> Download
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        ))} 
 
-        <div className="w-full h-fit px-3 flex ">
-          <form
-            onSubmit={commenthandler}
-            className="w-full h-fit flex flex-col gap-5 justify-end items-end"
-          >
-            <textarea
-              value={comment}
-              onChange={(e) => setcomment(e.target.value)}
-              style={{ resize: "none" }}
-              className="w-2/3 bg-[rgb(0,0,0,0.5)] rounded-lg border-zinc-100 border h-fit min-h-[100px] max-md:w-full"
-              id=""
-            ></textarea>
-            <input
-              type="submit"
-              value="Add comment"
-              className="bg-zinc-100 text-black rounded-lg font-semibold px-2 py-1"
-            />
-          </form>
+          {/* Video Player and Episodes Section */}
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Video Player */}
+            <div className="lg:col-span-2">
+              <div className="bg-black rounded-2xl overflow-hidden shadow-2xl aspect-video relative">
+                {/* Invisible overlay to block clicks on video */}
+                <div className="absolute inset-0 z-20 bg-transparent pointer-events-none">
+                  {/* Top-right corner blocker - blocks the redirect link */}
+                  <div
+                    className="absolute top-0 right-0 w-32 h-16 bg-black/0 pointer-events-auto"
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onContextMenu={(e) => e.preventDefault()}
+                  />
+                </div>
+                <iframe
+                  title="videoplayer"
+                  className="w-full h-full relative z-10"
+                  src={video}
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen
+                  allow="autoplay; fullscreen; picture-in-picture"
+                />
+              </div>
+            </div>
+
+            {/* Episodes Sidebar */}
+            <div className="bg-zinc-800/50 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+              {/* Seasons Toggle Button */}
+              <div className="p-6 border-b border-zinc-700/50">
+                <button
+                  onClick={handleToggleSeasons}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                >
+                  <span>{showSeasons ? "▲" : "▼"}</span>
+                  {showSeasons ? "Hide Seasons" : "Show All Seasons"}
+                </button>
+              </div>
+
+              {/* Seasons List */}
+              <div
+                className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                  showSeasons ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="px-6 py-4 border-b border-zinc-700/50">
+                  <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2">
+                    <span className="text-red-500">📺</span>
+                    All Seasons
+                  </h3>
+                  <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                    {data
+                      .filter(
+                        (item) =>
+                          item.animename === name &&
+                          item.quality === 720 &&
+                          item.ep === 1
+                      )
+                      .sort((a, b) => a.season - b.season)
+                      .map((item, index) => (
+                        <Link
+                          key={index}
+                          to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                          onClick={() => setShowSeasons(false)}
+                        >
+                          <div
+                            className={`${
+                              item.season == watchSeason
+                                ? "bg-red-600 shadow-lg"
+                                : "bg-zinc-700 hover:bg-zinc-600"
+                            } p-3 rounded-lg transition-all my-1 cursor-pointer group flex items-center justify-between`}
+                          >
+                            <span className="text-white font-medium flex items-center gap-2">
+                              <span className="text-xs bg-zinc-900/50 px-2 py-1 rounded">
+                                S{item.season}
+                              </span>
+                              {item.seasonname || `Season ${item.season}`}
+                            </span>
+                            {item.season == watchSeason && (
+                              <span className="text-white text-xs">▶</span>
+                            )}
+                          </div>
+                        </Link>
+                      ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Episodes List */}
+              <div className="px-6 py-4">
+                <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2 sticky top-0 bg-zinc-800/95 py-2 z-10">
+                  <span className="text-red-500">🎬</span>
+                  Season {watchSeason} Episodes
+                </h3>
+                <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                  {data
+                    .filter(
+                      (item) =>
+                        item.animename === name &&
+                        item.quality === 720 &&
+                        item.season === watchSeason
+                    )
+                    .sort((a, b) => a.ep - b.ep)
+                    .map((item, index) => (
+                      <Link
+                        key={index}
+                        to={`/watch/${item.animename}/${item.season}/${item.ep}`}
+                      >
+                        <div
+                          className={`${
+                            item.ep == episode
+                              ? "bg-red-600 shadow-lg scale-[1.02]"
+                              : "bg-zinc-700 hover:bg-zinc-600 hover:scale-[1.01]"
+                          } p-4 rounded-lg transition-all my-1 duration-200 cursor-pointer group flex items-center justify-between`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold ${
+                                item.ep == episode
+                                  ? "bg-white/20"
+                                  : "bg-zinc-900/30"
+                              }`}
+                            >
+                              <span className="text-white text-sm">
+                                {item.ep}
+                              </span>
+                            </div>
+                            <span className="text-white font-medium">
+                              Episode {item.ep}
+                            </span>
+                          </div>
+                          {item.ep == episode ? (
+                            <span className="text-white text-sm font-semibold">
+                              ▶ Playing
+                            </span>
+                          ) : (
+                            <span className="text-zinc-400 text-xs group-hover:text-white transition-colors">
+                              Watch →
+                            </span>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Admin Update Form */}
+          {isAuthenticated && isAdmin && showUpdateForm && (
+            <div className="mt-8 bg-zinc-800/50 backdrop-blur-md rounded-2xl p-8 shadow-xl">
+              <h2 className="text-2xl font-bold text-white mb-6">
+                Edit Video Details
+              </h2>
+              <form onSubmit={updatevideohandler} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Video Link */}
+                  <div className="md:col-span-2">
+                    <label className="block text-white mb-2">Video Link</label>
+                    <input
+                      type="text"
+                      value={newformdata.videolink}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          videolink: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Anime Name */}
+                  <div>
+                    <label className="block text-white mb-2">Anime Name</label>
+                    <input
+                      type="text"
+                      value={newformdata.animename}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          animename: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Season Name */}
+                  <div>
+                    <label className="block text-white mb-2">Season Name</label>
+                    <input
+                      type="text"
+                      value={newformdata.seasonname}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          seasonname: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Season Number */}
+                  <div>
+                    <label className="block text-white mb-2">
+                      Season Number
+                    </label>
+                    <input
+                      type="number"
+                      value={newformdata.season}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          season: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Episode */}
+                  <div>
+                    <label className="block text-white mb-2">Episode</label>
+                    <input
+                      type="number"
+                      value={newformdata.ep}
+                      onChange={(e) =>
+                        setNewformdata({ ...newformdata, ep: e.target.value })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Thumbnail */}
+                  <div className="md:col-span-2">
+                    <label className="block text-white mb-2">
+                      Thumbnail URL
+                    </label>
+                    <input
+                      type="text"
+                      value={newformdata.thumbnail}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          thumbnail: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Genres */}
+                  <div className="md:col-span-2">
+                    <label className="block text-white mb-2">
+                      Genres (comma separated)
+                    </label>
+                    <input
+                      type="text"
+                      value={newformdata.genres}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          genres: e.target.value.split(","),
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Description */}
+                  <div className="md:col-span-2">
+                    <label className="block text-white mb-2">Description</label>
+                    <textarea
+                      value={newformdata.description}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          description: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[120px]"
+                      style={{ resize: "vertical" }}
+                    />
+                  </div>
+
+                  {/* Download Link */}
+                  <div className="md:col-span-2">
+                    <label className="block text-white mb-2">
+                      Download Link
+                    </label>
+                    <input
+                      type="text"
+                      value={newformdata.download}
+                      onChange={(e) =>
+                        setNewformdata({
+                          ...newformdata,
+                          download: e.target.value,
+                        })
+                      }
+                      className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  {/* Trending & Popular */}
+                  <div className="flex gap-8">
+                    <div>
+                      <label className="block text-white mb-2">Trending</label>
+                      <div className="flex gap-4">
+                        <label className="flex items-center text-white">
+                          <input
+                            type="radio"
+                            name="trending"
+                            checked={newformdata.trending === true}
+                            onChange={() =>
+                              setNewformdata({
+                                ...newformdata,
+                                trending: true,
+                              })
+                            }
+                            className="mr-2"
+                          />
+                          Yes
+                        </label>
+                        <label className="flex items-center text-white">
+                          <input
+                            type="radio"
+                            name="trending"
+                            checked={newformdata.trending === false}
+                            onChange={() =>
+                              setNewformdata({
+                                ...newformdata,
+                                trending: false,
+                              })
+                            }
+                            className="mr-2"
+                          />
+                          No
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-white mb-2">Popular</label>
+                      <div className="flex gap-4">
+                        <label className="flex items-center text-white">
+                          <input
+                            type="radio"
+                            name="popular"
+                            checked={newformdata.popular === true}
+                            onChange={() =>
+                              setNewformdata({
+                                ...newformdata,
+                                popular: true,
+                              })
+                            }
+                            className="mr-2"
+                          />
+                          Yes
+                        </label>
+                        <label className="flex items-center text-white">
+                          <input
+                            type="radio"
+                            name="popular"
+                            checked={newformdata.popular === false}
+                            onChange={() =>
+                              setNewformdata({
+                                ...newformdata,
+                                popular: false,
+                              })
+                            }
+                            className="mr-2"
+                          />
+                          No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all"
+                >
+                  Update Video
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* Comments Section */}
+          <CommentSection
+            animename={desiredPart[0]}
+            season={desiredPart[1]}
+            episode={desiredPart[2]}
+            userdata={userdata}
+          />
         </div>
-      </div>
-      <Footer />
+        <Footer />
       </div>
     </div>
   );
