@@ -17,8 +17,6 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
   const typingTimeoutRef = useRef(null);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [usePolling, setUsePolling] = useState(false); // toggle to force polling
-  const [socketStatus, setSocketStatus] = useState("disconnected"); // 'connecting' | 'connected' | 'error' | 'disconnected'
-  const [socketError, setSocketError] = useState("");
 
   // Use userdata from session endpoint instead of client-side token decoding
   // userdata may contain: { email, username, userpic, isAdmin, ... }
@@ -40,10 +38,9 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
           socketRef.current.off();
           socketRef.current.disconnect();
         }
-      } catch (e) {}
-
-      setSocketStatus("connecting");
-      setSocketError("");
+      } catch (e) {
+        console.error("Error cleaning up previous socket:", e);
+      }
 
       const transports = usePolling ? ["polling"] : ["websocket", "polling"];
 
@@ -99,22 +96,10 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
           if (result.ok) {
             // we have a connected socket; set it and wire events
             socketRef.current = result.socket;
-            console.log(
-              "Socket connected to",
-              base,
-              "path:",
-              path,
-              "id:",
-              socketRef.current.id,
-              "transports:",
-              transports
-            );
             setIsSocketConnected(true);
-            setSocketStatus("connected");
 
             // standard events
             socketRef.current.on("reconnect", (attempt) => {
-              console.log("Socket reconnected:", attempt);
               socketRef.current.emit("join-video", {
                 animename,
                 season,
@@ -122,12 +107,7 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
               });
             });
             socketRef.current.on("disconnect", (reason) => {
-              console.log("Socket disconnected:", reason);
               setIsSocketConnected(false);
-              setSocketStatus("disconnected");
-            });
-            socketRef.current.on("connect_error", (error) => {
-              console.warn("Socket connect_error after connect:", error);
             });
             socketRef.current.on("new-comment", (newComment) => {
               setComments((prev) => [...prev, newComment]);
@@ -161,13 +141,6 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
               socket.off();
               socket.disconnect();
             } catch (e) {}
-            // log error for debugging
-            console.warn(
-              "Socket attempt failed:",
-              base,
-              path,
-              result.err && result.err.message ? result.err.message : result.err
-            );
             // continue to next candidate
           }
         }
@@ -175,17 +148,8 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
       }
 
       if (!connected) {
-        // none connected -> set error with actionable guidance
-        setSocketStatus("error");
-        setSocketError(
-          `Cannot reach Socket.IO at candidates: ${bases.join(
-            ", "
-          )}. If you are running on Netlify/functions, sockets are not supported — run a dedicated socket server and set VITE_SOCKET_URL to its origin. See console for details.`
-        );
-        console.error(
-          "Socket connection failed for all candidates. Tried:",
-          bases
-        );
+        // none connected -> mark as not connected (no debug logs/UI)
+        setIsSocketConnected(false);
       }
     };
 
@@ -340,16 +304,6 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
         // refresh comments as a fallback
         await fetchComments();
       }
-
-      // If server indicates realtime is unavailable, surface it in the UI
-      if (response?.data && response.data.realtime === false) {
-        setSocketStatus("error");
-        setSocketError(
-          response.data.note ||
-            response.data.emitError ||
-            "Realtime not available (server-side)."
-        );
-      }
     } catch (err) {
       console.error("Fallback POST failed:", err);
       throw err;
@@ -383,37 +337,8 @@ const CommentSection = ({ animename, season, episode, userdata }) => {
           <div className="text-zinc-300 text-sm font-medium">
             {viewerCount} {viewerCount === 1 ? "viewer" : "viewers"}
           </div>
-          {/* realtime status */}
-          <div className="text-xs text-zinc-400 ml-2">
-            {socketStatus === "connected" && "Realtime"}
-            {socketStatus === "connecting" && "Connecting..."}
-            {socketStatus === "error" && (
-              <>
-                Realtime unavailable
-                <button
-                  onClick={() => {
-                    // quick retry by toggling polling-mode
-                    setUsePolling((p) => !p);
-                  }}
-                  className="ml-2 underline text-zinc-200"
-                >
-                  Retry
-                </button>
-              </>
-            )}
-            {socketStatus === "disconnected" && "Disconnected"}
-          </div>
         </div>
       </div>
-
-      {/* Realtime warning banner */}
-      {socketStatus === "error" && (
-        <div className="mb-4 p-3 rounded-lg bg-yellow-600 text-black text-sm">
-          ⚠️ Realtime disabled:{" "}
-          {socketError ||
-            "Using HTTP fallback; other viewers may not receive updates in real-time."}
-        </div>
-      )}
 
       {/* Add Comment Form */}
       {userdata?.email ? (
